@@ -10103,6 +10103,9 @@ span[data-jarallax-element] {
 .software-lp .spirits-gradient {
 background: linear-gradient(90deg, #5de4d7, #0eb9a9); }
 
+.software-lp .spirits-dark-gradient {
+background: linear-gradient(90deg, #21b5a6, #089183); }
+
 .software-lp .card {
   font-weight: 300; }
 
@@ -10718,4 +10721,8 @@ footer.page-footer h2 {
       background-image: none;
     }
   }
+}
+
+.warning-text{
+	font-size: 0.6rem !important;
 }
