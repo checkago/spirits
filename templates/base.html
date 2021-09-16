@@ -8,78 +8,27 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
         <!-- Bootstrap CSS -->
         <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+        <link href="{% static 'css/mdb.css' %}" rel="stylesheet">
         <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
-        <title>Hello, world!</title>
+        <title>{{ title }}</title>
       </head>
     <body class="software-lp">
-        <header>
-            <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar  bg-info">
-              <div class="container">
-                <a class="navbar-brand" href="/"><img src="{% static 'img/text_logo.png' %}" height="35px"></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-7"
-                  aria-controls="navbarSupportedContent-7" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent-7">
-                  <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                      <a class="nav-link" href="/#"><strong>НАЧАЛО</strong></a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="/#about_us"><strong>БРЕНДЫ</strong></a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="/#services"><strong>КАТАЛОГ</strong></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/#contact"><strong>КОНТАКТЫ</strong></a>
-                    </li>
-                  </ul>
-                  <ul class="navbar-nav ml-auto nav-flex-icons">
-                    <li class="nav-item">
-                      <a class="nav-link waves-effect waves-light"><i class="fab fa-instagram fa-2x"></i></a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link waves-effect waves-light"><i class="fab fa-vk fa-2x"></i></a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link waves-effect waves-light"><i class="fab fa-youtube fa-2x"></i></a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </nav>
-        </header>
-        <section class="card bg-info bg-gradient wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
-            <div class="container">
-                <div class="row py-5 px-5 m3-5 mt-5">
-                    <div class="col-md-6">
-                        <img class="img-responsive" src="{% static 'img/logo_white_moscow.png' %}">
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card hoverable">
-                          <div class="card-body text-center info-color-dark">
-                          </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        {% include '_header.html' %}
 
         <main>
-
+        {% block content %}
+        {% endblock %}
         </main>
         <footer>
 
         </footer>
 
-          <script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
 
           <!-- Bootstrap core JavaScript -->
-          <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+          <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
 
           <!-- MDB core JavaScript -->
-          <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+          <script type="text/javascript" src="{% static 'js/mdb.js' %}"></script>
 
     </body>
 </html>
