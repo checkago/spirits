@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 
-    <section class="card info-color wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
+    <section class="card spirits-gradient wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
 
         <!-- Content -->
         <div class="card-body text-white text-center py-5 px-5 mb-3 mt-5">
@@ -40,212 +40,196 @@
         <!-- Content -->
     </section>
 
+    <!--Section: Features v.1-->
+    <section id="features" class="mb-5">
+        <div class="container mt-5 pt-5">
+            <!--First row-->
+            <div class="row features wow fadeIn" data-wow-delay="0.2s">
 
-    <!--First container-->
-    <div class="container">
-
-      <!--Section: Features v.1-->
-      <section id="features" class="mb-5">
-
-        <!--Section heading-->
-        <h1 class="mb-3 my-3 pt-5 dark-grey-text wow fadeIn text-center" data-wow-delay="0.2s"><strong
-            class="font-weight-bold">Почему бизнесу нужны новые технологии?</strong></h1>
-          <hr>
-
-        <!--First row-->
-        <div class="row features wow fadeIn" data-wow-delay="0.2s">
-
-          <div class="col-lg-3 text-center">
-            <div class="icon-area">
-              <div class="circle-icon">
-                <i class="fas fa-balance-scale blue-text"></i>
-              </div>
-              <br>
-              <h5 class="dark-grey-text font-weight-bold mt-2">Оптимизация</h5>
-              <div class="mt-1">
-                <p class="mx-3 dark-text">Позволяет уменьшить количество этапов бизнес-процессов.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-3 text-center">
-            <div class="icon-area">
-              <div class="circle-icon">
-                <i class="fas fa-cogs orange-text"></i>
-              </div>
-              <br>
-              <h5 class="dark-grey-text font-weight-bold mt-2">Автоматизация</h5>
-              <div class="mt-1">
-                <p class="mx-3 dark-text">Сокращает время выполнения задач, увеличивает производительность</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-3 text-center mb-4">
-            <div class="icon-area">
-              <div class="circle-icon">
-                <i class="fas fa-funnel-dollar red-text"></i>
-              </div>
-              <br>
-              <h5 class="dark-grey-text font-weight-bold mt-2">- Расходы</h5>
-              <div class="mt-1">
-                <p class="mx-3 dark-text">Снижает кадровые расходы и затраты на обеспечение рабочих мест.</p>
-              </div>
-            </div>
-          </div>
-
-            <div class="col-lg-3 text-center mb-4">
-            <div class="icon-area">
-              <div class="circle-icon">
-                <i class="fas fa-hand-holding-usd green-text"></i>
-              </div>
-              <br>
-              <h5 class="dark-grey-text font-weight-bold mt-2">Прибыль</h5>
-              <div class="mt-1">
-                <p class="mx-3 dark-text">Оптимизация работы и сокрашение расходов увеличивает прибыль.</p>
-              </div>
-            </div>
-          </div>
-
-
-        </div>
-        <!--/First row-->
-
-      </section>
-      <!--/Section: Features v.1-->
-
-    </div>
-    <!--First container-->
-
-    <!--Second container-->
-    <div id="about_us" class="container-fluid" style="background-color: #f9f9f9">
-      <div class="container py-4">
-
-        <!--Section: Download-->
-        <section>
-
-          <!-- First row -->
-          <div class="row my-4 pt-5 wow fadeIn" data-wow-delay="0.4s">
-
-            <!-- First column -->
-            <div class="col-lg-7 col-md-12 mb-4 text-center">
-              <img src="{% static 'img/dostup.jpg' %}" alt=""
-                class="img-fluid z-depth-2 rounded">
-            </div>
-            <!-- /First column -->
-
-            <!-- Second column -->
-            <div class="col-lg-5 col-md-12 mb-4 text-left">
-
-              <!--Section heading-->
-              <h2 class="mb-3 my-3 dark-grey-text wow fadeIn" data-wow-delay="0.2s"><strong
-                  class="font-weight-bold">20 лет</strong> на рынке IT</h2>
-
-              <p class="mb-2">Наша фирма уже многие годы предоставляет различные услуги по внедрению, управлению, обслуживанию ПО и оборудования связанного с информацилнными технологиями.</p>
-                <p>Такой большой срок присутствия на рынке обусловлен постоянному следованию за инновациями и использованием самых современных технологических трендов</p>
-              <a class="btn btn-white btn-rounded blue-text font-weight-bold ml-0 wow fadeIn" data-wow-delay="0.2s"><i
-                  class="fab fa-android pr-2" aria-hidden="true"></i> Наши услуги</a>
-              <a class="btn btn-white btn-rounded blue-text font-weight-bold wow fadeIn" data-wow-delay="0.2s"><i
-                  class="fab fa-apple pr-2" aria-hidden="true"></i> Наши клиенты</a>
-            </div>
-            <!-- /.Second column -->
-
-          </div>
-          <!-- /.First row -->
-
-        </section>
-        <!--/Section: Download-->
-
-      </div>
-    </div>
-    <!--Second container-->
-
-    <!--Third container-->
-    <div class="streak streak-md streak-photo"
-      style="background-image:url('media/paralax.jpg')">
-      <div class="flex-center white-text blue-gradient-mask">
-        <div class="container-fluid py-3">
-
-          <!--Section: Features v.4-->
-          <section id="services" class="wow fadeIn" data-wow-delay="0.2s">
-            <!--Section heading-->
-            <h1 class="py-5 my-5 white-text text-center wow fadeIn" data-wow-delay="0.2s"><strong
-                class="font-weight-bold">Наши услуги и сервисы</strong></h1>
-
-            <!--Grid row-->
-            <div class="row  mb-5">
-                {% for Service in services %}
-               <!-- Grid column -->
-                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 d-flex">
-
-                <!-- Card -->
-                <div class="card card-cascade cascading-admin-card">
-
-                  <!-- Card Data -->
-                  <div class="admin-up">
-                    <img class="bg-{{ Service.color }} mr-5 rounded-lg z-depth-2" src="{{ Service.img.url}}" width="25%">
-                    <div class="data">
-                      <h4 class="text-uppercase font-weight-bold dark-grey-text">{{ Service.name }}</h4>
-                    </div>
+                <div class="col-lg-4 text-center">
+                <div class="icon-area">
+                  <div class="circle-icon">
+                    <i class="fas fa-hand-holding-usd blue-text"></i>
                   </div>
-
-                  <!-- Card content -->
-                  <div class="card-body card-body-cascade">
-                        <div class="float-left text-dark">
-                            <ul class="mt-2" style="text-align:left; font-size: 0.95em">
-                                <li>
-                                    {{ Service.s1 }}
-                                </li>
-                                <li>
-                                    {{ Service.s2 }}
-                                </li>
-                                <li>
-                                    {{ Service.s3 }}
-                                </li>
-                                <li>
-                                    {{ Service.s4 }}
-                                </li>
-                                <li>
-                                    {{ Service.s5 }}
-                                </li>
-                                <li>
-                                    {{ Service.s6 }}
-                                </li>
-                                <li>
-                                    {{ Service.s7 }}
-                                </li>
-                            </ul>
-                        </div>
+                  <br>
+                  <h5 class="dark-grey-text font-weight-bold mt-2">Низкие цены</h5>
+                  <div class="mt-1">
+                    <p class="mx-3 dark-text">Самые низкие цены на рынке напрямую от дистрибьютера</p>
                   </div>
-                  <div class="card-footer text-dark">
-
-                    <div>
-                        <p class="uppercase"><strong>Технологии:</strong></p>
-                        <p style="text-align:left; font-size: 0.85em">
-                            {{ Service.stack }}
-                        </p>
-                    </div>
-                    <div class="float-right">
-                        <a class="btn btn-outline-{{ Service.color }}" href="{{ Service.link }}">Подробнее</a>
-                    </div>
-
-                  </div>
-
                 </div>
-                <!-- Card -->
+                </div>
 
-              </div>
-               <!-- Grid column -->
-                {% endfor %}
+                <div class="col-lg-4 text-center">
+                <div class="icon-area">
+                  <div class="circle-icon">
+                    <i class="fas fa-barcode red-text"></i>
+                  </div>
+                  <br>
+                  <h5 class="dark-grey-text font-weight-bold mt-2">Маркировка</h5>
+                  <div class="mt-1">
+                    <p class="mx-3 dark-text">Вся продукция маркированна в соответствии с законодательством</p>
+                  </div>
+                </div>
+                </div>
+
+                <div class="col-lg-4 text-center">
+                <div class="icon-area">
+                  <div class="circle-icon">
+                    <i class="fas fa-leaf green-text"></i>
+                  </div>
+                  <br>
+                  <h5 class="dark-grey-text font-weight-bold mt-2">Органика</h5>
+                  <div class="mt-1">
+                    <p class="mx-3 dark-text">Для производства используются только органические продукты.</p>
+                  </div>
+                </div>
+                </div>
+
             </div>
-            <!--Grid row-->
-
-
-          </section>
-          <!--/Section: Features v.4-->
+            <!--/First row-->
         </div>
-      </div>
-    </div>
-    <!--/Third container-->
+    </section>
+    <!--/Section: Features v.1-->
+    <hr>
+
+    <section class="mb-5">
+        <div class="container-fluide">
+            <div class="row mb-3 mt-3">
+                <div class="col-md-2 col-lg-2">
+                    <h2 class="page-header pt-5 text-center text-info"><strong>АПЕРИТИВЫ</strong></h2>
+                </div>
+                <div class="col-md-2 col-lg-2 py-2">
+                    <img class="img-fluide" src="/media/brands/Dolin.png">
+                </div>
+                <div class="col-md-2 col-lg-2">
+                    <img class="img-fluide" src="/media/brands/Bonal.png">
+                </div>
+                <div class="col-md-2 col-lg-2">
+                    <img class="img-fluide" src="/media/brands/LCWS-Brands.png">
+                </div>
+                <div class="col-md-2 col-lg-2">
+                    <img class="img-fluide" src="/media/brands/Byrrh.png">
+                </div>
+                <div class="col-md-2 col-lg-2">
+                    <img class="img-fluide" src="/media/brands/Grand-Poppy-Greenbar.png">
+                </div>
+            </div>
+        </div>
+        <div class="streak streak-md streak-photo img-fluid"
+          style="background-image:url('media/paralax.jpg')">
+          <div class="flex-center white-text">
+            <div class="container-fluid py-3">
+
+              <!--Section: Features v.4-->
+              <section class="wow fadeIn" data-wow-delay="0.2s">
+                <div class="container pb-3">
+                    <div class="row">
+                        <div class="col-md-8 col-lg-8">
+                            <div class="card text-dark pt-5 pb-3 pr-2 pl-4 mt-4">
+                                <div class="card-title">
+                                    <h3>Аперетив Caranco Redondo</h3>
+                                </div>
+                                <div class="card-content">
+                                    <p>
+                                        Аперитив Carranca Redondo был назван в честь основателя компании
+                                        <strong>Destilaria Portugesa</strong>, Хосе Карранка Редондо, родившегося в 1921 году и
+                                    основавшего одну из самых уважаемых алкогольных компаний в
+                                    Португалии. В основе аперитива – ароматические семена и растения,
+                                    среди которых мята, лаванда, кардамон, корица, эвкалипт, а также
+                                    другие не менее интересные ингредиенты со всего мира, обогащенные
+                                    винным бренди, прошедшим двойную дистилляцию. Во вкусе можно
+                                    услышать сложный букет выдержанного бренди, сочетающийся с
+                                    натуральными ароматами древесины, семян ароматических растений,
+                                    а также сладкого ликера. Создатели бутылки были вдохновлены
+                                    старыми бутылками для лекарств и настоек, использовавшимися в
+                                    начале прошлого века. Крепость 30 градусов
+                                    </p>
+                                    <hr>
+                                    <p>
+                                        <a class="btn btn-info btn-rounded white-text font-weight-bold">В каталог</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4 py-4 pr-2 pl-4">
+                            <img calss="img-fluid" src="{% static 'img/products/caranco_redondo.png' %}">
+                        </div>
+                    </div>
+                </div>
+              </section>
+              <!--/Section: Features v.4-->
+            </div>
+          </div>
+        </div>
+
+        <div class="container-fluide">
+            <div class="row mb-3 mt-3">
+                <div class="col-md-2 col-lg-2">
+                    <h2 class="page-header pt-5 text-center text-info"><strong>БИТТЕРЫ</strong></h2>
+                </div>
+                <div class="col-md-2 col-lg-2 py-2">
+                    <img class="img-fluide" src="/media/brands/Dolin.png">
+                </div>
+                <div class="col-md-2 col-lg-2">
+                    <img class="img-fluide" src="/media/brands/Bonal.png">
+                </div>
+                <div class="col-md-2 col-lg-2">
+                    <img class="img-fluide" src="/media/brands/LCWS-Brands.png">
+                </div>
+                <div class="col-md-2 col-lg-2">
+                    <img class="img-fluide" src="/media/brands/Byrrh.png">
+                </div>
+                <div class="col-md-2 col-lg-2">
+                    <img class="img-fluide" src="/media/brands/Grand-Poppy-Greenbar.png">
+                </div>
+            </div>
+        </div>
+        <div class="streak streak-md streak-photo img-fluid"
+          style="background-image:url('media/paralax_2.jpg')">
+          <div class="flex-center white-text">
+            <div class="container-fluid py-3">
+
+              <!--Section: Features v.4-->
+              <section class="wow fadeIn" data-wow-delay="0.2s">
+                <div class="container pb-3">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-4 py-4 pr-2 pl-4">
+                            <img calss="img-fluid" src="{% static 'img/products/dolin_bitter.png' %}">
+                        </div>
+                        <div class="col-md-8 col-lg-8">
+                            <div class="card text-dark pt-5 pb-3 pr-2 pl-4 mt-4">
+                                <div class="card-title">
+                                    <h3>Биттер DOLIN</h3>
+                                </div>
+                                <div class="card-content">
+                                    <p>
+                                        <strong>Биттер – это новое творение легендарного дома из
+                                            Шамбери. Dolin</strong> биттер изготовлен из растительных
+                                        компонентов и специй, таких как горький апельсин,
+                                        горечавка, хинная кислота, размельченная в вине на
+                                        долгие недели. Его консистенция во рту постепенно
+                                        переходит в мёд, делая его более тонким и легким по
+                                        сравнению с конкурентами. Dolin используется в
+                                        качестве основы многих коктейлей, а также подается
+                                        охлажденным, с долькой апельсина. Идеален для
+                                        приготовления Spritz, которому придает особый
+                                        горький вкус.
+                                    </p>
+                                    <hr>
+                                    <p>
+                                        <a class="btn btn-info btn-rounded white-text font-weight-bold">В каталог</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </section>
+              <!--/Section: Features v.4-->
+            </div>
+          </div>
+        </div>
+    </section>
+
 
 {% endblock %}
