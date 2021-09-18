@@ -2,23 +2,25 @@
 <!doctype html>
 <html lang="ru">
     <head>
-        <!-- Обязательные метатеги -->
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
-        <!-- Bootstrap CSS -->
+        <!-- Bootstrap core CSS -->
         <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+        <!-- Material Design Bootstrap -->
         <link href="{% static 'css/mdb.css' %}" rel="stylesheet">
+          <!-- JQuery -->
         <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
         <title>{{ title }}</title>
         <meta name="description" content="{{ description }}">
-      </head>
+    </head>
     <body class="software-lp">
         {% include '_header.html' %}
 
         <main>
-        {% block content %}
-        {% endblock %}
+            {% block content %}
+            {% endblock %}
         </main>
         <!--Footer-->
         <footer class="page-footer text-center text-md-left spirits-dark-gradient">
@@ -74,13 +76,10 @@
 
         </footer>
         <!--/.Footer-->
+        <!-- Bootstrap core JavaScript -->
+        <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
 
-
-          <!-- Bootstrap core JavaScript -->
-          <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
-
-          <!-- MDB core JavaScript -->
-          <script type="text/javascript" src="{% static 'js/mdb.js' %}"></script>
-
+        <!-- MDB core JavaScript -->
+        <script type="text/javascript" src="{% static 'js/mdb.js' %}"></script>
     </body>
 </html>
