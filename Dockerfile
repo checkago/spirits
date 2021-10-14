@@ -3,7 +3,7 @@ FROM python:3.9-alpine
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-WORKDIR /app
+WORKDIR /usr/src/spirit
 
 COPY requirements.txt .
 COPY entrypoint.sh .
@@ -15,6 +15,9 @@ RUN apk add postgresql-dev
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
+
+RUN chmod +x ./entrypoint.sh
+
 COPY . .
 
-ENTRYPOINT ["sh", "/app/entrypoint.sh"]
+ENTRYPOINT ["sh", "/usr/src/spirit/entrypoint.sh"]
