@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
+from django.urls import  reverse
 from django.utils import timezone
 from django.utils.safestring import mark_safe
 
@@ -30,6 +31,9 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('category_detail', kwargs={'category_slug': self.slug})
+
 
 class Brand(models.Model):
     name = models.CharField(max_length=100, verbose_name='Торговая марка')
@@ -47,6 +51,9 @@ class Brand(models.Model):
 
     def __str__(self):
         return f"{self.name} | {self.country.name}"
+
+    def get_absolute_url(self):
+        return reverse('brand_detail', kwargs={'brand_slug': self.slug})
 
 
 class Product(models.Model):
@@ -68,6 +75,10 @@ class Product(models.Model):
 
     def __str__(self):
         return f"{self.brand.name} | {self.name} | {self.volume.name} | {self.category.name}"
+
+    def get_absolute_url(self):
+        return reverse('product_detail', kwargs={'category_slug': self.category.slug, 'brand_slug':self.brand.slug,
+                                                 'product_slug': self.slug})
 
     @property
     def ct_model(self):
@@ -232,7 +243,7 @@ class ImageGallery(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
     image = models.ImageField(upload_to=upload_function)
-    use_in_slider = models.BooleanField(default=False)
+    use_in_slider = models.BooleanField(default=False, verbose_name='Использовать в слайдере')
 
     class Meta:
         verbose_name = 'Галерея изображений'
@@ -242,7 +253,8 @@ class ImageGallery(models.Model):
         return f"Изображение для {self.content_object}"
 
     def image_url(self):
-        return mark_safe(f'<img src="{self.image_url}" width="auto" eight="100px"/>')
+        return mark_safe(f'<img src="{self.image.url}" width="auto" height="100px"')
+
 
 
 

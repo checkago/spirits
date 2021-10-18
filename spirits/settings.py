@@ -132,16 +132,17 @@ STATIC_URL = '/static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-STATIC_ROOT = '/static'
-STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
 
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'static'
 
 # Media files
 MEDIA_URL = '/media/'
-MEDIA_ROOT = './media'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+STATICFILES_DIRS = (
+    (BASE_DIR / 'static_dev'),
+)
 
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 
