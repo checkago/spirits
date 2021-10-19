@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static%}
+
+{% block content %}
+
+    <section class="card spirits-gradient wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
+        <!-- Content -->
+        <div class="card-body text-white mb-1 mt-4">
+
+          <div class="container">
+              <div class="row">
+                  <div class="col-md-8 col-xs-12 mt-5 float-left">
+                      <h2 class="title mt-3">Авторизация <span class="text-dark">пользователя</span></h2>
+                  </div>
+                  <div class="col-md-4 col-xs-12 float-right">
+                      <img class="img-fluid mt-4" src="{% static 'img/logo_white_very_small.png' %}">
+                  </div>
+              </div>
+          </div>
+
+        </div>
+        <!-- Content -->
+    </section>
+
+    <section class="mt-2">
+        <div class="container">
+          <div class="row">
+            <div class="col-xl-5 col-lg-6 col-md-10 col-sm-12 mx-auto mt-lg-5">
+
+              <!-- Form with header -->
+              <div class="card wow fadeIn mb-3" data-wow-delay="0.3s">
+                <div class="card-body">
+
+                  <!-- Header -->
+                  <div class="form-header spirits-gradient rounded">
+                    <h3>
+                        <i class="fas fa-user mt-2 mb-2 "></i> <span class="font-weight-bold">Данные для входа:</span></h3>
+                  </div>
+                    <form method="post" action="{% url 'login' %}">
+                        {% csrf_token %}
+                          <!-- Body -->
+                          <div class="md-form mb-0">
+                            <i class="fas fa-user prefix white-text"></i>
+                            <input type="text" id="orangeForm-name" class="form-control">
+                            <label for="orangeForm-name">Your name</label>
+                          </div>
+                          <div class="md-form mb-0">
+                            <i class="fas fa-envelope prefix white-text"></i>
+                            <input type="text" id="orangeForm-email" class="form-control">
+                            <label for="orangeForm-email">Your email</label>
+                          </div>
+                          <div class="md-form mb-0">
+                            <i class="fas fa-lock prefix white-text"></i>
+                            <input type="password" id="orangeForm-pass" class="form-control">
+                            <label for="orangeForm-pass">Your password</label>
+                          </div>
+                            {{ form }}
+
+                          <div class="text-center">
+                            <button type='submit' class="btn spirits-dark-gradient text-white font-weight-bold btn-rounded mt-3">Войти</button>
+                          </div>
+
+                    </form>
+
+                </div>
+              </div>
+              <!-- Form with header -->
+
+            </div>
+          </div>
+        </div>
+    </section>
+
+{% endblock content %}

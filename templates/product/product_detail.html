@@ -1,10 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-{{ product }}
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="card spirits-gradient wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
+    <!-- Content -->
+    <div class="card-body text-white mb-1 mt-4">
+
+      <div class="container">
+          <div class="row">
+              <div class="col-md-8 col-xs-12 mt-5 float-left">
+                  <h1 class="title mt-3">{{ product.name }} | <span class="text-dark">{{ product.brand.name }}</span></h1>
+              </div>
+              <div class="col-md-4 col-xs-12 float-right">
+                  <img class="img-fluid mt-4" src="{% static 'img/logo_white_very_small.png' %}">
+              </div>
+          </div>
+      </div>
+
+    </div>
+    <!-- Content -->
+</section>
+
+<section>
+    <div class="container">
+        {{ product.name }} | {{ product.category }}
+        <div>
+            {{ product.category }}
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
