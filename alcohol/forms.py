@@ -35,9 +35,10 @@ class RegistrationForm(forms.ModelForm):
 
     password = forms.CharField(widget=forms.PasswordInput)
     confirm_password = forms.CharField(widget=forms.PasswordInput)
-    phone = forms.CharField(required=False)
-    address = forms.CharField(required=False)
-    email = forms.EmailField()
+    first_name = forms.CharField(required=True)
+    last_name = forms.CharField(required=True)
+    phone = forms.CharField(required=True)
+    email = forms.EmailField(required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -47,7 +48,6 @@ class RegistrationForm(forms.ModelForm):
         self.fields['first_name'].label = 'Имя'
         self.fields['last_name'].label = 'Фамилия'
         self.fields['phone'].label = 'Номер телефона'
-        self.fields['address'].label = 'Адрес'
         self.fields['email'].label = 'E-mail'
 
     def clean_email(self):
@@ -74,6 +74,6 @@ class RegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'password', 'confirm_password', 'first_name', 'last_name', 'email', 'phone', 'address']
+        fields = ['username', 'password', 'confirm_password', 'first_name', 'last_name', 'phone', 'email']
 
 

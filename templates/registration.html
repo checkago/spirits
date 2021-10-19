@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load static%}
+{% load crispy_forms_field %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
@@ -97,25 +99,46 @@
                         <form method="post" action="{% url 'registration' %}">
                         {% csrf_token %}
                           <!-- Body -->
+                            {{ form|crispy }}
+                    <!--
                           <div class="md-form mb-0">
-                            <i class="fas fa-user prefix dark-grey-text"></i>
-                            <input type="text" id="orangeForm-name" class="form-control">
-                            <label for="orangeForm-name">Your name</label>
+                            <i class="fas fa-user prefix"></i>
+                            {% crispy_field form.username 'class' 'form-control' %}
+                            <label for="orangeForm-name">Логин</label>
                           </div>
                           <div class="md-form mb-0">
-                            <i class="fas fa-envelope prefix dark-grey-text"></i>
-                            <input type="text" id="orangeForm-email" class="form-control">
-                            <label for="orangeForm-email">Your email</label>
+                            <i class="fas fa-lock prefix"></i>
+                            {% crispy_field form.password 'class' 'form-control' %}
+                            <label for="orangeForm-pass">Пароль</label>
                           </div>
-
                           <div class="md-form mb-0">
-                            <i class="fas fa-lock prefix dark-grey-text"></i>
-                            <input type="password" id="orangeForm-pass" class="form-control">
-                            <label for="orangeForm-pass">Your password</label>
+                            <i class="fas fa-lock prefix white-text"></i>
+                            {% crispy_field form.confirm_password 'class' 'form-control' %}
+                            <label for="orangeForm-pass">Подтверждение</label>
                           </div>
+                          <div class="md-form mb-0">
+                            <i class="fas fa-signature prefix"></i>
+                            {% crispy_field form.first_name 'class' 'form-control' %}
+                            <label for="orangeForm-name">Имя</label>
+                          </div>
+                          <div class="md-form mb-0">
+                            <i class="fas fa-lock prefix white-text"></i>
+                            {% crispy_field form.last_name 'class' 'form-control' %}
+                            <label for="orangeForm-name">Фамилия</label>
+                          </div>
+                          <div class="md-form mb-0">
+                            <i class="fas fa-phone prefix"></i>
+                            {% crispy_field form.phone 'class' 'form-control' %}
+                            <label for="orangeForm-phone">Номер телефона</label>
+                          </div>
+                          <div class="md-form mb-0">
+                            <i class="fas fa-envelope prefix"></i>
+                            {% crispy_field form.email 'class' 'form-control' %}
+                            <label for="orangeForm-email">Ваш E-mail</label>
+                          </div> -->
 
                           <div class="text-center">
-                            <button class="btn spirits-dark-gradient text-white font-weight-bold btn-rounded mt-3">Зарегистрировать</button>
+                            <button type='submit' class="btn spirits-dark-gradient text-white font-weight-bold btn-rounded mt-3">Зарегистрировать</button>
                           </div>
                         </form>
 

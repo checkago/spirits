@@ -26,12 +26,13 @@ class ProductDetailView(views.generic.DetailView):
 
 
 class LoginView(views.View):
+
     def get(self, request, *args, **kwargs):
         form = LoginForm(request.POST or None)
         context = {
             'form': form
         }
-        return render(request, 'login.html', context=context)
+        return render(request, 'login.html', context)
 
     def post(self, request, *args, **kwargs):
         form = LoginForm(request.POST or None)
@@ -46,16 +47,17 @@ class LoginView(views.View):
         context = {
             'form': form
         }
-        return render(request, 'registration.html', context)
+        return render(request, 'login.html', context)
 
 
 class RegistrationView(views.View):
+
     def get(self, request, *args, **kwargs):
         form = RegistrationForm(request.POST or None)
         context = {
             'form': form
         }
-        return render(request, 'registration.html', context=context)
+        return render(request, 'registration.html', context)
 
     def post(self, request, *args, **kwargs):
         form = RegistrationForm(request.POST or None)
@@ -66,10 +68,11 @@ class RegistrationView(views.View):
             new_user.first_name = form.cleaned_data['first_name']
             new_user.last_name = form.cleaned_data['last_name']
             new_user.save()
+            new_user.set_password(form.cleaned_data['password'])
+            new_user.save()
             Customer.objects.create(
                 user=new_user,
                 phone=form.cleaned_data['phone'],
-                address=form.cleaned['address']
             )
             user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
             login(request, user)

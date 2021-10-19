@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load static%}
+{% load crispy_forms_field %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
@@ -38,28 +40,28 @@
                   </div>
                     <form method="post" action="{% url 'login' %}">
                         {% csrf_token %}
+
                           <!-- Body -->
                           <div class="md-form mb-0">
-                            <i class="fas fa-user prefix white-text"></i>
-                            <input type="text" id="orangeForm-name" class="form-control">
-                            <label for="orangeForm-name">Your name</label>
+                            <i class="fas fa-user prefix"></i>
+                            {% crispy_field form.username 'class' 'form-control' %}
+                            <label for="orangeForm-name">Ваш логин</label>
                           </div>
+
                           <div class="md-form mb-0">
-                            <i class="fas fa-envelope prefix white-text"></i>
-                            <input type="text" id="orangeForm-email" class="form-control">
-                            <label for="orangeForm-email">Your email</label>
+                            <i class="fas fa-lock prefix"></i>
+                            {% crispy_field form.password 'class' 'form-control' %}
+                            <label for="orangeForm-pass">Ваш пароль</label>
                           </div>
-                          <div class="md-form mb-0">
-                            <i class="fas fa-lock prefix white-text"></i>
-                            <input type="password" id="orangeForm-pass" class="form-control">
-                            <label for="orangeForm-pass">Your password</label>
-                          </div>
-                            {{ form }}
 
                           <div class="text-center">
                             <button type='submit' class="btn spirits-dark-gradient text-white font-weight-bold btn-rounded mt-3">Войти</button>
                           </div>
-
+                        {% for message in messages %}
+                        <div class="alert alert-danger mb-0 alert-dismissible alert-absolute fade show text-center mt-1">
+                             {{ message }}
+                        </div>
+                        {% endfor %}
                     </form>
 
                 </div>
@@ -70,5 +72,15 @@
           </div>
         </div>
     </section>
-
+<script>
+mdb.Alert.getInstance(document.getElementById("alertExample")).update({
+  position: "top-right",
+  delay: 2000,
+  autohide: false,
+  width: "300px",
+  offset: 20,
+  stacking: true,
+  appendToBody: true,
+});
+</script>
 {% endblock content %}

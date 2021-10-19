@@ -1,4 +1,5 @@
 {% load static %}
+{% load crispy_forms_field %}
 <!doctype html>
 <html lang="ru">
     <head>
@@ -6,10 +7,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
-        <!-- Bootstrap core CSS -->
-        <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
         <!-- Material Design Bootstrap -->
         <link href="{% static 'css/mdb.css' %}" rel="stylesheet">
+        <!-- Bootstrap core CSS -->
+        <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
           <!-- JQuery -->
         <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
         <title>{{ title }}</title>
