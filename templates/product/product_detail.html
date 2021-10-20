@@ -172,12 +172,12 @@
                 <div id="collapseTwo2" class="collapse" role="tabpanel" aria-labelledby="headingTwo2"
                   data-parent="#accordionEx">
 
-                  <div class="card-body">
-
-                    {{ product.recipe.description }}
-
-                  </div>
-
+                  <span class="card-body">
+                      <div class="ml-3 mr-2">
+                          <span class="font-weight-bold">{{ product.recipe.name }}</span>
+                            {{ product.recipe.description|safe }}
+                      </div>
+                  </span>
                 </div>
 
               </div>
