@@ -15,6 +15,12 @@
         <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
         <title>{{ title }}</title>
         <meta name="description" content="{{ description }}">
+          <style type="text/css">
+            .multiple-select-dropdown li [type=checkbox]+label {
+              height: 1rem;
+            }
+
+  </style>
     </head>
     <body class="software-lp">
         {% include '_header.html' %}
@@ -32,23 +38,26 @@
               <div class="row pt-5">
 
                 <!--First column-->
-                <div class="col-md-3 col-lg-3 col-xl-3 mb-4 white-text">
-                    <img class="img-fluide mt-2" src="{% static 'img/logo_white_very_small.png' %}" alt="">
+                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 mb-4 white-text">
+                    <img class="img-fluide mt-2 mr-1" src="{% static 'img/logo_white_very_small.png' %}" alt="">
                 </div>
                 <!--/.First column-->
 
                 <!--Second column-->
-                <div class="col-md-4 col-lg-4 col-xl-4 mx-auto ml-1 mr-1 mb-4 white-text">
+                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mx-auto ml-1 mr-1 mb-4 white-text">
                     <h4 class="white-text text-center">Moscow Spirits</h4>
                     <p class="white-text text-center">Крафтовые алкогольные напитки со всего мира</p>
                     <hr>
-                    <p class="warning-text text-center"><strong>Уведомление:</strong> в соответствии с рекомендациями ФС РАР от 25.06.18 приобретение алкогольной продукции возможно непосредственно в магазине VinDom по адресу: г.Москва, ул.Мытная, д.7, стр.1</p>
-                    <p class="warning-text text-center">Отгрузка продукции юридическим лицам осуществляется в соответствии с действующим законодательством</p>
+                    <p class="warning-text text-center"><strong>Уведомление:</strong> в соответствии с рекомендациями
+                        ФС РАР от 25.06.18 приобретение алкогольной продукции возможно непосредственно
+                        в магазине VinDom по адресу: г.Москва, ул.Мытная, д.7, стр.1</p>
+                    <p class="warning-text text-center">Отгрузка продукции юридическим лицам осуществляется
+                        в соответствии с действующим законодательством</p>
                 </div>
                 <!--/.Second column-->
 
                 <!--Third column-->
-                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4 white-text">
+                <div class="col-sm-6 col-md-2 col-lg-2 col-xl-2 mx-auto mb-4 white-text">
                     <h6 class="text-uppercase font-weight-bold"><strong>Меню</strong></h6>
                     <hr class="white mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                     <p><a href="#!" class="white-text">В начало</a></p>
@@ -59,7 +68,7 @@
                 <!--/.Third column-->
 
                 <!--Fourth column-->
-                <div class="col-md-3 col-lg-3 col-xl-3 white-text">
+                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 white-text">
                   <h6 class="text-uppercase font-weight-bold"><strong>Контакты</strong></h6>
                   <hr class="white mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
                   <p><i class="fas fa-home mr-3"></i> МО, г. Москва</p>
