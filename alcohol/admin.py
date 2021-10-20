@@ -1,3 +1,5 @@
+from django import forms
+from ckeditor.widgets import CKEditorWidget
 from django.contrib import admin
 from django.contrib.contenttypes.admin import GenericTabularInline
 from .models import *
@@ -30,8 +32,22 @@ class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 
+class RecipeAdminForm(forms.ModelForm):
+    description = forms.CharField(widget=CKEditorWidget(config_name='awesome_ckeditor'))
+
+    class Meta:
+        verbose_name = 'Описание'
+        model = Recipe
+        fields = '__all__'
+
+
+@admin.register(Recipe)
+class RecipeAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    form = RecipeAdminForm
+
+
 admin.site.register(BottleVolume)
-admin.site.register(Recipe)
 admin.site.register(CartProduct)
 admin.site.register(Order)
 admin.site.register(Cart)

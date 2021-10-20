@@ -234,7 +234,7 @@ class Notification(models.Model):
 
     class Meta:
         verbose_name = 'Уведомление'
-        verbose_name_plural = 'Уведомления дял пользователей'
+        verbose_name_plural = 'Уведомления для пользователей'
 
     def __str__(self):
         return f"Уведомление для {self.recipient.user.username} | {self.id}"
