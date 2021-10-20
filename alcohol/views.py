@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django import views
+from django.views.generic import DetailView, View
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, RegistrationForm
-from .models import Product, Category, Customer
+from .mixins import CartMixin
+from .models import Product, Category, Customer, CartProduct
 
 
 class IndexView(views.View):
@@ -11,11 +13,43 @@ class IndexView(views.View):
         return render(request, 'index.html', {})
 
 
-class CategoryDetailView(views.generic.DetailView):
+class CategoryDetailView(CartMixin, views.generic.DetailView):
     model = Category
     template_name = 'category/category_detail.html'
     slug_url_kwarg = 'category_slug'
     context_object_name = 'category'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        query = self.request.GET.get('search')
+        category = self.get_object()
+        context['cart'] = self.cart
+        context['categories'] = self.model.objects.all()
+        if not query and not self.request.GET:
+            context['category_products'] = category.product_set.all()
+            return context
+        if query:
+            products = category.product_set.filter(Q(title__icontains=query))
+            context['category_products'] = products
+            return context
+        url_kwargs = {}
+        for item in self.request.GET:
+            if len(self.request.GET.getlist(item)) > 1:
+                url_kwargs[item] = self.request.GET.getlist(item)
+            else:
+                url_kwargs[item] = self.request.GET.get(item)
+        q_condition_queries = Q()
+        for key, value in url_kwargs.items():
+            if isinstance(value, list):
+                q_condition_queries.add(Q(**{'value__in': value}), Q.OR)
+            else:
+                q_condition_queries.add(Q(**{'value': value}), Q.OR)
+        pf = ProductFeatures.objects.filter(
+            q_condition_queries
+        ).prefetch_related('product', 'feature').values('product_id')
+        products = Product.objects.filter(id__in=[pf_['product_id'] for pf_ in pf])
+        context['category_products'] = products
+        return context
 
 
 class ProductDetailView(views.generic.DetailView):
@@ -23,6 +57,63 @@ class ProductDetailView(views.generic.DetailView):
     template_name = 'product/product_detail.html'
     slug_url_kwarg = 'product_slug'
     context_object_name = 'product'
+
+
+class AddToCartView(CartMixin, View):
+
+    def get(self, request, *args, **kwargs):
+        product_slug = kwargs.get('slug')
+        product = Product.objects.get(slug=product_slug)
+        cart_product, created = CartProduct.objects.get_or_create(
+            user=self.cart.owner, cart=self.cart, product=product
+        )
+        if created:
+            self.cart.products.add(cart_product)
+        recalc_cart(self.cart)
+        messages.add_message(request, messages.INFO, "Товар успешно добавлен")
+        return HttpResponseRedirect('/cart/')
+
+
+class DeleteFromCartView(CartMixin, View):
+
+    def get(self, request, *args, **kwargs):
+        product_slug = kwargs.get('slug')
+        product = Product.objects.get(slug=product_slug)
+        cart_product = CartProduct.objects.get(
+            user=self.cart.owner, cart=self.cart, product=product
+        )
+        self.cart.products.remove(cart_product)
+        cart_product.delete()
+        recalc_cart(self.cart)
+        messages.add_message(request, messages.INFO, "Товар успешно удален")
+        return HttpResponseRedirect('/cart/')
+
+
+class ChangeQTYView(CartMixin, View):
+
+    def post(self, request, *args, **kwargs):
+        product_slug = kwargs.get('slug')
+        product = Product.objects.get(slug=product_slug)
+        cart_product = CartProduct.objects.get(
+            user=self.cart.owner, cart=self.cart, product=product
+        )
+        qty = int(request.POST.get('qty'))
+        cart_product.qty = qty
+        cart_product.save()
+        recalc_cart(self.cart)
+        messages.add_message(request, messages.INFO, "Кол-во успешно изменено")
+        return HttpResponseRedirect('/cart/')
+
+
+class CartView(CartMixin, View):
+
+    def get(self, request, *args, **kwargs):
+        categories = Category.objects.all()
+        context = {
+            'cart': self.cart,
+            'categories': categories
+        }
+        return render(request, 'cart.html', context)
 
 
 class LoginView(views.View):

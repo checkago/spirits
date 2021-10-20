@@ -33,7 +33,6 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-
     def get_absolute_url(self):
         return reverse('category_detail', kwargs={'category_slug': self.slug})
 
@@ -139,7 +138,7 @@ class Cart(models.Model):
     products = models.ManyToManyField(CartProduct, blank=True, related_name='related_cart',
                                       verbose_name='Товары в корзине')
     total_products = models.IntegerField(default=0, verbose_name='Общее кол-во товаров в корзине')
-    final_price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name='Общая стоимость')
+    final_price = models.DecimalField(max_digits=9, decimal_places=2, default=0.00, verbose_name='Общая стоимость')
     in_order = models.BooleanField(default=False)
     for_anonimous_user = models.BooleanField(default=False)
 
@@ -148,7 +147,7 @@ class Cart(models.Model):
         verbose_name_plural = 'Корзины покупателей'
 
     def __str__(self):
-        return f"{self.id} | {self.owner.name} | {self.final_price}"
+        return f"{self.id} | {self.owner.name}"
 
 
 class Order(models.Model):

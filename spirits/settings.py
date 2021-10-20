@@ -149,7 +149,7 @@ CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 
 CKEDITOR_CONFIGS = {
     'awesome_ckeditor': {
-        'toolbar': 'Full',
+        'toolbar': 'full',
     },
 }
 
