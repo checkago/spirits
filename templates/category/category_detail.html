@@ -42,11 +42,11 @@
 
         <!-- Links -->
         <ul class="navbar-nav mr-auto">
-
+            {% for category in categories %}
           <li class="nav-item ">
-            <a class="nav-link dark-grey-text" href="">Аперитивы</a>
+            <a class="nav-link dark-grey-text" href="{{ category.get_absolute_url }}">{{ category.name }}</a>
           </li>
-
+            {% endfor %}
         </ul>
 
         <!-- Links -->

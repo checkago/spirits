@@ -4,6 +4,7 @@ from django import views
 from django.contrib import messages
 from django.views.generic import DetailView
 from django.http import HttpResponseRedirect
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, RegistrationForm
 from .mixins import CartMixin
@@ -18,6 +19,7 @@ class IndexView(views.View):
 
 class CategoryDetailView(CartMixin, views.generic.DetailView):
     model = Category
+    categories = Category.objects.all()
     template_name = 'category/category_detail.html'
     slug_url_kwarg = 'category_slug'
     context_object_name = 'category'
