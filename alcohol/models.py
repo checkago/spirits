@@ -1,5 +1,4 @@
-import email
-
+import extended as extended
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
@@ -7,8 +6,10 @@ from django.db import models
 from django.urls import  reverse
 from django.utils import timezone
 from django.utils.safestring import mark_safe
-
+from django.contrib.auth import get_user_model
 from utils import upload_function
+
+User = get_user_model()
 
 
 class BottleVolume(models.Model):
@@ -75,16 +76,16 @@ class Product(models.Model):
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
 
+    @property
+    def ct_model(self):
+        return self._meta.model_name
+
     def __str__(self):
         return f"{self.brand.name} | {self.name} | {self.volume.name} | {self.category.name}"
 
     def get_absolute_url(self):
         return reverse('product_detail', kwargs={'category_slug': self.category.slug, 'brand_slug': self.brand.slug,
                                                  'product_slug': self.slug})
-
-    @property
-    def ct_model(self):
-        return self._meta.model.name
 
 
 class Country(models.Model):
@@ -115,9 +116,9 @@ class Recipe(models.Model):
 class CartProduct(models.Model):
     user = models.ForeignKey('Customer', on_delete=models.CASCADE, verbose_name='Покупатель')
     cart = models.ForeignKey('Cart', on_delete=models.CASCADE, verbose_name='Корзина')
-    volume = models.ForeignKey(ContentType, on_delete=models.CASCADE, verbose_name='Объем')
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey('volume', 'object_id')
+    content_object = GenericForeignKey('content_type', 'object_id')
     qty = models.PositiveIntegerField(default=1, verbose_name='Количество')
     final_price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name='Общая стоимость')
 
@@ -134,20 +135,21 @@ class CartProduct(models.Model):
 
 
 class Cart(models.Model):
-    owner = models.ForeignKey('Customer', on_delete=models.CASCADE, verbose_name='Покупатель')
+    owner = models.ForeignKey('Customer', on_delete=models.CASCADE, null=True, blank=True, verbose_name='Покупатель')
     products = models.ManyToManyField(CartProduct, blank=True, related_name='related_cart',
                                       verbose_name='Товары в корзине')
     total_products = models.IntegerField(default=0, verbose_name='Общее кол-во товаров в корзине')
-    final_price = models.DecimalField(max_digits=9, decimal_places=2, default=0.00, verbose_name='Общая стоимость')
+    final_price = models.DecimalField(max_digits=9, decimal_places=2, default=0.00, verbose_name='Общая стоимость',
+                                      null=True, blank=True)
     in_order = models.BooleanField(default=False)
-    for_anonimous_user = models.BooleanField(default=False)
+    for_anonymous_user = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Корзина'
         verbose_name_plural = 'Корзины покупателей'
 
     def __str__(self):
-        return f"{self.id} | {self.owner.name}"
+        return f"{self.id} | {self.owner.user.username}"
 
 
 class Order(models.Model):
