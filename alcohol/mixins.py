@@ -1,7 +1,6 @@
-from django.views.generic import View
 from django import views
 
-from .models import Cart, Customer, Product
+from .models import Cart, Customer
 
 
 class CartMixin(views.generic.detail.SingleObjectMixin, views.View):
@@ -22,3 +21,8 @@ class CartMixin(views.generic.detail.SingleObjectMixin, views.View):
                 cart = Cart.objects.create(for_anonymous_user=True)
         self.cart = cart
         return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cart'] = self.cart
+        return context

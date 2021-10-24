@@ -2,17 +2,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.urls import path
 from django.contrib.auth.views import LogoutView
-from .views import (
-    IndexView,
-    CategoryDetailView,
-    ProductDetailView,
-    LoginView,
-    RegistrationView,
-    CartView,
-    AddToCartView,
-    DeleteFromCartView,
-    ChangeQTYView
-)
+from .views import *
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
