@@ -119,11 +119,11 @@
                 <!-- Card image -->
                 <div class="view overlay">
 
-                  <a href="{{ product.get_absolute_url }}">
-                      <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.name }}">
-                  </a>
 
-                  <a>
+                      <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.name }}">
+
+
+                  <a href="{{ product.get_absolute_url }}">
 
                     <div class="mask rgba-white-slight"></div>
 
@@ -136,8 +136,8 @@
                 <div class="card-body">
 
                   <!-- Category & Title -->
-                  <a href="{{ product.get_absolute_url }}"><h5 class="card-title mb-1"><strong><a href="" class="dark-grey-text">{{ product.name }}</a></strong></h5><span
-                          class="badge badge-danger mb-2">Хит</span></a>
+                  <h5 class="card-title mb-1"><strong><a href="{{ product.get_absolute_url }}" class="dark-grey-text">{{ product.name }}</a></strong></h5><span
+                          class="badge badge-danger mb-2">Хит</span>
 
                   <!-- Rating -->
 
@@ -150,7 +150,7 @@
 
                       <span class="float-right">
 
-                        <a class="" data-toggle="tooltip" data-placement="top" href="{% url 'add_to_cart' slug=product.slug %}" title="В заказ"><i
+                        <a class="" data-toggle="tooltip" data-placement="top" href="" title="В заказ"><i
                             class="fas fa-shopping-cart ml-3"></i></a>
 
                       </span>

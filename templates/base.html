@@ -31,6 +31,94 @@
             {% endblock content %}
         </main>
         <!--Footer-->
+
+          <!-- Cart Modal -->
+        <div class="modal fade cart-modal" id="cart-modal-ex" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+
+          <!-- Content -->
+          <div class="modal-content">
+
+            <!-- Header -->
+            <div class="modal-header">
+
+              <h4 class="modal-title font-weight-bold dark-grey-text" id="myModalLabel">Ваша корзина</h4>
+
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
+                <span aria-hidden="true">&times;</span>
+
+              </button>
+
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+
+              <table class="table table-hover">
+
+                <thead>
+
+                  <tr>
+
+                    <th>#</th>
+
+                    <th>Наименование</th>
+
+                    <th>Цена</th>
+
+                    <th>Удалить</th>
+
+                  </tr>
+
+                </thead>
+
+                <tbody>
+
+                  <tr>
+
+                    <th scope="row">1</th>
+
+                    <td>Chamberyzzette</td>
+
+                    <td>3200 Руб.</td>
+
+                    <td>
+
+                      <a>
+
+                        <i class="fas fa-eraser text-danger"></i>
+
+                      </a>
+
+                    </td>
+
+                  </tr>
+
+                </tbody>
+
+              </table>
+
+              <button class="btn spirits-color btn-rounded btn-sm white-text font-weight-bold">Оформить</button>
+
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+
+              <button type="button" class="btn btn-warning btn-rounded btn-sm" data-dismiss="modal">Закрыть</button>
+
+            </div>
+
+          </div>
+          <!-- Content -->
+
+        </div>
+        </div>
+        <!-- Cart Modal -->
+
+
         <footer class="page-footer text-center text-md-left spirits-dark-gradient">
 
             <!--Footer Links-->

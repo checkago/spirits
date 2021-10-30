@@ -1,4 +1,6 @@
 {% load static %}
+{% url 'index' as index_url %}
+{% url 'account' as account_url %}
 
 {% block content %}
 
@@ -15,10 +17,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent-7">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="/"><strong class="text-uppercase">Начало</strong></a>
+            <li class="nav-item {% if request.path == index_url %}active{%endif%}">
+              <a class="nav-link" href="{% url 'index' %}"><strong class="text-uppercase">Начало</strong></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if '/#brends' in url %}active{% endif %}">
               <a class="nav-link" href="/#brends"><strong class="text-uppercase">Бренды</strong></a>
             </li>
             <li class="nav-item">
@@ -30,9 +32,14 @@
           </ul>
           <ul class="navbar-nav ml-auto nav-flex-icons">
 
-              <li class="nav-item">
-               <a class="nav-link waves-effect waves-light" title="Группа ВКонтакте"><i class="fab fa-vk fa-2x"></i></a>
+              <li class="nav-item ">
+                <a class="nav-link waves-effect waves-light" href="#" data-toggle="modal"
+                    data-target="#cart-modal-ex">
+                    <span class="badge danger-color">4</span>
+                     <i class="fas fa-shopping-cart fa-2x" aria-hidden="true"></i>
+                 </a>
               </li>
+
               <li class="nav-item">
                  <i class="nav-link grey-text-3 fas fa-ellipsis-v fa-2x"></i>
               </li>
@@ -41,7 +48,7 @@
                 <a class="nav-link waves-effect waves-light" href="{% url 'login' %}" title="Вход для пользователя"><i class="fas fa-sign-in-alt fa-2x"></i></a>
               </li>
               {% else %}
-              <li class="nav-item">
+              <li class="nav-item {% if request.path == account_url %}active{%endif%}">
                 <a class="nav-link waves-effect waves-light" href="{% url 'account' %}" title="Личный кабинет"><i class="fas fa-house-user fa-2x"></i></a>
               </li>
               <li class="nav-item">

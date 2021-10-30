@@ -4049,7 +4049,8 @@ table.table a.btn.btn-black {
       color: rgba(255, 255, 255, 0.75); }
   .navbar.navbar-dark .breadcrumb .nav-item.active > .nav-link,
   .navbar.navbar-dark .navbar-nav .nav-item.active > .nav-link {
-    background-color: rgba(47, 197, 183, 0.84); }
+    background-color: #06ab9a;
+    outline: auto; }
     .navbar.navbar-dark .breadcrumb .nav-item.active > .nav-link:hover,
     .navbar.navbar-dark .navbar-nav .nav-item.active > .nav-link:hover {
       color: #fff; }

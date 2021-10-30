@@ -8,7 +8,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, RegistrationForm
 from .mixins import CartMixin
-from .models import Product, Category, Customer, CartProduct
+from .models import Product, Category, Customer, CartProduct, Brand, Cart
 from utils.recalc_cart import recalc_cart
 
 
@@ -197,13 +197,13 @@ class AddToCartView(CartMixin, views.View):
         content_type = ContentType.objects.get(model=ct_model)
         product = content_type.model_class().objects.get(slug=product_slug)
         cart_product, created = CartProduct.objects.get_or_create(
-            user=self.cart.owner, cart=self.cart, content_type=content_type, object_id=product.id
+            user=self.cart.owner, cart=self.cart, product=product.slug
         )
         if created:
             self.cart.products.add(cart_product)
         recalc_cart(self.cart)
         messages.add_message(request, messages.INFO, "Товар успешно добавлен")
-        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER' "/cart/"))
 
 
 class DeleteFromCartView(CartMixin, views.View):
@@ -218,8 +218,8 @@ class DeleteFromCartView(CartMixin, views.View):
         self.cart.products.remove(cart_product)
         cart_product.delete()
         recalc_cart(self.cart)
-        messages.add_message(request, messages.INFO, "Товар удалнен из корзины")
-        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+        messages.add_message(request, messages.INFO, "Товар удален из корзины")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER' "/cart/"))
 
 
 class ChangeQTYView(CartMixin, views.View):
@@ -236,10 +236,16 @@ class ChangeQTYView(CartMixin, views.View):
         cart_product.save()
         recalc_cart(self.cart)
         messages.add_message(request, messages.INFO, "Кол-во товаров изменено")
-        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER' "/cart/"))
 
 
+class CartView(CartMixin, views.View):
 
+    def get(self, request, *args, **kwargs):
+        context = {
+            'cart': self.cart,
+        }
+        return render(request, 'cart.html', context)
 
 
 

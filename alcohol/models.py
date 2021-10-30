@@ -1,9 +1,8 @@
-import extended as extended
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from django.urls import  reverse
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django.contrib.auth import get_user_model
@@ -63,7 +62,7 @@ class Product(models.Model):
     name = models.CharField(max_length=150, verbose_name='Наименование')
     slug = models.SlugField(unique=True, verbose_name='Псевдоним/Slug')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
-    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, verbose_name='Бренд')
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Бренд')
     volume = models.ForeignKey(BottleVolume, on_delete=models.CASCADE, verbose_name='Объем')
     price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name='Цена')
     stock = models.IntegerField(default=1, verbose_name='Количество на складе')
@@ -72,20 +71,19 @@ class Product(models.Model):
     offer_of_the_week = models.BooleanField(default=False, verbose_name='Предложение недели')
     image = models.ImageField(upload_to=upload_function)
 
-    class Meta:
-        verbose_name = 'Товар'
-        verbose_name_plural = 'Товары'
-
     @property
     def ct_model(self):
         return self._meta.model_name
 
+    class Meta:
+        verbose_name = 'Товар'
+        verbose_name_plural = 'Товары'
+
     def __str__(self):
-        return f"{self.brand.name} | {self.name} | {self.volume.name} | {self.category.name}"
+        return f"{self.name} | {self.volume.name} | {self.category.name}"
 
     def get_absolute_url(self):
-        return reverse('product_detail', kwargs={'category_slug': self.category.slug, 'brand_slug': self.brand.slug,
-                                                 'product_slug': self.slug})
+        return reverse('product_detail', kwargs={'category_slug': self.category.slug, 'brand_slug': self.brand.slug, 'product_slug': self.slug})
 
 
 class Country(models.Model):
@@ -127,7 +125,7 @@ class CartProduct(models.Model):
         verbose_name_plural = 'Продукты корзины'
 
     def __str__(self):
-        return f"Продукт: {self.content_object.name} для корзины"
+        return f"Продукт: {self.content_object} для корзины"
 
     def save(self, *args, **kwargs):
         self.final_price = self.qty * self.content_object.price
@@ -149,7 +147,7 @@ class Cart(models.Model):
         verbose_name_plural = 'Корзины покупателей'
 
     def __str__(self):
-        return f"{self.id} | {self.owner.user.username}"
+        return f"{self.id} | {self.owner}"
 
 
 class Order(models.Model):
