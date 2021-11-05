@@ -1,0 +1,257 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <section class="card spirits-gradient wow fadeIn mt-4">
+        <!-- Content -->
+        <div class="card-body text-white mb-1 mt-2">
+          <div class="container">
+              <hr class="spirits-dark-gradient mt-4">
+              <div class="row">
+                  <div class="col-md-2 col-xs-12">
+                      <img class="img-fluid mt-1" src="{% static 'img/logo_white_v_sm.png' %}">
+                  </div>
+                  <div class="col-md-10 col-xs-12 mt-2 float-left">
+                      <h2 class="title mt-3">Каталог</h2>
+                  </div>
+              </div>
+          </div>
+
+        </div>
+        <!-- Content -->
+    </section>
+
+
+  <!-- Main Container -->
+  <div class="container mt-3 pt-3">
+        {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-success alert-dismissible fade show mt-1 mb-2" role="alert">
+            <strong>{{ message }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endfor %}
+    {% endif %}
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light spirits-color mt-3 mb-3">
+
+      <!-- Navbar brand -->
+      <h5 class="font-weight-bold dark-text mr-4">Категории</h5>
+
+      <!-- Collapse button -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1"
+        aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"><span
+          class="navbar-toggler-icon"></span></button>
+
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+
+        <!-- Links -->
+        <ul class="navbar-nav mr-auto">
+            {% for category in categories %}
+          <li class="nav-item ">
+            <a class="nav-link dark-grey-text" href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+          </li>
+            {% endfor %}
+        </ul>
+
+        <!-- Links -->
+        <!-- Search form -->
+        <form class="search-form" role="search">
+
+          <div class="form-group md-form my-0 waves-light">
+
+            <input type="text" class="form-control" placeholder="Поиск">
+
+          </div>
+
+        </form>
+
+      </div>
+      <!-- Collapsible content -->
+
+    </nav>
+
+    <!-- Navbar -->
+    <div class="row pt-4">
+
+      <!-- Sidebar -->
+      <div class="col-lg-3">
+
+        <div class="">
+
+          <!-- Grid row -->
+          <div class="row">
+
+            <div class="col-md-6 col-lg-12 mb-5">
+
+              <!-- Panel -->
+              <h5 class="font-weight-bold dark-grey-text"><strong>Сортировка по</strong></h3>
+
+                <div class="divider"></div>
+
+                <p class="blue-text"><a>Умолчанию</a></p>
+
+                <p class="dark-grey-text"><a>Популярности</a></p>
+
+                <p class="dark-grey-text"><a>По цене: низкая</a></p>
+
+                <p class="dark-grey-text"><a>По цене: высокая</a></p>
+
+            </div>
+
+          </div>
+          <!-- Grid row -->
+
+        </div>
+
+      </div>
+      <!-- Sidebar -->
+
+      <!-- Content -->
+      <div class="col-lg-9">
+
+        <!-- Products Grid -->
+        <section class="section pt-4">
+
+          <!-- Grid row -->
+          <div class="row">
+            {% for Product in products %}
+            <!-- Grid column -->
+            <div class="col-lg-4 col-md-12 mb-4 d-flex">
+              <!-- Card -->
+              <div class="card card-ecommerce">
+
+                <!-- Card image -->
+                <div class="view overlay mt-2">
+
+
+                      <img src="{{ Product.image.url }}" class="img-fluid" alt="{{ Product.name }}" style="max-height: 230px">
+
+
+                  <a href="{{ Product.get_absolute_url }}">
+
+                    <div class="mask rgba-white-slight"></div>
+
+                  </a>
+
+                </div>
+                <!-- Card image -->
+
+                <!-- Card content -->
+                <div class="card-body text-center">
+
+                  <!-- Category & Title -->
+                  <h5 class="card-title mb-1"><strong>
+                      <a href="{{ Product.get_absolute_url }}" class="dark-grey-text">{{ Product.name }}</a>
+                  </strong></h5>
+                    <span class="italic text-center">{{ Product.brand }}</span>
+
+                  <!-- Rating -->
+
+                  <!-- Card footer -->
+                  <div class="card-footer pb-0">
+
+                    <div class="row mb-0">
+
+                      <span class="float-left"><strong>{{ Product.price }} <i class="fas fa-ruble-sign"></i></strong></span>
+
+                      <span class="float-right">
+
+                        <a class="" data-toggle="tooltip" data-placement="top" href="{% url 'add_to_cart' ct_model=Product.ct_model slug=Product.slug%}" title="В заказ"><i
+                            class="fas fa-shopping-cart ml-3"></i></a>
+
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                </div>
+                <!-- Card content -->
+
+              </div>
+              <!-- Card -->
+            </div>
+            {% endfor %}
+          </div>
+          <!-- Grid row -->
+
+
+          <!-- Grid row -->
+          <div class="row justify-content-center mb-4">
+
+            <!-- Pagination -->
+            <nav class="mb-4">
+
+              <ul class="pagination pagination-circle pg-blue mb-0">
+
+                <!-- First -->
+                <li class="page-item disabled clearfix d-none d-md-block"><a
+                    class="page-link waves-effect waves-effect">First</a></li>
+
+                <!-- Arrow left -->
+                <li class="page-item disabled">
+
+                  <a class="page-link waves-effect waves-effect" aria-label="Previous">
+
+                    <span aria-hidden="true">«</span>
+
+                    <span class="sr-only">Previous</span>
+
+                  </a>
+
+                </li>
+
+                <!-- Numbers -->
+                <li class="page-item active"><a class="page-link waves-effect waves-effect">1</a></li>
+
+                <li class="page-item"><a class="page-link waves-effect waves-effect">2</a></li>
+
+                <li class="page-item"><a class="page-link waves-effect waves-effect">3</a></li>
+
+                <li class="page-item"><a class="page-link waves-effect waves-effect">4</a></li>
+
+                <li class="page-item"><a class="page-link waves-effect waves-effect">5</a></li>
+
+                <!-- Arrow right -->
+                <li class="page-item">
+
+                  <a class="page-link waves-effect waves-effect" aria-label="Next">
+
+                    <span aria-hidden="true">»</span>
+
+                    <span class="sr-only">Next</span>
+
+                  </a>
+
+                </li>
+
+                <!-- First -->
+                <li class="page-item clearfix d-none d-md-block"><a class="page-link waves-effect waves-effect">Last</a>
+
+                </li>
+
+              </ul>
+
+            </nav>
+            <!-- Pagination -->
+
+          </div>
+          <!-- Grid row -->
+
+        </section>
+        <!-- Products Grid -->
+
+      </div>
+      <!-- Content -->
+
+    </div>
+
+  </div>
+  <!-- Main Container -->
+
+{% endblock content %}

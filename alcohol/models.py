@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
+import operator
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.safestring import mark_safe
@@ -45,7 +46,8 @@ class Brand(models.Model):
     country = models.ForeignKey('Country', on_delete=models.CASCADE, verbose_name='Страна происхождения')
     description = models.TextField(verbose_name='Описание', default='Описание появится позже')
     products = models.ManyToManyField('Product', blank=True, related_name='products', verbose_name='Продукты')
-    image = models.ImageField(upload_to=upload_function)
+    image = models.ImageField(upload_to=upload_function, verbose_name='Маленький логотип')
+    big_image = models.ImageField(upload_to=upload_function, blank=True, null=True, verbose_name='Большой логотип')
 
     class Meta:
         verbose_name = 'Торговая марка'
@@ -71,10 +73,6 @@ class Product(models.Model):
     offer_of_the_week = models.BooleanField(default=False, verbose_name='Предложение недели')
     image = models.ImageField(upload_to=upload_function)
 
-    @property
-    def ct_model(self):
-        return self._meta.model_name
-
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
@@ -82,8 +80,13 @@ class Product(models.Model):
     def __str__(self):
         return f"{self.name} | {self.volume.name} | {self.category.name}"
 
+    @property
+    def ct_model(self):
+        return self._meta.model_name
+
     def get_absolute_url(self):
-        return reverse('product_detail', kwargs={'category_slug': self.category.slug, 'brand_slug': self.brand.slug, 'product_slug': self.slug})
+        return reverse('product_detail', kwargs={'category_slug': self.category.slug, 'brand_slug': self.brand.slug,
+                                                 'product_slug': self.slug})
 
 
 class Country(models.Model):
@@ -112,7 +115,13 @@ class Recipe(models.Model):
 
 
 class CartProduct(models.Model):
-    user = models.ForeignKey('Customer', on_delete=models.CASCADE, verbose_name='Покупатель')
+
+    MODEL_CARTPRODUCT_DISPLAY_NAME_MAP = {
+        "Product": {"is_constructable": True, "fields": ['name', 'brand.name'], "separator": '-'}
+    }
+
+
+    user = models.ForeignKey('Customer', on_delete=models.CASCADE, null=True, blank=True, verbose_name='Покупатель')
     cart = models.ForeignKey('Cart', on_delete=models.CASCADE, verbose_name='Корзина')
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
@@ -123,6 +132,18 @@ class CartProduct(models.Model):
     class Meta:
         verbose_name = 'Продукт корзины'
         verbose_name_plural = 'Продукты корзины'
+
+    @property
+    def display_name(self):
+        model_fields = self.MODEL_CARTPRODUCT_DISPLAY_NAME_MAP.get(self.content_object.__class__._meta.model_name.capitalizer())
+        if model_fields and model_fields['is_constructable']:
+            display_name = model_fields['separator'].join(
+                [operator.attrgetter(fied)(self.content_object) for fied in model_fields['fields']]
+            )
+            return display_name
+        if model_fields and not model_fields['is_constructable']:
+            display_name = operator.attrgetter(model_fields['field'])
+
 
     def __str__(self):
         return f"Продукт: {self.content_object} для корзины"

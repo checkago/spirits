@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <section class="card spirits-gradient wow fadeIn mt-4">
+        <!-- Content -->
+        <div class="card-body text-white mb-1 mt-2">
+          <div class="container">
+              <hr class="spirits-dark-gradient mt-4">
+              <div class="row">
+                  <div class="col-md-2 col-xs-12">
+                      <img class="img-fluid mt-1" src="{% static 'img/logo_white_v_sm.png' %}">
+                  </div>
+                  <div class="col-md-10 col-xs-12 mt-2 float-left">
+                      <h2 class="title mt-3">Корзина <span class="text-dark">заказов</span></h2>
+                  </div>
+              </div>
+          </div>
+
+        </div>
+        <!-- Content -->
+    </section>
+<div class="container">
+    <h3 class="text-center mt-5 mb-5">Ваша корзина {% if not cart.products.count %}пуста{% endif %}</h3>
+    {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-success alert-dismissible fade show mt-2 mb-2" role="alert">
+            <strong>{{ message }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endfor %}
+        {% endif %}
+    {% if cart.products.count %}
+        <div class="table-responsive">
+            <table class="table product-table">
+                <thead class="text-center">
+                <tr>
+                    <th scope="col"><h5></h5></th>
+                    <th scope="col"><h5>Наименование</h5></th>
+                    <th scope="col"><h5>Цена</h5></th>
+                    <th colspan="2" scope="col"><h5>Кол-во</h5></th>
+                    <th scope="col"><h5> цена</h5></th>
+                    <th scope="col"><h5>Действие</h5></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in cart.products.all %}
+                    <tr class="justify-content-center align-items-center">
+                      <td><img src="{{ item.content_object.image.url }}" class="img-fluid" style="width: 125px;"></td>
+                      <td scope="row"><h5 class="text-center title">{{ item.content_object.name }}</h5></td>
+                        <td><span class="font-weight-bold">{{ item.content_object.price }} руб.</span></td>
+                      <td scope="row">
+                        <form action="{% url 'change_qty' ct_model=item.content_object.ct_model slug=item.content_object.slug %}" method="POST">
+                          {% csrf_token %}
+                            <input type="number" class="form-control" name="qty" style="width: 70px;" min="1" value="{{ item.qty }}">
+                      </td>
+                      <td scope="row">
+                          <button type="submit" class="btn spirits-color text-white"><i class="fas fa-sync-alt"></i></button>
+                        </form>
+                      </td>
+                        <td><span class="font-weight-bold">{{ item.final_price }} руб.</span></td>
+                      <td class="text-center">
+                        <a href="{% url 'delete_from_cart' ct_model=item.content_object.ct_model slug=item.content_object.slug %}"><i class="fas fa-trash fa-2x text-danger"></i></a>
+                      </td>
+                    </tr>
+                {% endfor %}
+                    <tr>
+                      <td colspan="3"></td>
+                      <td><h4>Итого:</h4></td>
+                      <td><h5>{{ cart.qty }}</h5></td>
+                      <td><h5>{{ cart.final_price }} руб.</h5></td>
+                      <td>
+                          <a href="">
+                              <button class="btn spirits-dark-gradient text-white">
+                                  <span class="font-weight-bold">Оформить</span>
+                              </button>
+                          </a>
+                      </td>
+                    </tr>
+                </tbody>
+             </table>
+        </div>
+</div>
+{% endif %}
+{% endblock content %}

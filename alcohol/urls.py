@@ -10,13 +10,15 @@ urlpatterns = [
     path('accounts/login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
     path('registration/', RegistrationView.as_view(), name='registration'),
-    path('accounts/', AccountView.as_view(), name='account'),
+    path('account/', AccountView.as_view(), name='account'),
+    path('cart/', CartView.as_view(), name='cart'),
+    path('categories/', CategoryView.as_view(), name='categories'),
+    path('brands/brands/', BrandsView.as_view(), name='brands'),
+    path('add-to-cart/<str:ct_model>/<str:slug>/', AddToCartView.as_view(), name='add_to_cart'),
+    path('remove-from-cart/<str:ct_model>/<str:slug>/', DeleteFromCartView.as_view(), name='delete_from_cart'),
+    path('change-qty/<str:ct_model>/<str:slug>/', ChangeQTYView.as_view(), name='change_qty'),
     path('<str:category_slug>/', CategoryDetailView.as_view(), name='category_detail'),
     path('<str:category_slug>/<str:brand_slug>/<str:product_slug>/', ProductDetailView.as_view(), name='product_detail'),
-    path('cart', CartView.as_view(), name='cart'),
-    path('add-to-cart/<str:slug>/', AddToCartView.as_view(), name='add_to_cart'),
-    path('remove-from-cart/<str:slug>/', DeleteFromCartView.as_view(), name='delete_from_cart'),
-    path('change-qty/<str:slug>/', ChangeQTYView.as_view(), name='change_qty'),
 ]
 
 

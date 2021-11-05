@@ -27,7 +27,16 @@
 
     <!-- Section: Product detail -->
     <section id="productDetails" class="pb-5">
-
+        {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ message }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endfor %}
+        {% endif %}
       <!-- News card -->
       <div class="card mt-4 hoverable">
 
@@ -231,7 +240,7 @@
 
                   <div class="col-md-12 text-center text-md-left text-md-right">
 
-                    <a class="btn spirits-dark-gradient btn-rounded" href="">
+                    <a class="btn spirits-dark-gradient btn-rounded" href="{% url 'add_to_cart' ct_model=ct_model slug=product.slug %}">
 
                       <i class="fas fa-cart-plus mr-2 white-text" aria-hidden="true"></i>
                         <span class="font-weight-bold white-text">Добавить в заказ</span></a>

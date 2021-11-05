@@ -1,4 +1,7 @@
+from lib2to3.fixes.fix_input import context
+
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.shortcuts import render
 from django import views
 from django.contrib import messages
@@ -8,13 +11,33 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, RegistrationForm
 from .mixins import CartMixin
-from .models import Product, Category, Customer, CartProduct, Brand, Cart
+from .models import CartProduct, Category, Customer, Product, Brand, Cart
 from utils.recalc_cart import recalc_cart
 
 
-class IndexView(views.View):
+class IndexView(CartMixin, views.View):
+
     def get(self, request, *args, **kwargs):
-        return render(request, 'index.html', {})
+        categories = Category.objects.all().order_by('-id')[:5]
+        context = {
+            'categories': categories,
+            'cart': self.cart
+        }
+        return render(request, 'index.html', context)
+
+
+class CategoryView(CartMixin, views.View):
+    model = Category
+
+    def get(self, request, *args, **kwargs):
+        categories = Category.objects.all()
+        products = Product.objects.all()
+        context = {
+            'categories': categories,
+            'products': products,
+            'cart': self.cart
+        }
+        return render(request, 'category/categories.html', context)
 
 
 class CategoryDetailView(CartMixin, views.generic.DetailView):
@@ -57,68 +80,32 @@ class CategoryDetailView(CartMixin, views.generic.DetailView):
         return context
 
 
-class ProductDetailView(views.generic.DetailView):
+class BrandsView(CartMixin, views.View):
+    model = Brand
+
+    def get(self, request, *args, **kwargs):
+        brands = Brand.objects.all()
+        context = {
+            'brands': brands,
+            'cart': self.cart
+        }
+        return render(request, 'brands/brands.html', context)
+
+
+class ProductDetailView(CartMixin, views.generic.DetailView):
     model = Product
     template_name = 'product/product_detail.html'
     slug_url_kwarg = 'product_slug'
+    title = 'product_name'
     context_object_name = 'product'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        ct_model = self.model().ct_model
+        context['cart'] = self.cart
+        context['ct_model'] = ct_model
+        return context
 
-# class AddToCartView(CartMixin, View):
-#
-#     def get(self, request, *args, **kwargs):
-#         product_slug = kwargs.get('slug')
-#         product = Product.objects.get(slug=product_slug)
-#         cart_product, created = CartProduct.objects.get_or_create(
-#             user=self.cart.owner, cart=self.cart, product=product
-#         )
-#         if created:
-#             self.cart.products.add(cart_product)
-#         recalc_cart(self.cart)
-#         messages.add_message(request, messages.INFO, "Товар успешно добавлен")
-#         return HttpResponseRedirect('/cart/')
-#
-#
-# class DeleteFromCartView(CartMixin, View):
-#
-#     def get(self, request, *args, **kwargs):
-#         product_slug = kwargs.get('slug')
-#         product = Product.objects.get(slug=product_slug)
-#         cart_product = CartProduct.objects.get(
-#             user=self.cart.owner, cart=self.cart, product=product
-#         )
-#         self.cart.products.remove(cart_product)
-#         cart_product.delete()
-#         recalc_cart(self.cart)
-#         messages.add_message(request, messages.INFO, "Товар успешно удален")
-#         return HttpResponseRedirect('/cart/')
-#
-#
-# class ChangeQTYView(CartMixin, View):
-#
-#     def post(self, request, *args, **kwargs):
-#         product_slug = kwargs.get('slug')
-#         product = Product.objects.get(slug=product_slug)
-#         cart_product = CartProduct.objects.get(
-#             user=self.cart.owner, cart=self.cart, product=product
-#         )
-#         qty = int(request.POST.get('qty'))
-#         cart_product.qty = qty
-#         cart_product.save()
-#         recalc_cart(self.cart)
-#         messages.add_message(request, messages.INFO, "Кол-во успешно изменено")
-#         return HttpResponseRedirect('/cart/')
-#
-#
-# class CartView(CartMixin, View):
-#
-#     def get(self, request, *args, **kwargs):
-#         categories = Category.objects.all()
-#         context = {
-#             'cart': self.cart,
-#             'categories': categories
-#         }
-#         return render(request, 'cart.html', context)
 
 
 class LoginView(views.View):
@@ -190,6 +177,12 @@ class AccountView(LoginRequiredMixin, CartMixin, views.View):
         return render(request, 'auth/account_view.html', context)
 
 
+class CartView(CartMixin, views.View):
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'cart/cart.html', {'cart': self.cart})
+
+
 class AddToCartView(CartMixin, views.View):
 
     def get(self, request, *args, **kwargs):
@@ -197,13 +190,13 @@ class AddToCartView(CartMixin, views.View):
         content_type = ContentType.objects.get(model=ct_model)
         product = content_type.model_class().objects.get(slug=product_slug)
         cart_product, created = CartProduct.objects.get_or_create(
-            user=self.cart.owner, cart=self.cart, product=product.slug
+            user=self.cart.owner, cart=self.cart, content_type=content_type, object_id=product.id
         )
         if created:
             self.cart.products.add(cart_product)
         recalc_cart(self.cart)
         messages.add_message(request, messages.INFO, "Товар успешно добавлен")
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER' "/cart/"))
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
 class DeleteFromCartView(CartMixin, views.View):
@@ -219,14 +212,14 @@ class DeleteFromCartView(CartMixin, views.View):
         cart_product.delete()
         recalc_cart(self.cart)
         messages.add_message(request, messages.INFO, "Товар удален из корзины")
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER' "/cart/"))
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
 class ChangeQTYView(CartMixin, views.View):
 
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         ct_model, product_slug = kwargs.get('ct_model'), kwargs.get('slug')
-        content_type = ContentType.objects.get(model=ct_model)
+        content_type = ContentType.objects.get(model='product')
         product = content_type.model_class().objects.get(slug=product_slug)
         cart_product = CartProduct.objects.get(
             user=self.cart.owner, cart=self.cart, content_type=content_type, object_id=product.id
@@ -236,16 +229,8 @@ class ChangeQTYView(CartMixin, views.View):
         cart_product.save()
         recalc_cart(self.cart)
         messages.add_message(request, messages.INFO, "Кол-во товаров изменено")
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER' "/cart/"))
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
-
-class CartView(CartMixin, views.View):
-
-    def get(self, request, *args, **kwargs):
-        context = {
-            'cart': self.cart,
-        }
-        return render(request, 'cart.html', context)
 
 
 

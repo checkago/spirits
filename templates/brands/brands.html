@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <section class="card spirits-gradient wow fadeIn mt-4">
+        <!-- Content -->
+        <div class="card-body text-white mb-1 mt-2">
+          <div class="container">
+              <hr class="spirits-dark-gradient mt-4">
+              <div class="row">
+                  <div class="col-md-2 col-xs-12">
+                      <img class="img-fluid mt-1" src="{% static 'img/logo_white_v_sm.png' %}">
+                  </div>
+                  <div class="col-md-10 col-xs-12 mt-2 float-left">
+                      <h2 class="title mt-3">Мировые <span class="text-dark">Бренды</span></h2>
+                  </div>
+              </div>
+          </div>
+
+        </div>
+        <!-- Content -->
+    </section>
+    <!-- Projects section v.2 -->
+    <section id="portfolio" class="section mt-2 pb-5 mb-4">
+
+      <div class="container">
+
+        <!-- Section heading -->
+        <div class="row mt-4">
+
+          <div class="col-md-12 ">
+
+            <h2 class="text-uppercase text-center font-weight-bold my-4 pt-5 wow fadeIn" data-wow-delay="0.2s">Бренды представленные в нашем каталоге</h2>
+
+            <hr class="between-sections">
+
+            <p class="text-center w-responsive mx-auto mt-5 wow fadeIn" data-wow-delay="0.2s">
+
+              Крафтовые компании. </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="row ml-5 mr-5 mt-2 flex-center">
+
+        {% for Brand in brands %}
+        <div class="col-lg-3 col-md-4 col-sm-6 text-center">
+
+          <!-- Featured image -->
+          <div class="view overlay zoom z-depth-2">
+
+            <img src="{{ Brand.big_image.url }}" class="img-fluid">
+
+          </div>
+
+          <p class="text-uppercase text-center font-weight-bold blue-grey-text mt-4 mb-4">{{ Brand.name }} | {{ Brand.country }}</p>
+
+        </div>
+        {% endfor %}
+      </div>
+
+    </section>
+    <!-- Projects section v.2 -->
+{% endblock content %}

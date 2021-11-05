@@ -24,10 +24,19 @@
 
 
   <!-- Main Container -->
-  <div class="container mt-5 pt-3">
-
+  <div class="container mt-3 pt-3">
+        {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-success alert-dismissible fade show mt-1 mb-2" role="alert">
+            <strong>{{ message }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endfor %}
+    {% endif %}
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light spirits-color mt-5 mb-5">
+    <nav class="navbar navbar-expand-lg navbar-light spirits-color mt-3 mb-3">
 
       <!-- Navbar brand -->
       <h5 class="font-weight-bold dark-text mr-4">Категории</h5>
@@ -112,15 +121,15 @@
           <div class="row">
             {% for product in category_products %}
             <!-- Grid column -->
-            <div class="col-lg-4 col-md-12 mb-4">
+            <div class="col-lg-4 col-md-12 mb-4 d-flex">
               <!-- Card -->
               <div class="card card-ecommerce">
 
                 <!-- Card image -->
-                <div class="view overlay">
+                <div class="view overlay mt-2">
 
 
-                      <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.name }}">
+                      <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.name }}" style="max-height: 230px">
 
 
                   <a href="{{ product.get_absolute_url }}">
@@ -133,11 +142,13 @@
                 <!-- Card image -->
 
                 <!-- Card content -->
-                <div class="card-body">
+                <div class="card-body text-center">
 
                   <!-- Category & Title -->
-                  <h5 class="card-title mb-1"><strong><a href="{{ product.get_absolute_url }}" class="dark-grey-text">{{ product.name }}</a></strong></h5><span
-                          class="badge badge-danger mb-2">Хит</span>
+                  <h5 class="card-title mb-1"><strong>
+                      <a href="{{ product.get_absolute_url }}" class="dark-grey-text">{{ product.name }}</a>
+                  </strong></h5>
+                    <span class="italic text-center">{{ product.brand }}</span>
 
                   <!-- Rating -->
 
@@ -150,7 +161,7 @@
 
                       <span class="float-right">
 
-                        <a class="" data-toggle="tooltip" data-placement="top" href="" title="В заказ"><i
+                        <a class="" data-toggle="tooltip" data-placement="top" href="{% url 'add_to_cart' ct_model=product.ct_model slug=product.slug%}" title="В заказ"><i
                             class="fas fa-shopping-cart ml-3"></i></a>
 
                       </span>
