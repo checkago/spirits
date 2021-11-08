@@ -6,7 +6,7 @@ services:
       context: ./docker/postgres
       dockerfile: Dockerfile
     environment:
-      - POSTGRES_PASSWORD=Bib52211443
+      - POSTGRES_PASSWORD=c41916312
     volumes:
     - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
