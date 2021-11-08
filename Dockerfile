@@ -3,7 +3,7 @@ FROM python:3.9-alpine
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-WORKDIR /usr/src/bibsite
+WORKDIR /usr/src/mspirits
 
 COPY requirements.txt .
 COPY entrypoint.sh .
@@ -20,4 +20,4 @@ RUN chmod +x entrypoint.sh
 
 COPY . .
 
-ENTRYPOINT ["sh", "/usr/src/bibsite/entrypoint.sh"]
+ENTRYPOINT ["sh", "/usr/src/mspirits/entrypoint.sh"]
