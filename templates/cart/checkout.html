@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_field %}
+{% block content %}
+
+<section class="card spirits-gradient wow fadeIn mt-4">
+    <!-- Content -->
+    <div class="card-body text-white mb-1 mt-2">
+      <div class="container">
+          <hr class="spirits-dark-gradient mt-4">
+          <div class="row">
+              <div class="col-md-2 col-xs-12">
+                  <img class="img-fluid mt-1" src="{% static 'img/logo_white_v_sm.png' %}">
+              </div>
+              <div class="col-md-10 col-xs-12 mt-2 float-left">
+                  <h2 class="title mt-3">Корзина <span class="text-dark">заказов</span></h2>
+              </div>
+          </div>
+      </div>
+
+    </div>
+    <!-- Content -->
+</section>
+<div class="container">
+    <h3 class="text-center mt-5 mb-5">Ваша корзина {% if not cart.products.count %}пуста{% endif %}</h3>
+    {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-success alert-dismissible fade show mt-2 mb-2" role="alert">
+        <strong>{{ message }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endfor %}
+    {% endif %}
+    <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Наименование</th>
+              <th scope="col">Изображение</th>
+              <th scope="col">Цена</th>
+              <th scope="col">Кол-во</th>
+                <th scope="col">Общая цена</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in cart.products.all %}
+                <tr>
+                  <th scope="row">{{ item.category }}{{ item.product.title }}</th>
+                  <td class="w-25"><img src="{{ item.product.image.url }}" class="img-fluid" style="width: 80px;"></td>
+                  <td>{{ item.product.price }} руб.</td>
+                  <td>{{ item.qty }}</td>
+                    <td>{{ item.final_price }} руб.</td>
+                </tr>
+            {% endfor %}
+                <tr>
+                  <td colspan="2"></td>
+                  <td>Итого:</td>
+                  <td>{{ cart.total_products }}</td>
+                  <td><strong>{{ cart.final_price }} руб.</strong></td>
+                </tr>
+          </tbody>
+        </table>
+            <hr>
+        <h3 class="text-center mt-5 mb-5">Форма заказа</h3>
+    </div>
+</div>
+<div class="container">
+    <section id="contact" class="mb-5">
+        <div class="container">
+            <section class="contact-section my-5">
+              <div class="card">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <form action="{% url 'make_order' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="card-body form">
+                                <h3 class="mt-4"><i class="fas fa-order pr-2"></i></h3>
+                                <div class="row">
+
+                                    <div class="col-md-6">
+
+                                      <div class="md-form mb-0">
+
+                                        {% crispy_field form.first_name 'id' 'form-contact-name' 'class' 'form-control' 'placeholder' 'Иван' %}
+
+                                        <label for="form-contact-name" class="">Имя</label>
+
+                                      </div>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                      <div class="md-form mb-0">
+
+                                        {% crispy_field form.last_name 'id' 'form-contact-name' 'class' 'form-control' 'placeholder' 'Иванов' %}
+
+                                        <label for="form-contact-name" class="">Фамилия</label>
+
+                                      </div>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                      <div class="md-form mb-0">
+
+                                        {% crispy_field form.phone 'id' 'form-contact-name' 'class' 'form-control' 'placeholder' 'Номер телефона' %}
+
+                                        <label for="form-contact-name" class="">Номер телефона</label>
+
+                                      </div>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                    <div class="md-form mb-0">
+
+                                        {% crispy_field form.buying_type 'class' 'form-control' 'placeholder' 'Доставка' %}
+
+                                        <label for="form-contact-company" class="">Способ получения</label>
+
+                                      </div>
+
+                                </div>
+
+                                    <div class="col-md-6">
+
+                                    <div class="md-form mb-0">
+
+                                        {% crispy_field form.order_date 'class' 'form-control' 'placeholder' 'Дата получения' %}
+
+                                        <label for="form-contact-company" class="">Желаемая дата получения</label>
+
+                                      </div>
+
+                                </div>
+
+                                </div>
+                                <div class="md-form mb-0">
+
+                                    {% crispy_field form.address 'id' 'form-contact-address' 'class' 'form-control' 'placeholder' 'Адрес' %}
+
+                                    <label for="form-contact-address" class="">Адрес</label>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+
+                                      <div class="md-form mb-0">
+
+                                        {% crispy_field form.comment 'class' 'form-control md-textarea' 'placeholder' 'Ваш комментарий' %}
+
+                                        <label for="form-contact-message">Комментарий к заказу</label>
+
+                                        <button type="submit" class="btn-floating btn-lg spirits-color">
+                                            Заказать
+                                        </button>
+
+                                      </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-lg-4">
+                    <div class="card-body spirits-color text-center h-100 white-text">
+                      <h3 class="my-4 pb-2">Контактная информация</h3>
+                      <ul class="text-lg-left list-unstyled ml-4">
+                        <li>
+                          <p><i class="fas fa-map-marker-alt pr-2 mb-4"></i>МО, г.о. Балашиха</p>
+                        </li>
+                        <li>
+                          <p><i class="fas fa-phone pr-2 mb-4"></i>+7 (968) 375-38-83</p>
+                        </li>
+                        <li>
+                          <p><i class="fas fa-envelope pr-2"></i>info@revenant-it.ru</p>
+                        </li>
+                      </ul>
+                      <hr class="hr-light my-4">
+                      <ul class="list-inline text-center list-unstyled">
+                        <li class="list-inline-item">
+                          <a class="p-2 fa-lg tw-ic">
+                            <i class="fab fa-vk text-white"></i>
+                          </a>
+                        </li>
+                        <li class="list-inline-item">
+                          <a class="p-2 fa-lg li-ic">
+                            <i class="fab fa-instagram text-white"> </i>
+                          </a>
+                        </li>
+                        <li class="list-inline-item">
+                          <a class="p-2 fa-lg ins-ic">
+                            <i class="fab fa-youtube text-white"> </i>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    </div>
+                </div>
+              </div>
+            </section>
+        </div>
+    </section>
+</div>
+{% endblock content %}

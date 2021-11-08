@@ -120,7 +120,6 @@ class CartProduct(models.Model):
         "Product": {"is_constructable": True, "fields": ['name', 'brand.name'], "separator": '-'}
     }
 
-
     user = models.ForeignKey('Customer', on_delete=models.CASCADE, null=True, blank=True, verbose_name='Покупатель')
     cart = models.ForeignKey('Cart', on_delete=models.CASCADE, verbose_name='Корзина')
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
@@ -143,7 +142,6 @@ class CartProduct(models.Model):
             return display_name
         if model_fields and not model_fields['is_constructable']:
             display_name = operator.attrgetter(model_fields['field'])
-
 
     def __str__(self):
         return f"Продукт: {self.content_object} для корзины"
@@ -188,7 +186,7 @@ class Order(models.Model):
         (STATUS_CONFIRMED, 'Заказ подтвержден'),
         (STATUS_IN_PROGRESS, 'Заказ в обработке'),
         (STATUS_READY, 'Заказ готов'),
-        (STATUS_COMPLETED, 'Заказ получен покупателем'),
+        (STATUS_COMPLETED, 'Заказ получен'),
         (STATUS_CANCELLED, 'Заказ отменен')
     )
 
@@ -198,12 +196,15 @@ class Order(models.Model):
     )
 
     customer = models.ForeignKey('Customer', on_delete=models.CASCADE, related_name='orders', verbose_name='Покупатель')
+    address = models.ForeignKey('Address', blank=True, null=True, on_delete=models.CASCADE, verbose_name='Адрес')
     first_name = models.CharField(max_length=255, verbose_name='Имя')
     last_name = models.CharField(max_length=255, verbose_name='Фамилия')
     phone = models.CharField(max_length=18, verbose_name='Номер телефона')
-    cart = models.ForeignKey(Cart, on_delete=models. CASCADE, verbose_name='Корзина')
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, null=True, verbose_name='Корзина')
     status = models.CharField(max_length=100, choices=STATUS_CHOICES, default=STATUS_NEW)
-    bying_type = models.CharField(max_length=100, choices=BYING_TYPE_CHOICES, default=BYING_TYPE_DELIVERY)
+    buying_type = models.CharField(max_length=100, blank=True, null=True,
+                                   choices=BYING_TYPE_CHOICES,
+                                   default=BYING_TYPE_DELIVERY, verbose_name='Тип покупки')
     comment = models.TextField(blank=True, null=True, verbose_name='Комментарий к заказу')
     created_at = models.DateField(auto_now=True, verbose_name='дата создания заказа')
     order_date = models.DateField(default=timezone.now, verbose_name='Предпочитаемая дата получения заказа')

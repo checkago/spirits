@@ -79,7 +79,7 @@
 
                     <th scope="row"><img src="{{ item.content_object.image.url }}" class="img-fluid" style="width: 50px;"></th>
 
-                      <td><span class="font-weight-bold">{{ item.content_object.name }}</span></td>
+                      <td><span class="font-weight-bold"><a href="{{ item.content_object.get_absolute_url }}">{{ item.content_object.name }}</a></span></td>
 
                     <td>{{ item.final_price }} Руб.</td>
 
@@ -99,14 +99,13 @@
 
               </table>
             </div>
-            {% endif %}
             <!-- Footer -->
             <div class="modal-footer">
 
               <a class="btn spirits-color btn-rounded btn-sm white-text font-weight-bold" href="{% url 'cart' %}">Оформить</a>
 
             </div>
-
+            {% endif %}
           </div>
           <!-- Content -->
 

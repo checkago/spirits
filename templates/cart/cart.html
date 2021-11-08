@@ -49,7 +49,7 @@
                 {% for item in cart.products.all %}
                     <tr class="justify-content-center align-items-center">
                       <td><img src="{{ item.content_object.image.url }}" class="img-fluid" style="width: 125px;"></td>
-                      <td scope="row"><h5 class="text-center title">{{ item.content_object.name }}</h5></td>
+                        <td scope="row"><h5 class="text-center title"><a href="{{ item.content_object.get_absolute_url }}">{{ item.content_object.name }}</a></h5></td>
                         <td><span class="font-weight-bold">{{ item.content_object.price }} руб.</span></td>
                       <td scope="row">
                         <form action="{% url 'change_qty' ct_model=item.content_object.ct_model slug=item.content_object.slug %}" method="POST">
@@ -72,7 +72,7 @@
                       <td><h5>{{ cart.qty }}</h5></td>
                       <td><h5>{{ cart.final_price }} руб.</h5></td>
                       <td>
-                          <a href="">
+                          <a href="{% url 'checkout' %}">
                               <button class="btn spirits-dark-gradient text-white">
                                   <span class="font-weight-bold">Оформить</span>
                               </button>

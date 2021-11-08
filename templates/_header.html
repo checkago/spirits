@@ -37,7 +37,9 @@
               <li class="nav-item ">
                 <a class="nav-link waves-effect waves-light" href="#" data-toggle="modal"
                     data-target="#cart-modal-ex">
+                    {% if cart.products.count %}
                     <span class="badge danger-color">{{ cart.products.count }}</span>
+                    {% endif %}
                      <i class="fas fa-shopping-cart fa-2x" aria-hidden="true"></i>
                  </a>
               </li>

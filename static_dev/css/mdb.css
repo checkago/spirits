@@ -6015,9 +6015,7 @@ ul.stepper {
   cursor: pointer;
   border-radius: 50%;
   box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
-  transition: all 0.2s ease-in-out;
-  width: 47px;
-  height: 47px; }
+  transition: all 0.2s ease-in-out; }
   .btn-floating i {
     font-size: 1.25rem;
     line-height: 47px; }
@@ -6037,8 +6035,8 @@ ul.stepper {
       font-size: 0.96154rem;
       line-height: 36.15385px; }
   .btn-floating.btn-lg {
-    width: 61.1px;
-    height: 61.1px; }
+    width: auto;
+    height: auto; }
     .btn-floating.btn-lg i {
       font-size: 1.625rem;
       line-height: 61.1px; }
