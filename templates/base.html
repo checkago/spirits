@@ -1,179 +1,228 @@
 {% load static %}
-{% load crispy_forms_field %}
 <!doctype html>
-<html lang="ru">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
-        <!-- Material Design Bootstrap -->
-        <link href="{% static 'css/mdb.css' %}" rel="stylesheet">
-        <!-- Bootstrap core CSS -->
-        <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
-          <!-- JQuery -->
-        <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
-        <title>{{ title }}</title>
-        <meta name="description" content="{{ description }}">
-          <style type="text/css">
-            .multiple-select-dropdown li [type=checkbox]+label {
-              height: 1rem;
-            }
+<html lang="en">
 
-  </style>
-    </head>
-    <body class="software-lp">
-        {% include '_header.html' %}
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--favicon-->
+	<link rel="icon" href="{%  static 'assets/images/favicon-32x32.png' %}" type="image/png" />
+	<!--plugins-->
+	<link href="{%  static 'assets/plugins/OwlCarousel/css/owl.carousel.min.css' %}" rel="stylesheet" />
+	<link href="{%  static 'assets/plugins/simplebar/css/simplebar.css' %}" rel="stylesheet" />
+	<link href="{%  static 'assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css' %}" rel="stylesheet" />
+	<link href="{%  static 'assets/plugins/metismenu/css/metisMenu.min.css' %}" rel="stylesheet" />
+	<!-- loader-->
+	<link href="{%  static 'assets/css/pace.min.css' %}" rel="stylesheet" />
+	<script src="{%  static 'assets/js/pace.min.js' %}"></script>
+	<!-- Bootstrap CSS -->
+	<link href="{%  static 'assets/css/bootstrap.min.css' %}" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+	<link href="{%  static 'assets/css/app.css' %}" rel="stylesheet">
+	<link href="{%  static 'assets/css/icons.css' %}" rel="stylesheet">
+	<title>Moscow Spirits</title>
+</head>
 
-        <main>
-            {% block content %}
-
-            {% endblock content %}
-        </main>
-        <!--Footer-->
-
-          <!-- Cart Modal -->
-        <div class="modal fade cart-modal" id="cart-modal-ex" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-
-          <!-- Content -->
-          <div class="modal-content">
-
-            <!-- Header -->
-            <div class="modal-header">
-
-              <h4 class="modal-title font-weight-bold dark-grey-text" id="myModalLabel">Ваша корзина {% if not cart.products.count %}пуста{% endif %}</h4>
-
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-
-                <span aria-hidden="true">&times;</span>
-
-              </button>
-
-            </div>
-            {% if cart.products.count %}
-            <!-- Body -->
-            <div class="modal-body">
-              <table class="table table-hover">
-
-                <thead>
-
-                  <tr>
-
-                    <th></th>
-
-                    <th>Наименование</th>
-
-                    <th>Цена</th>
-
-                    <th>Удалить</th>
-
-                  </tr>
-
-                </thead>
-
-                <tbody>
-                   {% for item in cart.products.all %}
-                  <tr>
-
-                    <th scope="row"><img src="{{ item.content_object.image.url }}" class="img-fluid" style="width: 50px;"></th>
-
-                      <td><span class="font-weight-bold"><a href="{{ item.content_object.get_absolute_url }}">{{ item.content_object.name }}</a></span></td>
-
-                    <td>{{ item.final_price }} Руб.</td>
-
-                    <td>
-
-                      <a href="{% url 'delete_from_cart' ct_model=item.content_object.ct_model slug=item.content_object.slug %}">
-
-                        <i class="fas fa-eraser text-danger"></i>
-
-                      </a>
-
-                    </td>
-
-                  </tr>
-                {% endfor %}
-                </tbody>
-
-              </table>
-            </div>
-            <!-- Footer -->
-            <div class="modal-footer">
-
-              <a class="btn spirits-color btn-rounded btn-sm white-text font-weight-bold" href="{% url 'cart' %}">Оформить</a>
-
-            </div>
-            {% endif %}
-          </div>
-          <!-- Content -->
-
-        </div>
-        </div>
-        <!-- Cart Modal -->
+<body class="bg-theme bg-theme4">	<b class="screen-overlay"></b>
+	<!--wrapper-->
+	<div class="wrapper">
+        <!-- СКИДИ АЛЕРТ
+		<div class="discount-alert bg-dark-1 d-none d-lg-block">
+			<div class="alert alert-dismissible fade show shadow-none rounded-0 mb-0 border-bottom">
+				<div class="d-lg-flex align-items-center gap-2 justify-content-center">
+					<p class="mb-0 text-white">Get Up to <strong>40% OFF</strong> New-Season Styles</p>	<a href="javascript:;" class="bg-dark text-white px-1 font-13 cursor-pointer">Men</a>
+					<a href="javascript:;" class="bg-dark text-white px-1 font-13 cursor-pointer">Women</a>
+					<p class="mb-0 font-13 text-light-3">*Limited time only</p>
+				</div>
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		</div> -->
+		<!--start top header wrapper-->
+    {% include '_header.html' %}
+{% block content %}
 
 
-        <footer class="page-footer text-center text-md-left spirits-dark-gradient">
+{% endblock %}
+		<footer>
+			<section class="py-4 bg-dark-1">
+				<div class="container">
+					<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-4">
+						<div class="col">
+							<div class="footer-section1 mb-3">
+								<h6 class="mb-3 text-uppercase">Contact Info</h6>
+								<div class="address mb-3">
+									<p class="mb-0 text-uppercase text-white">Address</p>
+									<p class="mb-0 font-12">123 Street Name, City, Australia</p>
+								</div>
+								<div class="phone mb-3">
+									<p class="mb-0 text-uppercase text-white">Phone</p>
+									<p class="mb-0 font-13">Toll Free (123) 472-796</p>
+									<p class="mb-0 font-13">Mobile : +91-9910XXXX</p>
+								</div>
+								<div class="email mb-3">
+									<p class="mb-0 text-uppercase text-white">Email</p>
+									<p class="mb-0 font-13">mail@example.com</p>
+								</div>
+								<div class="working-days mb-3">
+									<p class="mb-0 text-uppercase text-white">WORKING DAYS</p>
+									<p class="mb-0 font-13">Mon - FRI / 9:30 AM - 6:30 PM</p>
+								</div>
+							</div>
+						</div>
+						<div class="col">
+							<div class="footer-section2 mb-3">
+								<h6 class="mb-3 text-uppercase">Shop Categories</h6>
+								<ul class="list-unstyled">
+									<li class="mb-1"><a href="javascript:;"><i class='bx bx-chevron-right'></i> Jeans</a>
+									</li>
+									<li class="mb-1"><a href="javascript:;"><i class='bx bx-chevron-right'></i> T-Shirts</a>
+									</li>
+									<li class="mb-1"><a href="javascript:;"><i class='bx bx-chevron-right'></i> Sports</a>
+									</li>
+									<li class="mb-1"><a href="javascript:;"><i class='bx bx-chevron-right'></i> Shirts & Tops</a>
+									</li>
+									<li class="mb-1"><a href="javascript:;"><i class='bx bx-chevron-right'></i> Clogs & Mules</a>
+									</li>
+									<li class="mb-1"><a href="javascript:;"><i class='bx bx-chevron-right'></i> Sunglasses</a>
+									</li>
+									<li class="mb-1"><a href="javascript:;"><i class='bx bx-chevron-right'></i> Bags & Wallets</a>
+									</li>
+									<li class="mb-1"><a href="javascript:;"><i class='bx bx-chevron-right'></i> Sneakers & Athletic</a>
+									</li>
+									<li class="mb-1"><a href="javascript:;"><i class='bx bx-chevron-right'></i> Electronis</a>
+									</li>
+									<li class="mb-1"><a href="javascript:;"><i class='bx bx-chevron-right'></i> Furniture</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="col">
+							<div class="footer-section3 mb-3">
+								<h6 class="mb-3 text-uppercase">Popular Tags</h6>
+								<div class="tags-box"> <a href="javascript:;" class="tag-link">Cloths</a>
+									<a href="javascript:;" class="tag-link">Electronis</a>
+									<a href="javascript:;" class="tag-link">Furniture</a>
+									<a href="javascript:;" class="tag-link">Sports</a>
+									<a href="javascript:;" class="tag-link">Men Wear</a>
+									<a href="javascript:;" class="tag-link">Women Wear</a>
+									<a href="javascript:;" class="tag-link">Laptops</a>
+									<a href="javascript:;" class="tag-link">Formal Shirts</a>
+									<a href="javascript:;" class="tag-link">Topwear</a>
+									<a href="javascript:;" class="tag-link">Headphones</a>
+									<a href="javascript:;" class="tag-link">Bottom Wear</a>
+									<a href="javascript:;" class="tag-link">Bags</a>
+									<a href="javascript:;" class="tag-link">Sofa</a>
+									<a href="javascript:;" class="tag-link">Shoes</a>
+								</div>
+							</div>
+						</div>
+						<div class="col">
+							<div class="footer-section4 mb-3">
+								<h6 class="mb-3 text-uppercase">Stay informed</h6>
+								<div class="subscribe">
+									<input type="text" class="form-control radius-30" placeholder="Enter Your Email" />
+									<div class="mt-2 d-grid">	<a href="javascript:;" class="btn btn-white btn-ecomm radius-30">Subscribe</a>
+									</div>
+									<p class="mt-2 mb-0 font-13">Subscribe to our newsletter to receive early discount offers, updates and new products info.</p>
+								</div>
+								<div class="download-app mt-3">
+									<h6 class="mb-3 text-uppercase">Download our app</h6>
+									<div class="d-flex align-items-center gap-2">
+										<a href="javascript:;">
+											<img src="assets/images/icons/apple-store.png" class="" width="160" alt="" />
+										</a>
+										<a href="javascript:;">
+											<img src="assets/images/icons/play-store.png" class="" width="160" alt="" />
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--end row-->
+					<hr/>
+					<div class="row row-cols-1 row-cols-md-2 align-items-center">
+						<div class="col">
+							<p class="mb-0">Copyright © 2021. All right reserved.</p>
+						</div>
+						<div class="col text-end">
+							<div class="payment-icon">
+								<div class="row row-cols-auto g-2 justify-content-end">
+									<div class="col">
+										<img src="assets/images/icons/visa.png" alt="" />
+									</div>
+									<div class="col">
+										<img src="assets/images/icons/paypal.png" alt="" />
+									</div>
+									<div class="col">
+										<img src="assets/images/icons/mastercard.png" alt="" />
+									</div>
+									<div class="col">
+										<img src="assets/images/icons/american-express.png" alt="" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--end row-->
+				</div>
+			</section>
+		</footer>
+		<!--end footer section-->
+		<!--Start Back To Top Button--> <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
+		<!--End Back To Top Button-->
+	</div>
+	<!--end wrapper-->
+	<!--start switcher-->
+	<div class="switcher-wrapper">
+		<div class="switcher-btn"> <i class='bx bx-cog bx-spin'></i>
+		</div>
+		<div class="switcher-body">
+			<div class="d-flex align-items-center">
+				<h5 class="mb-0 text-uppercase">Theme Customizer</h5>
+				<button type="button" class="btn-close ms-auto close-switcher" aria-label="Close"></button>
+			</div>
+			<hr/>
+			<p class="mb-0">Gaussian Texture</p>
+			<hr>
+			<ul class="switcher">
+				<li id="theme1"></li>
+				<li id="theme2"></li>
+				<li id="theme3"></li>
+				<li id="theme4"></li>
+				<li id="theme5"></li>
+				<li id="theme6"></li>
+			</ul>
+			<hr>
+			<p class="mb-0">Gradient Background</p>
+			<hr>
+			<ul class="switcher">
+				<li id="theme7"></li>
+				<li id="theme8"></li>
+				<li id="theme9"></li>
+				<li id="theme10"></li>
+				<li id="theme11"></li>
+				<li id="theme12"></li>
+				<li id="theme13"></li>
+				<li id="theme14"></li>
+				<li id="theme15"></li>
+			</ul>
+		</div>
+	</div>
+	<!--end switcher-->
+	<!-- Bootstrap JS -->
+	<script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
+	<!--plugins-->
+	<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+	<script src="{% static 'assets/plugins/simplebar/js/simplebar.min.js' %}"></script>
+	<script src="{% static 'assets/plugins/OwlCarousel/js/owl.carousel.min.js' %}"></script>
+	<script src="{% static 'assets/plugins/OwlCarousel/js/owl.carousel2.thumbs.min.js' %}"></script>
+	<script src="{% static 'assets/plugins/metismenu/js/metisMenu.min.j' %}s"></script>
+	<script src="{% static 'assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js' %}"></script>
+	<!--app JS-->
+	<script src="{% static 'assets/js/app.js' %}"></script>
+	<script src="{% static 'assets/js/index.js' %}"></script>
+</body>
 
-            <!--Footer Links-->
-            <div class="container mt-5 mb-1 text-center text-md-left">
-              <div class="row pt-5">
-
-                <!--First column-->
-                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 mb-4 white-text">
-                    <img class="img-fluide mt-2 mr-1" src="{% static 'img/logo_white_very_small.png' %}" alt="">
-                </div>
-                <!--/.First column-->
-
-                <!--Second column-->
-                <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mx-auto ml-1 mr-1 mb-4 white-text">
-                    <h4 class="white-text text-center">Moscow Spirits</h4>
-                    <p class="white-text text-center">Крафтовые алкогольные напитки со всего мира</p>
-                    <hr>
-                    <p class="warning-text text-center"><strong>Уведомление:</strong> в соответствии с рекомендациями
-                        ФС РАР от 25.06.18 приобретение алкогольной продукции возможно непосредственно
-                        в магазине VinDom по адресу: г.Москва, ул.Мытная, д.7, стр.1</p>
-                    <p class="warning-text text-center">Отгрузка продукции юридическим лицам осуществляется
-                        в соответствии с действующим законодательством</p>
-                </div>
-                <!--/.Second column-->
-
-                <!--Third column-->
-                <div class="col-sm-6 col-md-2 col-lg-2 col-xl-2 mx-auto mb-4 white-text">
-                    <h6 class="text-uppercase font-weight-bold"><strong>Меню</strong></h6>
-                    <hr class="white mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-                    <p><a href="#!" class="white-text">В начало</a></p>
-                    <p><a href="#!" class="white-text">Бренды</a></p>
-                    <p><a href="#!" class="white-text">Каталог</a></p>
-                    <p><a href="#!" class="white-text">Статьи/Новости</a></p>
-                </div>
-                <!--/.Third column-->
-
-                <!--Fourth column-->
-                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 white-text">
-                  <h6 class="text-uppercase font-weight-bold"><strong>Контакты</strong></h6>
-                  <hr class="white mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-                  <p><i class="fas fa-home mr-3"></i> МО, г. Москва</p>
-                  <p><i class="fas fa-envelope mr-3"></i> info@moscow-spirits.ru</p>
-                  <p><i class="fas fa-phone mr-3"></i> +7 (968) 375-38-83</p>
-                  <p><i class="fab fa-whatsapp mr-3"></i> +7 (968) 375-38-83</p>
-                </div>
-                <!--/.Fourth column-->
-
-              </div>
-            </div>
-            <!--/.Footer Links-->
-            <div class="container-fluide spirits-dark-gradient mb-2 pb-2">
-                <p class="text-center">© 2001-2021 <a href="https://revenant-it.ru" target="_blank"> Revenant </a></p>
-            </div>
-
-        </footer>
-        <!--/.Footer-->
-        <!-- Bootstrap core JavaScript -->
-        <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
-
-        <!-- MDB core JavaScript -->
-        <script type="text/javascript" src="{% static 'js/mdb.js' %}"></script>
-    </body>
 </html>

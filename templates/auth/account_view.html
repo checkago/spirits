@@ -67,15 +67,11 @@
                               <!-- Panel 2 -->
                               <div class="tab-pane fade" id="panel22" role="tabpanel">
                                 <h5 class="my-2 h5">Список заказов</h5>
+                              {{ cart }}
 
-                                  <p class="pt-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta
-                                  doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat
-                                  ratione porro voluptate odit minima.</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus
-                                  reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione
-                                  porro voluptate odit minima.</p>
-                                      </div>
-                              <!-- Panel 2 -->
+                                  {% for Order in orders %}
+                                      <p>{{ Order.created_at }}</p>
+                                  {% endfor %}
 
                             </div>
                           </div>

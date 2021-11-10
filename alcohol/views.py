@@ -1,3 +1,4 @@
+import brand as brand
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.shortcuts import render
@@ -9,16 +10,20 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, RegistrationForm, OrderForm
 from .mixins import CartMixin
-from .models import CartProduct, Category, Customer, Product, Brand, Cart
+from .models import CartProduct, Category, Customer, Product, Brand, Slider, BottleVolume
 from utils.recalc_cart import recalc_cart
 
 
 class IndexView(CartMixin, views.View):
 
     def get(self, request, *args, **kwargs):
-        categories = Category.objects.all().order_by('-id')[:5]
+        categories = Category.objects.all()
+        sliders = Slider.objects.all()
+        products = Product.objects.all()
         context = {
             'categories': categories,
+            'products': products,
+            'sliders': sliders,
             'cart': self.cart
         }
         return render(request, 'index.html', context)
@@ -26,13 +31,17 @@ class IndexView(CartMixin, views.View):
 
 class CategoryView(CartMixin, views.View):
     model = Category
-
+    categories = Category.objects.all()
     def get(self, request, *args, **kwargs):
         categories = Category.objects.all()
         products = Product.objects.all()
+        volumes = BottleVolume.objects.all()
+        brands = Brand.objects.all()
         context = {
             'categories': categories,
             'products': products,
+            'volumes': volumes,
+            'brands': brands,
             'cart': self.cart
         }
         return render(request, 'category/categories.html', context)
@@ -41,6 +50,8 @@ class CategoryView(CartMixin, views.View):
 class CategoryDetailView(CartMixin, views.generic.DetailView):
     model = Category
     categories = Category.objects.all()
+    brands = Brand.objects.all()
+    volumes = BottleVolume.objects.all()
     template_name = 'category/category_detail.html'
     slug_url_kwarg = 'category_slug'
     context_object_name = 'category'
@@ -50,6 +61,8 @@ class CategoryDetailView(CartMixin, views.generic.DetailView):
         query = self.request.GET.get('search')
         category = self.get_object()
         context['cart'] = self.cart
+        context['volumes'] = BottleVolume.objects.all()
+        context['brands'] = Brand.objects.all()
         context['categories'] = self.model.objects.all()
         if not query and not self.request.GET:
             context['category_products'] = category.product_set.all()
@@ -80,7 +93,7 @@ class CategoryDetailView(CartMixin, views.generic.DetailView):
 
 class BrandsView(CartMixin, views.View):
     model = Brand
-
+    categories = Category.objects.all()
     def get(self, request, *args, **kwargs):
         brands = Brand.objects.all()
         context = {
@@ -102,8 +115,8 @@ class ProductDetailView(CartMixin, views.generic.DetailView):
         ct_model = self.model().ct_model
         context['cart'] = self.cart
         context['ct_model'] = ct_model
+        context['categories'] = Category.objects.all()
         return context
-
 
 
 class LoginView(views.View):
@@ -168,8 +181,10 @@ class AccountView(LoginRequiredMixin, CartMixin, views.View):
 
     def get(self, request, *args, **kwargs):
         customer = Customer.objects.get(user=request.user)
+        orders = Customer.user_orders.all()
         context = {
             'success': customer,
+            'orders': orders,
             'cart': self.cart
         }
         return render(request, 'auth/account_view.html', context)
@@ -200,11 +215,13 @@ class AddToCartView(CartMixin, views.View):
 class CheckoutView(CartMixin, views.View):
 
     def get(self, request, *args, **kwargs):
+        customer = Customer.objects.get(user=request.user)
         categories = Category.objects.all()
         form = OrderForm(request.POST or None)
         context = {
             'cart': self.cart,
             'categories': categories,
+            'customer': customer,
             'form': form
         }
         return render(request, 'cart/checkout.html', context)

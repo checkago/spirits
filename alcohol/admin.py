@@ -47,6 +47,21 @@ class RecipeAdmin(admin.ModelAdmin):
     form = RecipeAdminForm
 
 
+class SliderAdminForm(forms.ModelForm):
+    text = forms.CharField(widget=CKEditorWidget(config_name='awesome_ckeditor'))
+
+    class Meta:
+        verbose_name = 'Описание'
+        model = Slider
+        fields = '__all__'
+
+
+@admin.register(Slider)
+class SliderAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    form = SliderAdminForm
+
+
 admin.site.register(BottleVolume)
 admin.site.register(CartProduct)
 admin.site.register(Order)

@@ -12,6 +12,10 @@ class OrderForm(forms.ModelForm):
         self.fields['order_date'].label = 'Дата получения заказа'
 
     order_date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}))
+    comment = forms.CharField(
+        label='Сообщение',
+        widget=forms.Textarea(attrs={'rows': '4'})
+    )
 
     class Meta:
         model = Order
@@ -46,7 +50,7 @@ class LoginForm(forms.ModelForm):
 
 
 class RegistrationForm(forms.ModelForm):
-
+    birth_date = forms.DateField(widget=forms.DateInput)
     password = forms.CharField(widget=forms.PasswordInput)
     confirm_password = forms.CharField(widget=forms.PasswordInput)
     first_name = forms.CharField(required=True)
@@ -57,6 +61,7 @@ class RegistrationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['username'].label = 'Логин'
+        self.fields['birth_date'].label = 'Дата рождения'
         self.fields['password'].label = 'Пароль'
         self.fields['confirm_password'].label = 'Подтверждение пароля'
         self.fields['first_name'].label = 'Имя'
@@ -88,6 +93,6 @@ class RegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'password', 'confirm_password', 'first_name', 'last_name', 'phone', 'email']
+        fields = ['username', 'password', 'confirm_password', 'birth_date', 'first_name', 'last_name', 'phone', 'email']
 
 

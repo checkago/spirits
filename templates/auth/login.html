@@ -5,75 +5,80 @@
 
 {% block content %}
 
-    <section class="card spirits-gradient wow fadeIn mt-4">
-        <!-- Content -->
-        <div class="card-body text-white mb-1 mt-2">
-          <div class="container">
-              <hr class="spirits-dark-gradient mt-4">
-              <div class="row">
-                  <div class="col-md-2 col-xs-12">
-                      <img class="img-fluid mt-1" src="{% static 'img/logo_white_v_sm.png' %}">
-                  </div>
-                  <div class="col-md-10 col-xs-12 mt-2 float-left">
-                      <h2 class="title mt-3">Авторизация <span class="text-dark">пользователя</span></h2>
-                  </div>
-              </div>
-          </div>
+		<!--start page wrapper -->
+		<div class="page-wrapper">
+			<div class="page-content">
+				<!--start breadcrumb-->
+				<section class="py-3 border-bottom d-none d-md-flex">
+					<div class="container">
+						<div class="page-breadcrumb d-flex align-items-center">
+							<h3 class="breadcrumb-title pe-3">Авторизация</h3>
+							<div class="ms-auto">
+								<nav aria-label="breadcrumb">
+									<ol class="breadcrumb mb-0 p-0">
+										<li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i> Начало</a>
+										</li>
+										<li class="breadcrumb-item active" aria-current="page">Вход</li>
+									</ol>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</section>
+				<!--end breadcrumb-->
+				<!--start shop cart-->
+				<section class="">
+					<div class="container">
+						<div class="py-5 d-flex align-items-center justify-content-center my-5 my-lg-0">
+							<div class="row row-cols-1 row-cols-xl-2">
+								<div class="col mx-auto">
+									<div class="card">
+										<div class="card-body">
+											<div class="border p-4 rounded">
+												<div class="text-center">
+													<h3 class="">Вход</h3>
+													<p>У вас еще нет аккаунта? <a href="{% url 'registration' %}">Зарегистрируйтесь</a>
+													</p>
+												</div>
+												<div class="form-body">
+													<form class="row g-3" method="post" action="{% url 'login' %}">
+                                                        {% csrf_token %}
+														<div class="col-12">
+															<label for="inputEmailAddress" class="form-label">Логин</label>
+															{% crispy_field form.username 'class' 'form-control' 'placeholder' 'Логин' %}
+														</div>
+														<div class="col-12">
+															<label for="inputChoosePassword" class="form-label">Пароль</label>
+                                                            {% crispy_field form.password 'class' 'form-control' 'placeholder' 'Пароль' %}
 
-        </div>
-        <!-- Content -->
-    </section>
+														</div>
+														<div class="col-md-6">
+															<div class="form-check form-switch">
+																<input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+																<label class="form-check-label" for="flexSwitchCheckChecked">Подтверждаю</label>
+															</div>
+														</div>
+														<div class="col-md-6 text-end">	<a href="authentication-forgot-password.html">Забыли пароль ?</a>
+														</div>
+														<div class="col-12">
+															<div class="d-grid">
+																<button type="submit" class="btn btn-light"><i class="bx bxs-lock-open"></i>Войти</button>
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!--end row-->
+						</div>
+					</div>
+				</section>
+				<!--end shop cart-->
+			</div>
+		</div>
+		<!--end page wrapper -->
 
-    <section class="mt-2">
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-5 col-lg-6 col-md-10 col-sm-12 mx-auto mt-lg-5">
-
-              <!-- Form with header -->
-              <div class="card wow fadeIn mb-3" data-wow-delay="0.3s">
-                <div class="card-body">
-
-                  <!-- Header -->
-                  <div class="form-header spirits-gradient rounded">
-                    <h3>
-                        <i class="fas fa-user mt-2 mb-2 "></i> <span class="font-weight-bold">Данные для входа:</span></h3>
-                  </div>
-                    <form method="post" action="{% url 'login' %}">
-                        {% csrf_token %}
-
-                          {{ form|crispy }}
-                          <div class="text-center">
-                            <a class="btn warning-color text-white btn-sm font-weight-bold btn-rounded mt-3 float-left"
-                            href="{% url 'registration' %}" title="Регистрация нового пользователя">
-                                Регистрация</a>
-                          </div>
-                          <div class="text-center">
-                            <button type='submit' class="btn btn-sm spirits-dark-gradient text-white font-weight-bold btn-rounded mt-3 float-right">Войти</button>
-                          </div>
-                        {% for message in messages %}
-                        <div class="alert alert-danger mb-0 alert-dismissible alert-absolute fade show text-center mt-1">
-                             {{ message }}
-                        </div>
-                        {% endfor %}
-                    </form>
-
-                </div>
-              </div>
-              <!-- Form with header -->
-
-            </div>
-          </div>
-        </div>
-    </section>
-<script>
-mdb.Alert.getInstance(document.getElementById("alertExample")).update({
-  position: "top-right",
-  delay: 2000,
-  autohide: false,
-  width: "300px",
-  offset: 20,
-  stacking: true,
-  appendToBody: true,
-});
-</script>
 {% endblock content %}

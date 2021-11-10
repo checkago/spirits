@@ -6,65 +6,130 @@
 
 {% block content %}
 
- <!--Main Navigation-->
-  <header>
-
-    <!--Navbar-->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
-      <div class="container">
-        <a class="navbar-brand" href="/"><img src="{% static 'img/text_logo.png' %}" height="35"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-7"
-          aria-controls="navbarSupportedContent-7" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent-7">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item {% if request.path == index_url %}active{%endif%}">
-              <a class="nav-link" href="{% url 'index' %}"><strong class="text-uppercase">Начало</strong></a>
-            </li>
-            <li class="nav-item {% if request.path == brands_url %}active{% endif %}">
-              <a class="nav-link" href="{% url 'brands' %}"><strong class="text-uppercase">Бренды</strong></a>
-            </li>
-            <li class="nav-item {% if request.path == categories_url %}active{% endif %}">
-              <a class="nav-link" href="{% url 'categories' %}"><strong class="text-uppercase font-weight-bold dark-grey-text">Каталог</strong></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/#contact"><strong class="text-uppercase">Контакты</strong></a>
-            </li>
-          </ul>
-          <ul class="navbar-nav ml-auto nav-flex-icons">
-
-              <li class="nav-item ">
-                <a class="nav-link waves-effect waves-light" href="#" data-toggle="modal"
-                    data-target="#cart-modal-ex">
-                    {% if cart.products.count %}
-                    <span class="badge danger-color">{{ cart.products.count }}</span>
-                    {% endif %}
-                     <i class="fas fa-shopping-cart fa-2x" aria-hidden="true"></i>
-                 </a>
-              </li>
-
-              <li class="nav-item">
-                 <i class="nav-link grey-text-3 fas fa-ellipsis-v fa-2x"></i>
-              </li>
-              {% if not request.user.is_authenticated %}
-              <li class="nav-item">
-                <a class="nav-link waves-effect waves-light" href="{% url 'login' %}" title="Вход для пользователя"><i class="fas fa-sign-in-alt fa-2x"></i></a>
-              </li>
-              {% else %}
-              <li class="nav-item {% if request.path == account_url %}active{%endif%}">
-                <a class="nav-link waves-effect waves-light" href="{% url 'account' %}" title="Личный кабинет"><i class="fas fa-house-user fa-2x"></i></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link waves-effect waves-light" href="{% url 'logout' %}" title="Выход"><i class="fas fa-sign-out-alt fa-2x"></i></a>
-              </li>
-              {% endif %}
-          </ul>
+	<div class="header-wrapper bg-dark-1">
+        <div class="top-menu border-bottom">
+            <div class="container">
+                <nav class="navbar navbar-expand">
+                    <div class="shiping-title text-uppercase font-13 text-white d-none d-sm-flex">MOSCOW SPIRITS</div>
+                    <ul class="navbar-nav ms-auto d-none d-lg-flex">
+                        <li class="nav-item"> <a class="nav-link" href="about-us.html">О нас</a>
+                        </li>
+                        <li class="nav-item"> <a class="nav-link" href="shop-categories.html">Наши магазины</a>
+                        </li>
+                        <li class="nav-item"> <a class="nav-link" href="blog.html">Статьи</a>
+                        </li>
+                        <li class="nav-item">	<a class="nav-link" href="contact-us.html">Контвкты</a>
+                        </li>
+                        <li class="nav-item">	<a class="nav-link" href="javascript:;">Помощь</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav social-link ms-lg-2 ms-auto">
+                        <li class="nav-item"> <a class="nav-link" href="javascript:;"><i class='bx bxl-facebook'></i></a>
+                        </li>
+                        <li class="nav-item"> <a class="nav-link" href="javascript:;"><i class='bx bxl-twitter'></i></a>
+                        </li>
+                        <li class="nav-item"> <a class="nav-link" href="javascript:;"><i class='bx bxl-linkedin'></i></a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
-      </div>
-    </nav>
-
-  </header>
-  <!--Main Navigation-->
+        <div class="header-content pb-3 pb-md-0">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col col-md-auto">
+                        <div class="d-flex align-items-center">
+                            <div class="mobile-toggle-menu d-lg-none px-lg-2" data-trigger="#navbar_main"><i class='bx bx-menu'></i>
+                            </div>
+                            <div class="logo d-none d-lg-flex">
+                                <a href="{% url 'index' %}">
+                                    <img src="{% static 'assets/images/logo_white_v_sm.png' %}" class="logo-icon" alt="" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md order-4 order-md-2">
+                        <div class="input-group flex-nowrap px-xl-4">
+                            <input type="text" class="form-control w-100" placeholder="Поиск">
+                            <select class="form-select flex-shrink-0" aria-label="Default select example" style="width: 10.5rem;">
+                                <option selected>Все категории</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>	<span class="input-group-text cursor-pointer"><i class='bx bx-search'></i></span>
+                        </div>
+                    </div>
+                    <div class="col col-md-auto order-3 d-none d-xl-flex align-items-center">
+                        <div class="fs-1 text-white"><i class='bx bx-headphone'></i>
+                        </div>
+                        <div class="ms-2">
+                            <p class="mb-0 font-13">ПОЗВОНИТЕ НАМ</p>
+                            <h5 class="mb-0">8(495)555-55-55</h5>
+                        </div>
+                    </div>
+                    <div class="col col-md-auto order-2 order-md-4">
+                        <div class="top-cart-icons">
+                            <nav class="navbar navbar-expand">
+                                <ul class="navbar-nav ms-auto">
+                                    <li class="nav-item"><a href="javascript:;" class="nav-link cart-link"><i class='bx bx-user'></i></a>
+                                    </li>
+                                    <li class="nav-item"><a href="javascript:;" class="nav-link cart-link"><i class='bx bx-heart'></i></a>
+                                    </li>
+                                    <li class="nav-item dropdown dropdown-large">
+                                        <a href="#" class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative cart-link" data-bs-toggle="dropdown">
+                                            {% if cart.products.count %}
+                                            <span class="alert-count">{{ cart.products.count }}</span>
+                                            {% endif %}
+                                            <i class='bx bx-shopping-bag'></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                            <a href="">
+                                                <div class="cart-header">
+                                                    <p class="cart-header-title mb-0">{{ cart.products.count }} ТОВАРА\ОВ</p>
+                                                    <a href="{% url 'cart' %}" class="cart-header-clear btn btn-sm btn-outline-warning ms-auto mb-0">В КОРЗИНУ</a>
+                                                </div>
+                                            </a>
+                                            <div class="cart-list">
+                                                {% for item in cart.products.all %}
+                                                <a class="dropdown-item" href="">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="flex-grow-1">
+                                                            <h6 class="cart-product-title">{{ item.content_object.name }}</h6>
+                                                            <p class="cart-product-price">{{ item.qty }} X {{ item.final_price }} Руб.</p>
+                                                        </div>
+                                                        <div class="position-relative">
+                                                            <div class="cart-product-cancel position-absolute">
+                                                                <i class='bx bx-x'>
+                                                                </i>
+                                                            </div>
+                                                            <div class="cart-product">
+                                                                <img src="{{ item.content_object.image.url }}" class="" alt="item.content_object.name">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                {% endfor %}
+                                            </div>
+                                            <a href="javascript:;">
+                                                <div class="text-center cart-footer d-flex align-items-center">
+                                                    <h5 class="mb-0">ИТОГО</h5>
+                                                    <h5 class="mb-0 ms-auto">{{ cart.final_price }} руб.</h5>
+                                                </div>
+                                            </a>
+                                            <div class="d-grid p-3 border-top">	<a href="{% url 'checkout' %}" class="btn btn-light btn-ecomm">ОФОРМИТЬ</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <!--end row-->
+            </div>
+        </div>
+{% include '_primary_menu.html' %}
+    </div>
+    <!--end top header wrapper-->
 
 {% endblock %}

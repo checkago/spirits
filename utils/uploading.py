@@ -13,6 +13,10 @@ class ImageUploadHelper:
         'Product': {
             'field': 'slug',
             'upload_postfix': 'products_images'
+        },
+        'Slider': {
+            'field': 'name',
+            'upload_postfix': 'slider_images'
         }
     }
 

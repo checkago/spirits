@@ -5,160 +5,101 @@
 
 {% block content %}
 
-    <section class="card spirits-gradient wow fadeIn mt-4">
-        <!-- Content -->
-        <div class="card-body text-white mb-1 mt-2">
-          <div class="container">
-              <hr class="spirits-dark-gradient mt-4">
-              <div class="row">
-                  <div class="col-md-2 col-xs-12">
-                      <img class="img-fluid mt-1" src="{% static 'img/logo_white_v_sm.png' %}">
-                  </div>
-                  <div class="col-md-10 col-xs-12 mt-2 float-left">
-                      <h2 class="title mt-3">Регистрация <span class="text-dark">пользователя</span></h2>
-                  </div>
-              </div>
-          </div>
-
-        </div>
-        <!-- Content -->
-    </section>
-
-<section class="mt-2">
-      <div class="mask rgba-gradient7">
-        <div class="container h-100 d-flex justify-content-center align-items-center">
-
-          <!-- Grid row -->
-          <div class="row  pt-5 mt-2">
-
-            <!-- Grid column -->
-            <div class="col-md-12">
-
-              <div class="card">
-                <div class="card-body">
-
-                  <h3 class="text-center mb-5 mt-3 font-weight-bold">
-                    <strong>Регистрационные данные нового пользователя</strong>
-                  </h3>
-                  <hr>
-
-                  <!-- Grid row -->
-                  <div class="row mt-5">
-
-                    <!-- Grid column -->
-                    <div class="col-md-6 ml-lg-5 ml-md-3">
-
-                      <!-- Grid row -->
-                      <div class="row pb-3">
-                        <div class="col-2 col-lg-1">
-                          <i class="fas fa-university indigo-text fa-lg"></i>
-                        </div>
-                        <div class="col-10">
-                          <h4 class="feature-title">
-                            <strong>Safety</strong>
-                          </h4>
-                          <p class="dark-grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit maiores nam, aperiam ipsam voluptatem quia voluptas minima assumenda deleniti hic.</p>
-                        </div>
-                      </div>
-                      <!-- Grid row -->
-
-                      <!-- Grid row -->
-                      <div class="row pb-3">
-                        <div class="col-2 col-lg-1">
-                          <i class="fas fa-desktop indigo-text fa-lg"></i>
-                        </div>
-                        <div class="col-10">
-                          <h4 class="feature-title">
-                            <strong>Technology</strong>
-                          </h4>
-                          <p class="dark-grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit maiores nam, aperiam ipsam voluptatem quia voluptas minima assumenda deleniti hic.</p>
-                        </div>
-                      </div>
-                      <!-- Grid row -->
-
-                      <!-- Grid row -->
-                      <div class="row pb-4">
-                        <div class="col-2 col-lg-1">
-                          <i class="far fa-money-bill-alt indigo-text fa-lg"></i>
-                        </div>
-                        <div class="col-10">
-                          <h4 class="feature-title">
-                            <strong>Finance</strong>
-                          </h4>
-                          <p class="dark-grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit maiores nam, aperiam ipsam voluptatem quia voluptas minima assumenda deleniti hic.</p>
-                        </div>
-                      </div>
-                      <!-- Grid row -->
-
-                    </div>
-                    <!-- Grid column -->
-
-                    <!-- Grid column -->
-                    <div class="col-md-5">
-
-                        <form method="post" action="{% url 'registration' %}">
-                        {% csrf_token %}
-                          <!-- Body -->
-                            {{ form|crispy }}
-                    <!--
-                          <div class="md-form mb-0">
-                            <i class="fas fa-user prefix"></i>
-                            {% crispy_field form.username 'class' 'form-control' %}
-                            <label for="orangeForm-name">Логин</label>
-                          </div>
-                          <div class="md-form mb-0">
-                            <i class="fas fa-lock prefix"></i>
-                            {% crispy_field form.password 'class' 'form-control' %}
-                            <label for="orangeForm-pass">Пароль</label>
-                          </div>
-                          <div class="md-form mb-0">
-                            <i class="fas fa-lock prefix white-text"></i>
-                            {% crispy_field form.confirm_password 'class' 'form-control' %}
-                            <label for="orangeForm-pass">Подтверждение</label>
-                          </div>
-                          <div class="md-form mb-0">
-                            <i class="fas fa-signature prefix"></i>
-                            {% crispy_field form.first_name 'class' 'form-control' %}
-                            <label for="orangeForm-name">Имя</label>
-                          </div>
-                          <div class="md-form mb-0">
-                            <i class="fas fa-lock prefix white-text"></i>
-                            {% crispy_field form.last_name 'class' 'form-control' %}
-                            <label for="orangeForm-name">Фамилия</label>
-                          </div>
-                          <div class="md-form mb-0">
-                            <i class="fas fa-phone prefix"></i>
-                            {% crispy_field form.phone 'class' 'form-control' %}
-                            <label for="orangeForm-phone">Номер телефона</label>
-                          </div>
-                          <div class="md-form mb-0">
-                            <i class="fas fa-envelope prefix"></i>
-                            {% crispy_field form.email 'class' 'form-control' %}
-                            <label for="orangeForm-email">Ваш E-mail</label>
-                          </div> -->
-
-                          <div class="text-center">
-                            <button type='submit' class="btn spirits-dark-gradient text-white font-weight-bold btn-rounded mt-3">Зарегистрировать</button>
-                          </div>
-                        </form>
-
-                    </div>
-                    <!-- Grid column -->
-
-                  </div>
-                  <!-- Grid row -->
-
-                </div>
-              </div>
-
-            </div>
-            <!-- Grid column -->
-
-          </div>
-          <!-- Grid row -->
-
-        </div>
-      </div>
-    </section>
+		<!--start page wrapper -->
+		<div class="page-wrapper">
+			<div class="page-content">
+				<!--start breadcrumb-->
+				<section class="py-3 border-bottom d-none d-md-flex">
+					<div class="container">
+						<div class="page-breadcrumb d-flex align-items-center">
+							<h3 class="breadcrumb-title pe-3">Регистрация пользователя</h3>
+							<div class="ms-auto">
+								<nav aria-label="breadcrumb">
+									<ol class="breadcrumb mb-0 p-0">
+										<li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i> Начало</a>
+										</li>
+										<li class="breadcrumb-item active" aria-current="page">Регистрация</li>
+									</ol>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</section>
+				<!--end breadcrumb-->
+				<!--start shop cart-->
+				<section class="py-0 py-lg-5">
+					<div class="container">
+						<div class="py-5 d-flex align-items-center justify-content-center my-5 my-lg-0">
+							<div class="row row-cols-1 row-cols-lg-1 row-cols-xl-2">
+								<div class="col mx-auto">
+									<div class="card mb-0">
+										<div class="card-body">
+											<div class="border p-4 rounded">
+												<div class="text-center">
+													<h3 class="">Регистрация</h3>
+													<p>Уже есть аккаунт? <a href="authentication-signin.html"> Войдите здесь</a>
+													</p>
+												</div>
+												<div class="form-body">
+													<form class="row g-3" method="post" action="{% url 'registration' %}">
+                                                        {% csrf_token %}
+														<div class="col-sm-6">
+															<label for="inputFirstName" class="form-label">Имя</label>
+															{% crispy_field form.first_name 'class' 'form-control border-end-0' 'placeholder' 'Ваше Имя' %}
+														</div>
+														<div class="col-sm-6">
+															<label for="inputLastName" class="form-label">Фамилия</label>
+															{% crispy_field form.last_name 'class' 'form-control border-end-0' 'placeholder' 'Фамилия' %}
+														</div>
+                                                        <div class="col-sm-6">
+															<label for="inputFirstName" class="form-label">Логин</label>
+															{% crispy_field form.username 'class' 'form-control border-end-0' 'placeholder' 'Логин' %}
+														</div>
+                                                        <div class="col-sm-6">
+															<label for="inputFirstName" class="form-label">Дата рождения</label>
+															{% crispy_field form.birth_date 'class' 'form-control border-end-0' 'placeholder' '01.12.2003' %}
+														</div>
+                                                        <div class="col-sm-6 ">
+															<label for="inputChoosePassword" class="form-label">Пароль</label>
+                                                            {% crispy_field form.password 'class' 'form-control border-end-0' 'placeholder' 'Введите пароль' %}
+														</div>
+                                                        <div class="col-sm-6">
+															<label for="inputChoosePassword" class="form-label">Подтверждение</label>
+                                                            {% crispy_field form.confirm_password 'class' 'form-control border-end-0' 'placeholder' 'Введите пароль' %}
+														</div>
+                                                        <div class="col-sm-6">
+															<label for="inputChoosePhone" class="form-label">Номер телефона</label>
+                                                            {% crispy_field form.phone 'class' 'form-control border-end-0' 'placeholder' '+7(999)999-99-99' %}
+														</div>
+														<div class="col-sm-6">
+															<label for="inputEmailAddress" class="form-label">Email</label>
+															{% crispy_field form.email 'class' 'form-control border-end-0' 'placeholder' 'Ваша электронная почта' %}
+														</div>
+														<div class="col-12">
+															<div class="form-check form-switch">
+																<input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+																<label class="form-check-label" for="flexSwitchCheckChecked">I read and agree to Terms & Conditions</label>
+															</div>
+														</div>
+														<div class="col-12">
+															<div class="d-grid">
+																<button type="submit" class="btn btn-light"><i class='bx bx-user'></i>Зарегистрироваться</button>
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!--end row-->
+						</div>
+					</div>
+				</section>
+				<!--end shop cart-->
+			</div>
+		</div>
+		<!--end page wrapper -->
 
 {% endblock content %}

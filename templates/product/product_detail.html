@@ -3,1279 +3,551 @@
 
 {% block content %}
 
-    <section class="card spirits-gradient wow fadeIn mt-4">
-        <!-- Content -->
-        <div class="card-body text-white mb-1 mt-2">
-          <div class="container">
-              <hr class="spirits-dark-gradient mt-4">
-              <div class="row">
-                  <div class="col-md-2 col-xs-12">
-                      <img class="img-fluid mt-1" src="{% static 'img/logo_white_v_sm.png' %}">
-                  </div>
-                  <div class="col-md-10 col-xs-12 mt-2 float-left">
-                      <h2 class="title mt-3">{{ product.name }} | <span class="text-dark">{{ product.brand.name }}</span></h2>
-                  </div>
-              </div>
-          </div>
-
-        </div>
-        <!-- Content -->
-    </section>
-
-  <!-- Main Container -->
-  <div class="container mt-3 pt-3">
-
-    <!-- Section: Product detail -->
-    <section id="productDetails" class="pb-5">
-        {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>{{ message }}</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        {% endfor %}
-        {% endif %}
-      <!-- News card -->
-      <div class="card mt-4 hoverable">
-
-        <div class="row mt-5">
-
-          <div class="col-lg-6">
-
-            <!-- Carousel Wrapper -->
-            <div id="carousel-thumb" class="carousel slide carousel-fade carousel-thumbnails" data-ride="carousel">
-
-              <!-- Slides -->
-              <div class="carousel-inner text-center text-md-left" role="listbox">
-
-                <div class="carousel-item active">
-
-                  <img class="img-fluid ml-1" style="max-width:425px"  src="{{ product.image.url }}" alt="{{ product }}"
-                    class="img-fluid">
-
-                </div>
-
-              </div>
-              <!-- Slides -->
-
-              <!-- Thumbnails -->
-              <a class="carousel-control-prev" href="#carousel-thumb" role="button" data-slide="prev">
-
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-
-                <span class="sr-only">Предыдущий</span>
-
-              </a>
-
-              <a class="carousel-control-next" href="#carousel-thumb" role="button" data-slide="next">
-
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-
-                <span class="sr-only">Следующий</span>
-
-              </a>
-              <!-- Thumbnails -->
-
-            </div>
-            <!-- Carousel Wrapper -->
-
-          </div>
-
-          <div class="col-lg-5 mr-3 text-center text-md-left">
-            <h3 class="h2-responsive text-center text-md-left product-name font-weight-bold dark-grey-text mb-1 ml-xl-0 ml-4">
-                {{ product.category }} |
-              <strong>{{ product.name }}</strong>
-            </h3>
-
-            <div class="divider-new">
-              <h4 class="h4-responsive font-weight-bold spirits-text-dark mx-3">Бренд</h4>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <span><a herf="">
-                    <img class="img-fluide" src="{{ product.brand.image.url }}" style="max-width:120px">
-                    </a></span>
-                </div>
-                <div class="col-md-6">
-                    <h4 class="mt-1">{{ product.brand.country }}</h4>
-                </div>
-
-            </div>
-
-            <div class="divider-new">
-              <h4 class="h4-responsive font-weight-bold spirits-text-dark mx-3">Цена и описание</h4>
-            </div>
-            <h3 class="h3-responsive text-center text-md-left mb-3 ml-xl-0 ml-1">
-
-              <span class="spirits-text-dark font-weight-bold">
-
-                <strong>{{ product.price }} <i class="fas fa-ruble-sign"></i></strong>
-
-              </span>
-
-            </h3>
-
-            <!-- Accordion wrapper -->
-            <div class="accordion md-accordion mt-5" id="accordionEx" role="tablist" aria-multiselectable="true">
-
-              <!-- Accordion card -->
-              <div class="card">
-
-                <!-- Card header -->
-                <div class="card-header" role="tab" id="headingOne1">
-
-                  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne1"
-                     aria-expanded="false"  aria-controls="collapseOne1">
-
-                    <h5 class="mb-0 grey-text-3">
-
-                      Описание
-
-                      <i class="fas fa-angle-down rotate-icon"></i>
-
-                    </h5>
-
-                  </a>
-
-                </div>
-
-                <!-- Card body -->
-                <div id="collapseOne1" class="collapse" role="tabpanel" aria-labelledby="headingOne1"
-                  data-parent="#accordionEx">
-
-                  <div class="card-body">
-
-                    {{ product.description|safe }}
-
-                  </div>
-
-                </div>
-
-              </div>
-              <!-- Accordion card -->
-
-              <!-- Accordion card -->
-              <div class="card">
-
-                <!-- Card header -->
-                <div class="card-header" role="tab" id="headingTwo2">
-
-                  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwo2"
-                    aria-expanded="false" aria-controls="collapseTwo2">
-
-                    <h5 class="mb-0 grey-text-3">
-
-                      Рецепт напитка/коктейля
-
-                      <i class="fas fa-angle-down rotate-icon"></i>
-
-                    </h5>
-
-                  </a>
-
-                </div>
-
-                <!-- Card body -->
-                <div id="collapseTwo2" class="collapse" role="tabpanel" aria-labelledby="headingTwo2"
-                  data-parent="#accordionEx">
-
-                  <span class="card-body">
-                      <div class="ml-3 mr-2">
-                          <span class="font-weight-bold">{{ product.recipe.name }}</span>
-                            {{ product.recipe.description|safe }}
-                      </div>
-                  </span>
-                </div>
-
-              </div>
-              <!-- Accordion card -->
-
-              <!-- Accordion card -->
-              <div class="card">
-
-                <!-- Card header -->
-                <div class="card-header" role="tab" id="headingThree3">
-
-                  <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree3"
-                    aria-expanded="false" aria-controls="collapseThree3">
-
-                    <h5 class="mb-0 grey-text-3">
-
-                      Правила оформления заказа
-
-                      <i class="fas fa-angle-down rotate-icon"></i>
-
-                    </h5>
-
-                  </a>
-
-                </div>
-
-                <!-- Card body -->
-                <div id="collapseThree3" class="collapse" role="tabpanel" aria-labelledby="headingThree3"
-                  data-parent="#accordionEx">
-
-                  <div class="card-body">
-
-                    Заказ можно офомить .....
-
-                  </div>
-
-                </div>
-
-              </div>
-              <!-- Accordion card -->
-
-            </div>
-            <!-- Accordion wrapper -->
-
-            <!-- Add to Cart -->
-            <section class="color">
-
-              <div class="mt-5">
-
-                <div class="row mt-3 mb-4">
-
-                  <div class="col-md-12 text-center text-md-left text-md-right">
-
-                    <a class="btn spirits-dark-gradient btn-rounded" href="{% url 'add_to_cart' ct_model=ct_model slug=product.slug %}">
-
-                      <i class="fas fa-cart-plus mr-2 white-text" aria-hidden="true"></i>
-                        <span class="font-weight-bold white-text">Добавить в заказ</span></a>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-            </section>
-            <!-- Add to Cart -->
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <div class="divider-new">
-
-      <h3 class="h3-responsive font-weight-bold spirits-text-dark mx-3">С этой позицией также заказывают</h3>
-
-    </div>
-
-    <!-- Section: Products v.5 -->
-    <section id="products" class="pb-5">
-
-      <p class="text-center w-responsive mx-auto mb-5 dark-grey-text">Другие напитки подходяшие по категории и содержанию,
-          а также ингредиенты для приготовления коктейлей на основе
-          <span class="font-weight-bold">{{ product.name }}</span> от производителя <span class="font-weight-bold">{{ product.brand.name }}</span>
-
-      <!-- Carousel Wrapper -->
-      <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
-
-        <!-- Controls -->
-        <div class="controls-top">
-
-          <a class="btn-floating spirits-dark-gradient" href="#multi-item-example" data-slide="prev">
-
-            <i class="fas fa-chevron-left"></i>
-
-          </a>
-
-          <a class="btn-floating spirits-dark-gradient" href="#multi-item-example" data-slide="next">
-
-            <i class="fas fa-chevron-right"></i>
-
-          </a>
-
-        </div>
-        <!-- Controls -->
-
-        <!-- Indicators -->
-        <ol class="carousel-indicators">
-
-          <li class="spirits-color" data-target="#multi-item-example" data-slide-to="0" class="active"></li>
-
-          <li class="spirits-color" data-target="#multi-item-example" data-slide-to="1"></li>
-
-          <li class="spirits-color" data-target="#multi-item-example" data-slide-to="2"></li>
-
-        </ol>
-        <!-- Indicators -->
-
-        <!-- Slides -->
-        <div class="carousel-inner" role="listbox">
-
-          <!-- First slide -->
-          <div class="carousel-item active">
-
-            <div class="col-md-4 mb-4">
-
-              <!-- Card -->
-              <div class="card card-ecommerce">
-
-                <!-- Card image -->
-                <div class="view overlay">
-
-                  <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/14.jpg" class="img-fluid"
-                    alt="">
-
-                  <a>
-
-                    <div class="mask rgba-white-slight"></div>
-
-                  </a>
-
-                </div>
-                <!-- Card image -->
-
-                <!-- Card content -->
-                <div class="card-body">
-
-                  <!-- Category & Title -->
-                  <h5 class="card-title mb-1">
-
-                    <strong>
-
-                      <a href="" class="dark-grey-text">Sony TV-675i</a>
-
-                    </strong>
-
-                  </h5>
-
-                  <span class="badge badge-danger mb-2">bestseller</span>
-
-                  <!-- Rating -->
-                  <ul class="rating">
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star grey-text"></i>
-
-                    </li>
-
-                  </ul>
-
-                  <!-- Card footer -->
-                  <div class="card-footer pb-0">
-
-                    <div class="row mb-0">
-
-                      <span class="float-left">
-
-                        <strong>1439$</strong>
-
-                      </span>
-
-                      <span class="float-right">
-
-                        <a class="" data-toggle="tooltip" data-placement="top" title="Add to Cart">
-
-                          <i class="fas fa-shopping-cart ml-3"></i>
-
-                        </a>
-
-                      </span>
-
-                    </div>
-
-                  </div>
-
-                </div>
-                <!-- Card content -->
-
-              </div>
-              <!-- Card -->
-
-            </div>
-
-            <div class="col-md-4 clearfix d-none d-md-block mb-4">
-
-              <!-- Card -->
-              <div class="card card-ecommerce">
-
-                <!-- Card image -->
-                <div class="view overlay">
-
-                  <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/13.jpg" class="img-fluid"
-                    alt="">
-
-                  <a>
-
-                    <div class="mask rgba-white-slight"></div>
-
-                  </a>
-
-                </div>
-                <!-- Card image -->
-
-                <!-- Card content -->
-                <div class="card-body">
-
-                  <!-- Category & Title -->
-                  <h5 class="card-title mb-1">
-
-                    <strong>
-
-                      <a href="" class="dark-grey-text">Samsung 786i</a>
-
-                    </strong>
-
-                  </h5>
-
-                  <span class="badge badge-info mb-2">new</span>
-
-                  <!-- Rating -->
-                  <ul class="rating">
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star grey-text"></i>
-
-                    </li>
-
-                  </ul>
-
-                  <!-- Card footer -->
-                  <div class="card-footer pb-0">
-
-                    <div class="row mb-0">
-
-                      <span class="float-left">
-
-                        <strong>1439$</strong>
-
-                      </span>
-
-                      <span class="float-right">
-
-                        <a class="" data-toggle="tooltip" data-placement="top" title="Add to Cart">
-
-                          <i class="fas fa-shopping-cart ml-3"></i>
-
-                        </a>
-
-                      </span>
-
-                    </div>
-
-                  </div>
-
-                </div>
-                <!-- Card content -->
-
-              </div>
-              <!-- Card -->
-
-            </div>
-
-            <div class="col-md-4 clearfix d-none d-md-block mb-4">
-
-              <!-- Card -->
-              <div class="card card-ecommerce">
-
-                <!-- Card image -->
-                <div class="view overlay">
-
-                  <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/9.jpg" class="img-fluid"
-                    alt="">
-
-                  <a>
-
-                    <div class="mask rgba-white-slight"></div>
-
-                  </a>
-
-                </div>
-                <!-- Card image -->
-
-                <!-- Card content -->
-                <div class="card-body">
-
-                  <!-- Category & Title -->
-                  <h5 class="card-title mb-1">
-
-                    <strong>
-
-                      <a href="" class="dark-grey-text">Canon 675-D</a>
-
-                    </strong>
-
-                  </h5>
-
-                  <span class="badge badge-danger mb-2">bestseller</span>
-
-                  <!-- Rating -->
-                  <ul class="rating">
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                  </ul>
-
-                  <!-- Card footer -->
-                  <div class="card-footer pb-0">
-
-                    <div class="row mb-0">
-
-                      <span class="float-left">
-
-                        <strong>1439$</strong>
-
-                      </span>
-
-                      <span class="float-right">
-
-                        <a class="" data-toggle="tooltip" data-placement="top" title="Add to Cart">
-
-                          <i class="fas fa-shopping-cart ml-3"></i>
-
-                        </a>
-
-                      </span>
-
-                    </div>
-
-                  </div>
-
-                </div>
-                <!-- Card content -->
-
-              </div>
-              <!-- Card -->
-
-            </div>
-
-          </div>
-          <!-- First slide -->
-
-          <!-- Second slide -->
-          <div class="carousel-item">
-
-            <div class="col-md-4">
-
-              <!-- Card -->
-              <div class="card card-ecommerce">
-
-                <!-- Card image -->
-                <div class="view overlay">
-
-                  <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/8.jpg" class="img-fluid"
-                    alt="">
-
-                  <a>
-
-                    <div class="mask rgba-white-slight"></div>
-
-                  </a>
-
-                </div>
-                <!-- Card image -->
-
-                <!-- Card content -->
-                <div class="card-body">
-
-                  <!-- Category & Title -->
-                  <h5 class="card-title mb-1">
-
-                    <strong>
-
-                      <a href="" class="dark-grey-text">Samsung V54</a>
-
-                    </strong>
-
-                  </h5>
-
-                  <span class="badge grey mb-2">best rated</span>
-
-                  <!-- Rating -->
-                  <ul class="rating">
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                  </ul>
-
-                  <!-- Card footer -->
-                  <div class="card-footer pb-0">
-
-                    <div class="row mb-0">
-
-                      <span class="float-left">
-
-                        <strong>1439$</strong>
-
-                      </span>
-
-                      <span class="float-right">
-
-                        <a class="" data-toggle="tooltip" data-placement="top" title="Add to Cart">
-
-                          <i class="fas fa-shopping-cart ml-3"></i>
-
-                        </a>
-
-                      </span>
-
-                    </div>
-
-                  </div>
-
-                </div>
-                <!-- Card content -->
-
-              </div>
-              <!-- Card -->
-
-            </div>
-
-            <div class="col-md-4 clearfix d-none d-md-block mb-4">
-
-              <!-- Card -->
-              <div class="card card-ecommerce">
-
-                <!-- Card image -->
-                <div class="view overlay">
-
-                  <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/5.jpg" class="img-fluid"
-                    alt="">
-
-                  <a>
-
-                    <div class="mask rgba-white-slight"></div>
-
-                  </a>
-
-                </div>
-                <!-- Card image -->
-
-                <!-- Card content -->
-                <div class="card-body">
-
-                  <!-- Category & Title -->
-                  <h5 class="card-title mb-1">
-
-                    <strong>
-
-                      <a href="" class="dark-grey-text">Dell V-964i</a>
-
-                    </strong>
-
-                  </h5>
-
-                  <span class="badge badge-info mb-2">new</span>
-
-                  <!-- Rating -->
-                  <ul class="rating">
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                  </ul>
-
-                  <!-- Card footer -->
-                  <div class="card-footer pb-0">
-
-                    <div class="row mb-0">
-
-                      <span class="float-left">
-
-                        <strong>1439$</strong>
-
-                      </span>
-
-                      <span class="float-right">
-
-                        <a class="" data-toggle="tooltip" data-placement="top" title="Add to Cart">
-
-                          <i class="fas fa-shopping-cart ml-3"></i>
-
-                        </a>
-
-                      </span>
-
-                    </div>
-
-                  </div>
-
-                </div>
-                <!-- Card content -->
-
-              </div>
-              <!-- Card -->
-
-            </div>
-
-            <div class="col-md-4 clearfix d-none d-md-block mb-4">
-
-              <!-- Card -->
-              <div class="card card-ecommerce">
-
-                <!-- Card image -->
-                <div class="view overlay">
-
-                  <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/1.jpg" class="img-fluid"
-                    alt="">
-
-                  <a>
-
-                    <div class="mask rgba-white-slight"></div>
-
-                  </a>
-
-                </div>
-                <!-- Card image -->
-
-                <!-- Card content -->
-                <div class="card-body">
-
-                  <!-- Category & Title -->
-                  <h5 class="card-title mb-1">
-
-                    <strong>
-
-                      <a href="" class="dark-grey-text">iPad PRO</a>
-
-                    </strong>
-
-                  </h5>
-
-                  <span class="badge badge-danger mb-2">bestseller</span>
-
-                  <!-- Rating -->
-                  <ul class="rating">
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star grey-text"></i>
-
-                    </li>
-
-                  </ul>
-
-                  <!-- Card footer -->
-                  <div class="card-footer pb-0">
-
-                    <div class="row mb-0">
-
-                      <span class="float-left">
-
-                        <strong>1439$</strong>
-
-                      </span>
-
-                      <span class="float-right">
-
-                        <a class="" data-toggle="tooltip" data-placement="top" title="Add to Cart">
-
-                          <i class="fas fa-shopping-cart ml-3"></i>
-
-                        </a>
-
-                      </span>
-
-                    </div>
-
-                  </div>
-
-                </div>
-                <!-- Card content -->
-
-              </div>
-              <!-- Card -->
-
-            </div>
-
-          </div>
-          <!-- Second slide -->
-
-          <!-- Third slide -->
-          <div class="carousel-item">
-
-            <div class="col-md-4 mb-4">
-
-              <!-- Card -->
-              <div class="card card-ecommerce">
-
-                <!-- Card image -->
-                <div class="view overlay">
-
-                  <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/12.jpg" class="img-fluid"
-                    alt="">
-
-                  <a>
-
-                    <div class="mask rgba-white-slight"></div>
-
-                  </a>
-
-                </div>
-
-                <!-- Card image -->
-
-                <!-- Card content -->
-                <div class="card-body">
-
-                  <!-- Category & Title -->
-                  <h5 class="card-title mb-1">
-
-                    <strong>
-
-                      <a href="" class="dark-grey-text">Asus CT-567</a>
-
-                    </strong>
-
-                  </h5>
-
-                  <span class="badge grey mb-2">best rated</span>
-
-                  <!-- Rating -->
-                  <ul class="rating">
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                  </ul>
-
-                  <!-- Card footer -->
-                  <div class="card-footer pb-0">
-
-                    <div class="row mb-0">
-
-                      <span class="float-left">
-
-                        <strong>1439$</strong>
-
-                      </span>
-
-                      <span class="float-right">
-
-                        <a class="" data-toggle="tooltip" data-placement="top" title="Add to Cart">
-
-                          <i class="fas fa-shopping-cart ml-3"></i>
-
-                        </a>
-
-                      </span>
-
-                    </div>
-
-                  </div>
-
-                </div>
-                <!-- Card content -->
-
-              </div>
-              <!-- Card -->
-
-            </div>
-
-            <div class="col-md-4 clearfix d-none d-md-block mb-4">
-
-              <!-- Card -->
-              <div class="card card-ecommerce">
-
-                <!-- Card image -->
-                <div class="view overlay">
-
-                  <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/7.jpg" class="img-fluid"
-                    alt="">
-
-                  <a>
-
-                    <div class="mask rgba-white-slight"></div>
-
-                  </a>
-
-                </div>
-                <!-- Card image -->
-
-                <!-- Card content -->
-                <div class="card-body">
-
-                  <!-- Category & Title -->
-                  <h5 class="card-title mb-1">
-
-                    <strong>
-
-                      <a href="" class="dark-grey-text">Dell 786i</a>
-
-                    </strong>
-
-                  </h5>
-
-                  <span class="badge badge-info mb-2">new</span>
-
-                  <!-- Rating -->
-                  <ul class="rating">
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star grey-text"></i>
-
-                    </li>
-
-                  </ul>
-
-                  <!-- Card footer -->
-                  <div class="card-footer pb-0">
-
-                    <div class="row mb-0">
-
-                      <span class="float-left">
-
-                        <strong>1439$</strong>
-
-                      </span>
-
-                      <span class="float-right">
-
-                        <a class="" data-toggle="tooltip" data-placement="top" title="Add to Cart">
-
-                          <i class="fas fa-shopping-cart ml-3"></i>
-
-                        </a>
-
-                      </span>
-
-                    </div>
-
-                  </div>
-
-                </div>
-                <!-- Card content -->
-
-              </div>
-              <!-- Card -->
-
-            </div>
-
-            <div class="col-md-4 clearfix d-none d-md-block mb-4">
-
-              <!-- Card -->
-              <div class="card card-ecommerce">
-
-                <!-- Card image -->
-                <div class="view overlay">
-
-                  <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/10.jpg" class="img-fluid"
-                    alt="">
-
-                  <a>
-
-                    <div class="mask rgba-white-slight"></div>
-
-                  </a>
-
-                </div>
-                <!-- Card image -->
-
-                <!-- Card content -->
-                <div class="card-body">
-
-                  <!-- Category & Title -->
-                  <h5 class="card-title mb-1">
-
-                    <strong>
-
-                      <a href="" class="dark-grey-text">Headphones</a>
-
-                    </strong>
-
-                  </h5>
-
-                  <span class="badge badge-info mb-2">new</span>
-
-                  <!-- Rating -->
-                  <ul class="rating">
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                    <li>
-
-                      <i class="fas fa-star blue-text"></i>
-
-                    </li>
-
-                  </ul>
-
-                  <!-- Card footer -->
-                  <div class="card-footer pb-0">
-
-                    <div class="row mb-0">
-
-                      <span class="float-left">
-
-                        <strong>1439$</strong>
-
-                      </span>
-
-                      <span class="float-right">
-
-                        <a class="" data-toggle="tooltip" data-placement="top" title="Add to Cart">
-
-                          <i class="fas fa-shopping-cart ml-3"></i>
-
-                        </a>
-
-                      </span>
-
-                    </div>
-
-                  </div>
-
-                </div>
-                <!-- Card content -->
-
-              </div>
-              <!-- Card -->
-
-            </div>
-
-          </div>
-          <!-- Third slide -->
-
-        </div>
-        <!-- Slides -->
-
-      </div>
-      <!-- Carousel Wrapper -->
-
-    </section>
-    <!-- Section: Products v.5 -->
-
-  </div>
-  <!-- Main Container -->
+		<!--start page wrapper -->
+		<div class="page-wrapper">
+			<div class="page-content">
+				<!--start breadcrumb-->
+				<section class="py-3 border-bottom d-none d-md-flex">
+					<div class="container">
+						<div class="page-breadcrumb d-flex align-items-center">
+							<h3 class="breadcrumb-title pe-3">{{ product.name }}</h3>
+							<div class="ms-auto">
+								<nav aria-label="breadcrumb">
+									<ol class="breadcrumb mb-0 p-0">
+										<li class="breadcrumb-item"><a href="{% url 'index' %}"><i class="bx bx-home-alt"></i> Начало</a>
+										</li>
+										<li class="breadcrumb-item"><a href="{% url 'categories' %}">Каталог</a>
+										</li>
+                                        <li class="breadcrumb-item"><a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a>
+										</li>
+										<li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+									</ol>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</section>
+				<!--end breadcrumb-->
+				<!--start product detail-->
+				<section class="py-4">
+					<div class="container">
+						<div class="product-detail-card">
+							<div class="product-detail-body">
+								<div class="row g-0">
+									<div class="col-12 col-lg-5">
+										<div class="image-zoom-section">
+											<div class="product-gallery owl-carousel owl-theme border mb-3 p-3" data-slider-id="1">
+												<div class="item">
+													<img src="{{ product.image.url }}" class="img-fluid" alt="">
+												</div>
+												<div class="item">
+													<img src="assets/images/product-gallery/02.png" class="img-fluid" alt="">
+												</div>
+												<div class="item">
+													<img src="assets/images/product-gallery/03.png" class="img-fluid" alt="">
+												</div>
+												<div class="item">
+													<img src="assets/images/product-gallery/04.png" class="img-fluid" alt="">
+												</div>
+											</div>
+											<div class="owl-thumbs d-flex justify-content-center" data-slider-id="1">
+												<button class="owl-thumb-item">
+													<img src="assets/images/product-gallery/01.png" class="" alt="">
+												</button>
+												<button class="owl-thumb-item">
+													<img src="assets/images/product-gallery/02.png" class="" alt="">
+												</button>
+												<button class="owl-thumb-item">
+													<img src="assets/images/product-gallery/03.png" class="" alt="">
+												</button>
+												<button class="owl-thumb-item">
+													<img src="assets/images/product-gallery/04.png" class="" alt="">
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="col-12 col-lg-7">
+										<div class="product-info-section p-3">
+											<h3 class="mt-3 mt-lg-0 mb-0">{{ product.name }}</h3>
+											<div class="product-rating d-flex align-items-center mt-2">
+												<div class="rates cursor-pointer font-13">	<i class="bx bxs-star text-warning"></i>
+													<i class="bx bxs-star text-warning"></i>
+													<i class="bx bxs-star text-warning"></i>
+													<i class="bx bxs-star text-warning"></i>
+													<i class="bx bxs-star text-light-4"></i>
+												</div>
+												<div class="ms-1">
+													<p class="mb-0">(24 Голоса/ов)</p>
+												</div>
+											</div>
+											<div class="d-flex align-items-center mt-3 gap-2">
+												<h5 class="mb-0 text-decoration-line-through text-light-3">$98.00</h5>
+												<h4 class="mb-0">{{ product.price }} руб.</h4>
+											</div>
+											<div class="mt-3">
+												<h6>Описание :</h6>
+												<p class="mb-0">{{ product.description|safe }}</p>
+											</div>
+											<dl class="row mt-3">	<dt class="col-sm-3">Ариткул</dt>
+												<dd class="col-sm-9">#MSART3574{{ product.id }}</dd>	<dt class="col-sm-3">Доставка</dt>
+												<dd class="col-sm-9">Москва</dd>
+											</dl>
+
+											<div class="d-flex gap-2 mt-3">
+												<a href="{% url 'add_to_cart' ct_model=ct_model slug=product.slug %}" class="btn btn-white btn-ecomm">	<i class="bx bxs-cart-add"></i>В заказ</a> <a href="javascript:;" class="btn btn-light btn-ecomm"><i class="bx bx-heart"></i>В список желаемого</a>
+											</div>
+											<hr/>
+											<div class="product-sharing">
+												<ul class="list-inline">
+													<li class="list-inline-item"> <a href="javascript:;"><i class='bx bxl-facebook'></i></a>
+													</li>
+													<li class="list-inline-item">	<a href="javascript:;"><i class='bx bxl-linkedin'></i></a>
+													</li>
+													<li class="list-inline-item">	<a href="javascript:;"><i class='bx bxl-twitter'></i></a>
+													</li>
+													<li class="list-inline-item">	<a href="javascript:;"><i class='bx bxl-instagram'></i></a>
+													</li>
+													<li class="list-inline-item">	<a href="javascript:;"><i class='bx bxl-google'></i></a>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--end row-->
+							</div>
+						</div>
+					</div>
+				</section>
+				<!--end product detail-->
+				<!--start product more info-->
+				<section class="py-4">
+					<div class="container">
+						<div class="product-more-info">
+							<ul class="nav nav-tabs mb-0" role="tablist">
+								<li class="nav-item" role="presentation">
+									<a class="nav-link active" data-bs-toggle="tab" href="#discription" role="tab" aria-selected="true">
+										<div class="d-flex align-items-center">
+											<div class="tab-title text-uppercase fw-500">Описание</div>
+										</div>
+									</a>
+								</li>
+								<li class="nav-item" role="presentation">
+									<a class="nav-link" data-bs-toggle="tab" href="#more-info" role="tab" aria-selected="false">
+										<div class="d-flex align-items-center">
+											<div class="tab-title text-uppercase fw-500">Рецепты</div>
+										</div>
+									</a>
+								</li>
+								<li class="nav-item" role="presentation">
+									<a class="nav-link" data-bs-toggle="tab" href="#tags" role="tab" aria-selected="false">
+										<div class="d-flex align-items-center">
+											<div class="tab-title text-uppercase fw-500">Теги</div>
+										</div>
+									</a>
+								</li>
+								<li class="nav-item" role="presentation">
+									<a class="nav-link" data-bs-toggle="tab" href="#reviews" role="tab" aria-selected="false">
+										<div class="d-flex align-items-center">
+											<div class="tab-title text-uppercase fw-500">(3) Отзывы</div>
+										</div>
+									</a>
+								</li>
+							</ul>
+							<div class="tab-content pt-3">
+								<div class="tab-pane fade show active" id="discription" role="tabpanel">
+                                    {{ product.description }}
+								</div>
+								<div class="tab-pane fade" id="more-info" role="tabpanel">
+									{{ product.recipe.description|safe }}
+								</div>
+								<div class="tab-pane fade" id="tags" role="tabpanel">
+									<div class="tags-box w-50">	<a href="javascript:;" class="tag-link">Cloths</a>
+										<a href="javascript:;" class="tag-link">Electronis</a>
+										<a href="javascript:;" class="tag-link">Furniture</a>
+										<a href="javascript:;" class="tag-link">Sports</a>
+										<a href="javascript:;" class="tag-link">Men Wear</a>
+										<a href="javascript:;" class="tag-link">Women Wear</a>
+										<a href="javascript:;" class="tag-link">Laptops</a>
+										<a href="javascript:;" class="tag-link">Formal Shirts</a>
+										<a href="javascript:;" class="tag-link">Topwear</a>
+										<a href="javascript:;" class="tag-link">Headphones</a>
+										<a href="javascript:;" class="tag-link">Bottom Wear</a>
+										<a href="javascript:;" class="tag-link">Bags</a>
+										<a href="javascript:;" class="tag-link">Sofa</a>
+										<a href="javascript:;" class="tag-link">Shoes</a>
+									</div>
+								</div>
+								<div class="tab-pane fade" id="reviews" role="tabpanel">
+									<div class="row">
+										<div class="col col-lg-8">
+											<div class="product-review">
+												<h5 class="mb-4">3 Отзывы/ов к товару</h5>
+												<div class="review-list">
+													<div class="d-flex align-items-start">
+														<div class="review-user">
+															<img src="assets/images/avatars/avatar-1.png" width="65" height="65" class="rounded-circle" alt="" />
+														</div>
+														<div class="review-content ms-3">
+															<div class="rates cursor-pointer fs-6">	<i class="bx bxs-star text-white"></i>
+																<i class="bx bxs-star text-white"></i>
+																<i class="bx bxs-star text-white"></i>
+																<i class="bx bxs-star text-white"></i>
+																<i class="bx bxs-star text-light-4"></i>
+															</div>
+															<div class="d-flex align-items-center mb-2">
+																<h6 class="mb-0">James Caviness</h6>
+																<p class="mb-0 ms-auto">February 16, 2021</p>
+															</div>
+															<p>Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan</p>
+														</div>
+													</div>
+													<hr/>
+													<div class="d-flex align-items-start">
+														<div class="review-user">
+															<img src="assets/images/avatars/avatar-2.png" width="65" height="65" class="rounded-circle" alt="" />
+														</div>
+														<div class="review-content ms-3">
+															<div class="rates cursor-pointer fs-6"> <i class="bx bxs-star text-white"></i>
+																<i class="bx bxs-star text-white"></i>
+																<i class="bx bxs-star text-white"></i>
+																<i class="bx bxs-star text-white"></i>
+																<i class="bx bxs-star text-light-4"></i>
+															</div>
+															<div class="d-flex align-items-center mb-2">
+																<h6 class="mb-0">David Buckley</h6>
+																<p class="mb-0 ms-auto">February 22, 2021</p>
+															</div>
+															<p>Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan</p>
+														</div>
+													</div>
+													<hr/>
+													<div class="d-flex align-items-start">
+														<div class="review-user">
+															<img src="assets/images/avatars/avatar-3.png" width="65" height="65" class="rounded-circle" alt="" />
+														</div>
+														<div class="review-content ms-3">
+															<div class="rates cursor-pointer fs-6">	<i class="bx bxs-star text-white"></i>
+																<i class="bx bxs-star text-white"></i>
+																<i class="bx bxs-star text-white"></i>
+																<i class="bx bxs-star text-white"></i>
+																<i class="bx bxs-star text-light-4"></i>
+															</div>
+															<div class="d-flex align-items-center mb-2">
+																<h6 class="mb-0">Peter Costanzo</h6>
+																<p class="mb-0 ms-auto">February 26, 2021</p>
+															</div>
+															<p>Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan</p>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col col-lg-4">
+											<div class="add-review bg-dark-1">
+												<div class="form-body p-3">
+													<h4 class="mb-4">Write a Review</h4>
+													<div class="mb-3">
+														<label class="form-label">Your Name</label>
+														<input type="text" class="form-control rounded-0">
+													</div>
+													<div class="mb-3">
+														<label class="form-label">Your Email</label>
+														<input type="text" class="form-control rounded-0">
+													</div>
+													<div class="mb-3">
+														<label class="form-label">Rating</label>
+														<select class="form-select rounded-0">
+															<option selected>Choose Rating</option>
+															<option value="1">1</option>
+															<option value="2">2</option>
+															<option value="3">3</option>
+															<option value="3">4</option>
+															<option value="3">5</option>
+														</select>
+													</div>
+													<div class="mb-3">
+														<label class="form-label">Example textarea</label>
+														<textarea class="form-control rounded-0" rows="3"></textarea>
+													</div>
+													<div class="d-grid">
+														<button type="button" class="btn btn-light btn-ecomm">Submit a Review</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!--end row-->
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<!--end product more info-->
+				<!--start similar products-->
+				<section class="py-4">
+					<div class="container">
+						<div class="d-flex align-items-center">
+							<h5 class="text-uppercase mb-0">Similar Products</h5>
+							<div class="d-flex align-items-center gap-0 ms-auto">	<a href="javascript:;" class="owl_prev_item fs-2"><i class='bx bx-chevron-left'></i></a>
+								<a href="javascript:;" class="owl_next_item fs-2"><i class='bx bx-chevron-right'></i></a>
+							</div>
+						</div>
+						<hr/>
+						<div class="product-grid">
+							<div class="similar-products owl-carousel owl-theme">
+								<div class="item">
+									<div class="card rounded-0 product-card">
+										<div class="card-header bg-transparent border-bottom-0">
+											<div class="d-flex align-items-center justify-content-end">
+												<a href="javascript:;">
+													<div class="product-wishlist"> <i class='bx bx-heart'></i>
+													</div>
+												</a>
+											</div>
+										</div>
+										<img src="assets/images/similar-products/01.png" class="card-img-top" alt="...">
+										<div class="card-body">
+											<div class="product-info">
+												<a href="javascript:;">
+													<p class="product-catergory font-13 mb-1">Catergory Name</p>
+												</a>
+												<a href="javascript:;">
+													<h6 class="product-name mb-2">Product Short Name</h6>
+												</a>
+												<div class="d-flex align-items-center">
+													<div class="mb-1 product-price"> <span class="me-1 text-decoration-line-through">$99.00</span>
+														<span class="text-white fs-5">$49.00</span>
+													</div>
+													<div class="cursor-pointer ms-auto">	<span>5.0</span>  <i class="bx bxs-star text-white"></i>
+													</div>
+												</div>
+												<div class="product-action mt-2">
+													<div class="d-grid gap-2">
+														<a href="javascript:;" class="btn btn-light btn-ecomm"> <i class='bx bxs-cart-add'></i>Add to Cart</a> <a href="javascript:;" class="btn btn-link btn-ecomm"><i class='bx bx-zoom-in'></i>Quick View</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="item">
+									<div class="card rounded-0 product-card">
+										<div class="card-header bg-transparent border-bottom-0">
+											<div class="d-flex align-items-center justify-content-end">
+												<a href="javascript:;">
+													<div class="product-wishlist"> <i class='bx bx-heart'></i>
+													</div>
+												</a>
+											</div>
+										</div>
+										<img src="assets/images/similar-products/02.png" class="card-img-top" alt="...">
+										<div class="card-body">
+											<div class="product-info">
+												<a href="javascript:;">
+													<p class="product-catergory font-13 mb-1">Catergory Name</p>
+												</a>
+												<a href="javascript:;">
+													<h6 class="product-name mb-2">Product Short Name</h6>
+												</a>
+												<div class="d-flex align-items-center">
+													<div class="mb-1 product-price"> <span class="me-1 text-decoration-line-through">$99.00</span>
+														<span class="text-white fs-5">$49.00</span>
+													</div>
+													<div class="cursor-pointer ms-auto">	<span>5.0</span>  <i class="bx bxs-star text-white"></i>
+													</div>
+												</div>
+												<div class="product-action mt-2">
+													<div class="d-grid gap-2">
+														<a href="javascript:;" class="btn btn-light btn-ecomm"> <i class='bx bxs-cart-add'></i>Add to Cart</a> <a href="javascript:;" class="btn btn-link btn-ecomm"><i class='bx bx-zoom-in'></i>Quick View</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="item">
+									<div class="card rounded-0 product-card">
+										<div class="card-header bg-transparent border-bottom-0">
+											<div class="d-flex align-items-center justify-content-end">
+												<a href="javascript:;">
+													<div class="product-wishlist"> <i class='bx bx-heart'></i>
+													</div>
+												</a>
+											</div>
+										</div>
+										<img src="assets/images/similar-products/03.png" class="card-img-top" alt="...">
+										<div class="card-body">
+											<div class="product-info">
+												<a href="javascript:;">
+													<p class="product-catergory font-13 mb-1">Catergory Name</p>
+												</a>
+												<a href="javascript:;">
+													<h6 class="product-name mb-2">Product Short Name</h6>
+												</a>
+												<div class="d-flex align-items-center">
+													<div class="mb-1 product-price"> <span class="me-1 text-decoration-line-through">$99.00</span>
+														<span class="text-white fs-5">$49.00</span>
+													</div>
+													<div class="cursor-pointer ms-auto">	<span>4.9</span>  <i class="bx bxs-star text-white"></i>
+													</div>
+												</div>
+												<div class="product-action mt-2">
+													<div class="d-grid gap-2">
+														<a href="javascript:;" class="btn btn-light btn-ecomm"> <i class='bx bxs-cart-add'></i>Add to Cart</a> <a href="javascript:;" class="btn btn-link btn-ecomm"><i class='bx bx-zoom-in'></i>Quick View</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="item">
+									<div class="card rounded-0 product-card">
+										<div class="card-header bg-transparent border-bottom-0">
+											<div class="d-flex align-items-center justify-content-end">
+												<a href="javascript:;">
+													<div class="product-wishlist"> <i class='bx bx-heart'></i>
+													</div>
+												</a>
+											</div>
+										</div>
+										<img src="assets/images/similar-products/04.png" class="card-img-top" alt="...">
+										<div class="card-body">
+											<div class="product-info">
+												<a href="javascript:;">
+													<p class="product-catergory font-13 mb-1">Catergory Name</p>
+												</a>
+												<a href="javascript:;">
+													<h6 class="product-name mb-2">Product Short Name</h6>
+												</a>
+												<div class="d-flex align-items-center">
+													<div class="mb-1 product-price"> <span class="me-1 text-decoration-line-through">$99.00</span>
+														<span class="text-white fs-5">$49.00</span>
+													</div>
+													<div class="cursor-pointer ms-auto">	<span>5.0</span>  <i class="bx bxs-star text-white"></i>
+													</div>
+												</div>
+												<div class="product-action mt-2">
+													<div class="d-grid gap-2">
+														<a href="javascript:;" class="btn btn-light btn-ecomm"> <i class='bx bxs-cart-add'></i>Add to Cart</a> <a href="javascript:;" class="btn btn-link btn-ecomm"><i class='bx bx-zoom-in'></i>Quick View</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="item">
+									<div class="card rounded-0 product-card">
+										<div class="card-header bg-transparent border-bottom-0">
+											<div class="d-flex align-items-center justify-content-end">
+												<a href="javascript:;">
+													<div class="product-wishlist"> <i class='bx bx-heart'></i>
+													</div>
+												</a>
+											</div>
+										</div>
+										<img src="assets/images/similar-products/05.png" class="card-img-top" alt="...">
+										<div class="card-body">
+											<div class="product-info">
+												<a href="javascript:;">
+													<p class="product-catergory font-13 mb-1">Catergory Name</p>
+												</a>
+												<a href="javascript:;">
+													<h6 class="product-name mb-2">Product Short Name</h6>
+												</a>
+												<div class="d-flex align-items-center">
+													<div class="mb-1 product-price"> <span class="me-1 text-decoration-line-through">$99.00</span>
+														<span class="text-white fs-5">$49.00</span>
+													</div>
+													<div class="cursor-pointer ms-auto">	<span>3.9</span>  <i class="bx bxs-star text-white"></i>
+													</div>
+												</div>
+												<div class="product-action mt-2">
+													<div class="d-grid gap-2">
+														<a href="javascript:;" class="btn btn-light btn-ecomm"> <i class='bx bxs-cart-add'></i>Add to Cart</a> <a href="javascript:;" class="btn btn-link btn-ecomm"><i class='bx bx-zoom-in'></i>Quick View</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="item">
+									<div class="card rounded-0 product-card">
+										<div class="card-header bg-transparent border-bottom-0">
+											<div class="d-flex align-items-center justify-content-end">
+												<a href="javascript:;">
+													<div class="product-wishlist"> <i class='bx bx-heart'></i>
+													</div>
+												</a>
+											</div>
+										</div>
+										<img src="assets/images/similar-products/06.png" class="card-img-top" alt="...">
+										<div class="card-body">
+											<div class="product-info">
+												<a href="javascript:;">
+													<p class="product-catergory font-13 mb-1">Catergory Name</p>
+												</a>
+												<a href="javascript:;">
+													<h6 class="product-name mb-2">Product Short Name</h6>
+												</a>
+												<div class="d-flex align-items-center">
+													<div class="mb-1 product-price"> <span class="me-1 text-decoration-line-through">$99.00</span>
+														<span class="text-white fs-5">$49.00</span>
+													</div>
+													<div class="cursor-pointer ms-auto">	<span>5.0</span>  <i class="bx bxs-star text-white"></i>
+													</div>
+												</div>
+												<div class="product-action mt-2">
+													<div class="d-grid gap-2">
+														<a href="javascript:;" class="btn btn-light btn-ecomm"> <i class='bx bxs-cart-add'></i>Add to Cart</a> <a href="javascript:;" class="btn btn-link btn-ecomm"><i class='bx bx-zoom-in'></i>Quick View</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="item">
+									<div class="card rounded-0 product-card">
+										<div class="card-header bg-transparent border-bottom-0">
+											<div class="d-flex align-items-center justify-content-end">
+												<a href="javascript:;">
+													<div class="product-wishlist"> <i class='bx bx-heart'></i>
+													</div>
+												</a>
+											</div>
+										</div>
+										<img src="assets/images/similar-products/07.png" class="card-img-top" alt="...">
+										<div class="card-body">
+											<div class="product-info">
+												<a href="javascript:;">
+													<p class="product-catergory font-13 mb-1">Catergory Name</p>
+												</a>
+												<a href="javascript:;">
+													<h6 class="product-name mb-2">Product Short Name</h6>
+												</a>
+												<div class="d-flex align-items-center">
+													<div class="mb-1 product-price"> <span class="me-1 text-decoration-line-through">$99.00</span>
+														<span class="text-white fs-5">$49.00</span>
+													</div>
+													<div class="cursor-pointer ms-auto">	<span>5.0</span>  <i class="bx bxs-star text-white"></i>
+													</div>
+												</div>
+												<div class="product-action mt-2">
+													<div class="d-grid gap-2">
+														<a href="javascript:;" class="btn btn-light btn-ecomm"> <i class='bx bxs-cart-add'></i>Add to Cart</a> <a href="javascript:;" class="btn btn-link btn-ecomm"><i class='bx bx-zoom-in'></i>Quick View</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<!--end similar products-->
+			</div>
+		</div>
+		<!--end page wrapper -->
 
 {% endblock content %}

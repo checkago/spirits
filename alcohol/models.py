@@ -12,6 +12,21 @@ from utils import upload_function
 User = get_user_model()
 
 
+class Slider(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Название')
+    image = models.ImageField(upload_to=upload_function, verbose_name='Изображение')
+    text = models.TextField(verbose_name='Текст')
+    link = models.URLField(blank=True, null=True, verbose_name='Ссылка')
+    active = models.BooleanField(default=True, verbose_name='Показывать на главной')
+
+    class Meta:
+        verbose_name = 'Слайд'
+        verbose_name_plural = 'Слайдер'
+
+        def __str__(self):
+            return self.name
+
+
 class BottleVolume(models.Model):
     name = models.CharField(max_length=11, verbose_name='Объем тары')
 
@@ -166,7 +181,7 @@ class Cart(models.Model):
         verbose_name_plural = 'Корзины покупателей'
 
     def __str__(self):
-        return f"{self.id} | {self.owner}"
+        return f"Корзина №{self.id} | Пользователь -  {self.owner}"
 
 
 class Order(models.Model):
@@ -221,6 +236,7 @@ class Customer(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Пользователь')
     is_active = models.BooleanField(default=True, verbose_name='Активный')
     phone = models.CharField(max_length=18, verbose_name='Номер телефона')
+    birth_date = models.DateField(blank=True, null=True, verbose_name='Дата рождения')
     addresses = models.ManyToManyField('Address', blank=True, related_name='addresses', verbose_name='Адрес покупателя')
     user_orders = models.ManyToManyField(Order, blank=True, related_name='related_customer', verbose_name='Заказы покупателя')
     wishlist = models.ManyToManyField(Product, blank=True, verbose_name='Лист ожидания')

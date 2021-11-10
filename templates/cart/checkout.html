@@ -4,208 +4,187 @@
 {% load crispy_forms_field %}
 {% block content %}
 
-<section class="card spirits-gradient wow fadeIn mt-4">
-    <!-- Content -->
-    <div class="card-body text-white mb-1 mt-2">
-      <div class="container">
-          <hr class="spirits-dark-gradient mt-4">
-          <div class="row">
-              <div class="col-md-2 col-xs-12">
-                  <img class="img-fluid mt-1" src="{% static 'img/logo_white_v_sm.png' %}">
-              </div>
-              <div class="col-md-10 col-xs-12 mt-2 float-left">
-                  <h2 class="title mt-3">Корзина <span class="text-dark">заказов</span></h2>
-              </div>
-          </div>
-      </div>
+		<!--start page wrapper -->
+		<div class="page-wrapper">
+			<div class="page-content">
+				<!--start breadcrumb-->
+				<section class="py-3 border-bottom d-none d-md-flex">
+					<div class="container">
+						<div class="page-breadcrumb d-flex align-items-center">
+							<h3 class="breadcrumb-title pe-3">Оформление заказа</h3>
+							<div class="ms-auto">
+								<nav aria-label="breadcrumb">
+									<ol class="breadcrumb mb-0 p-0">
+										<li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i> Начало</a>
+										</li>
+										<li class="breadcrumb-item"><a href="{% url 'cart' %}">Корзина</a>
+										</li>
+										<li class="breadcrumb-item active" aria-current="page">Оформление</li>
+									</ol>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</section>
+				<!--end breadcrumb-->
+				<!--start shop cart-->
+				<section class="py-4">
+					<div class="container">
+						<div class="shop-cart">
+							<div class="row">
+								<div class="col-12 col-xl-8">
+									<div class="checkout-details">
+										<div class="card bg-transparent rounded-0 shadow-none">
+											<div class="card-body">
+												<div class="steps steps-light">
+													<a class="step-item active" href="{% url 'cart' %}">
+														<div class="step-progress"><span class="step-count">1</span>
+														</div>
+														<div class="step-label"><i class='bx bx-cart'></i>Корзина</div>
+													</a>
+													<a class="step-item active current" href="{% url 'checkout' %}">
+														<div class="step-progress"><span class="step-count">2</span>
+														</div>
+														<div class="step-label"><i class='bx bx-user-circle'></i>Данные</div>
+													</a>
+													<a class="step-item" href="checkout-review.html">
+														<div class="step-progress"><span class="step-count">3</span>
+														</div>
+														<div class="step-label"><i class='bx bx-check-circle'></i>Готово</div>
+													</a>
+												</div>
+											</div>
+										</div>
+										<div class="card rounded-0">
+											<div class="card-body">
+												<div class="d-flex align-items-center">
+													<div class="">
+														<img src="assets/images/avatars/avatar-1.png" width="90" alt="" class="rounded-circle p-1 border">
+													</div>
+													<div class="ms-2">
+														<h6 class="mb-0">{{ customer.user.first_name }} {{ customer.user.last_name }}</h6>
+														<p class="mb-0">{{ customer.user.email }}</p>
+													</div>
+													<div class="ms-auto">	<a href="javascript:;" class="btn btn-light btn-ecomm"><i class='bx bx-edit'></i> Редактировать профиль</a>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="card rounded-0">
+											<div class="card-body">
+												<div class="border p-3">
+													<h2 class="h5 mb-0">Shipping Address</h2>
+													<div class="my-3 border-bottom"></div>
+													<div class="form-body">
+														<form class="row g-3">
+															<div class="col-md-6">
+																<label class="form-label">First Name</label>
+																<input type="text" class="form-control rounded-0">
+															</div>
+															<div class="col-md-6">
+																<label class="form-label">Last Name</label>
+																<input type="text" class="form-control rounded-0">
+															</div>
+															<div class="col-md-6">
+																<label class="form-label">E-mail id</label>
+																<input type="text" class="form-control rounded-0">
+															</div>
+															<div class="col-md-6">
+																<label class="form-label">Phone Number</label>
+																<input type="text" class="form-control rounded-0">
+															</div>
+															<div class="col-md-6">
+																<label class="form-label">Company</label>
+																<input type="text" class="form-control rounded-0">
+															</div>
+															<div class="col-md-6">
+																<label class="form-label">State/Province</label>
+																<select class="form-select rounded-0">
+																	<option>United Kingdom</option>
+																	<option>California</option>
+																</select>
+															</div>
+															<div class="col-md-6">
+																<label class="form-label">Zip/Postal Code</label>
+																<input type="text" class="form-control rounded-0">
+															</div>
+															<div class="col-md-6">
+																<label class="form-label">Country</label>
+																<select class="form-select rounded-0">
+																	<option>United States</option>
+																	<option>India</option>
+																	<option>China</option>
+																	<option>Turkey</option>
+																</select>
+															</div>
+															<div class="col-md-6">
+																<label class="form-label">Address 1</label>
+																<textarea class="form-control rounded-0"></textarea>
+															</div>
+															<div class="col-md-6">
+																<label class="form-label">Address 2</label>
+																<textarea class="form-control rounded-0"></textarea>
+															</div>
+															<div class="col-md-12">
+																<h6 class="mb-0 h5">Billing Address</h6>
+																<div class="my-3 border-bottom"></div>
+																<div class="form-check">
+																	<input class="form-check-input" type="checkbox" id="gridCheck" checked>
+																	<label class="form-check-label" for="gridCheck">Same as shipping address</label>
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="d-grid">	<a href="javascript:;" class="btn btn-light btn-ecomm"><i class='bx bx-chevron-left'></i>Back to Cart</a>
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="d-grid">	<a href="javascript:;" class="btn btn-white btn-ecomm">Proceed to Checkout<i class='bx bx-chevron-right'></i></a>
+																</div>
+															</div>
+														</form>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 col-xl-4">
+									<div class="checkout-form p-3 bg-dark-1">
+										<div class="card rounded-0 border bg-transparent shadow-none">
+											<div class="card-body">
+												<p class="fs-5 text-white">Вариант получения</p>
+												<div class="my-3 border-top"></div>
+												<div class="mb-3">
+													<select class="form-select rounded-0">
+														<option selected>Доставка</option>
+														<option value="1">Самовывоз из магазина</option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="card rounded-0 border bg-transparent mb-0 shadow-none">
+											<div class="card-body">
+												<p class="mb-2">Итог корзины: <span class="float-end">{{ cart.final_price }} руб.</span>
+												</p>
+												<p class="mb-2">Доставка: <span class="float-end">0,00 руб.</span>
+												</p>
+												<div class="my-3 border-top"></div>
+												<h5 class="mb-0">Всего: <span class="float-end">{{ cart.final_price }} руб.</span></h5>
+												<div class="my-4"></div>
+												<div class="d-grid"> <a href="{% url 'checkout' %}" class="btn btn-white btn-ecomm">Перейти к оформлению</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!--end row-->
+						</div>
+					</div>
+				</section>
+				<!--end shop cart-->
+			</div>
+		</div>
+		<!--end page wrapper -->
 
-    </div>
-    <!-- Content -->
-</section>
-<div class="container">
-    <h3 class="text-center mt-5 mb-5">Ваша корзина {% if not cart.products.count %}пуста{% endif %}</h3>
-    {% if messages %}
-    {% for message in messages %}
-      <div class="alert alert-success alert-dismissible fade show mt-2 mb-2" role="alert">
-        <strong>{{ message }}</strong>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    {% endfor %}
-    {% endif %}
-    <div class="table-responsive">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Наименование</th>
-              <th scope="col">Изображение</th>
-              <th scope="col">Цена</th>
-              <th scope="col">Кол-во</th>
-                <th scope="col">Общая цена</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for item in cart.products.all %}
-                <tr>
-                  <th scope="row">{{ item.category }}{{ item.product.title }}</th>
-                  <td class="w-25"><img src="{{ item.product.image.url }}" class="img-fluid" style="width: 80px;"></td>
-                  <td>{{ item.product.price }} руб.</td>
-                  <td>{{ item.qty }}</td>
-                    <td>{{ item.final_price }} руб.</td>
-                </tr>
-            {% endfor %}
-                <tr>
-                  <td colspan="2"></td>
-                  <td>Итого:</td>
-                  <td>{{ cart.total_products }}</td>
-                  <td><strong>{{ cart.final_price }} руб.</strong></td>
-                </tr>
-          </tbody>
-        </table>
-            <hr>
-        <h3 class="text-center mt-5 mb-5">Форма заказа</h3>
-    </div>
-</div>
-<div class="container">
-    <section id="contact" class="mb-5">
-        <div class="container">
-            <section class="contact-section my-5">
-              <div class="card">
-                <div class="row">
-                    <div class="col-lg-8">
-                        <form action="{% url 'make_order' %}" method="POST">
-                            {% csrf_token %}
-                            <div class="card-body form">
-                                <h3 class="mt-4"><i class="fas fa-order pr-2"></i></h3>
-                                <div class="row">
-
-                                    <div class="col-md-6">
-
-                                      <div class="md-form mb-0">
-
-                                        {% crispy_field form.first_name 'id' 'form-contact-name' 'class' 'form-control' 'placeholder' 'Иван' %}
-
-                                        <label for="form-contact-name" class="">Имя</label>
-
-                                      </div>
-
-                                    </div>
-
-                                    <div class="col-md-6">
-
-                                      <div class="md-form mb-0">
-
-                                        {% crispy_field form.last_name 'id' 'form-contact-name' 'class' 'form-control' 'placeholder' 'Иванов' %}
-
-                                        <label for="form-contact-name" class="">Фамилия</label>
-
-                                      </div>
-
-                                    </div>
-
-                                    <div class="col-md-6">
-
-                                      <div class="md-form mb-0">
-
-                                        {% crispy_field form.phone 'id' 'form-contact-name' 'class' 'form-control' 'placeholder' 'Номер телефона' %}
-
-                                        <label for="form-contact-name" class="">Номер телефона</label>
-
-                                      </div>
-
-                                    </div>
-
-                                    <div class="col-md-6">
-
-                                    <div class="md-form mb-0">
-
-                                        {% crispy_field form.buying_type 'class' 'form-control' 'placeholder' 'Доставка' %}
-
-                                        <label for="form-contact-company" class="">Способ получения</label>
-
-                                      </div>
-
-                                </div>
-
-                                    <div class="col-md-6">
-
-                                    <div class="md-form mb-0">
-
-                                        {% crispy_field form.order_date 'class' 'form-control' 'placeholder' 'Дата получения' %}
-
-                                        <label for="form-contact-company" class="">Желаемая дата получения</label>
-
-                                      </div>
-
-                                </div>
-
-                                </div>
-                                <div class="md-form mb-0">
-
-                                    {% crispy_field form.address 'id' 'form-contact-address' 'class' 'form-control' 'placeholder' 'Адрес' %}
-
-                                    <label for="form-contact-address" class="">Адрес</label>
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-
-                                      <div class="md-form mb-0">
-
-                                        {% crispy_field form.comment 'class' 'form-control md-textarea' 'placeholder' 'Ваш комментарий' %}
-
-                                        <label for="form-contact-message">Комментарий к заказу</label>
-
-                                        <button type="submit" class="btn-floating btn-lg spirits-color">
-                                            Заказать
-                                        </button>
-
-                                      </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-lg-4">
-                    <div class="card-body spirits-color text-center h-100 white-text">
-                      <h3 class="my-4 pb-2">Контактная информация</h3>
-                      <ul class="text-lg-left list-unstyled ml-4">
-                        <li>
-                          <p><i class="fas fa-map-marker-alt pr-2 mb-4"></i>МО, г.о. Балашиха</p>
-                        </li>
-                        <li>
-                          <p><i class="fas fa-phone pr-2 mb-4"></i>+7 (968) 375-38-83</p>
-                        </li>
-                        <li>
-                          <p><i class="fas fa-envelope pr-2"></i>info@revenant-it.ru</p>
-                        </li>
-                      </ul>
-                      <hr class="hr-light my-4">
-                      <ul class="list-inline text-center list-unstyled">
-                        <li class="list-inline-item">
-                          <a class="p-2 fa-lg tw-ic">
-                            <i class="fab fa-vk text-white"></i>
-                          </a>
-                        </li>
-                        <li class="list-inline-item">
-                          <a class="p-2 fa-lg li-ic">
-                            <i class="fab fa-instagram text-white"> </i>
-                          </a>
-                        </li>
-                        <li class="list-inline-item">
-                          <a class="p-2 fa-lg ins-ic">
-                            <i class="fab fa-youtube text-white"> </i>
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    </div>
-                </div>
-              </div>
-            </section>
-        </div>
-    </section>
-</div>
 {% endblock content %}

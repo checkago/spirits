@@ -3,255 +3,285 @@
 
 {% block content %}
 
-    <section class="card spirits-gradient wow fadeIn mt-4">
-        <!-- Content -->
-        <div class="card-body text-white mb-1 mt-2">
-          <div class="container">
-              <hr class="spirits-dark-gradient mt-4">
-              <div class="row">
-                  <div class="col-md-2 col-xs-12">
-                      <img class="img-fluid mt-1" src="{% static 'img/logo_white_v_sm.png' %}">
-                  </div>
-                  <div class="col-md-10 col-xs-12 mt-2 float-left">
-                      <h2 class="title mt-3">{{ category.name }}</h2>
-                  </div>
-              </div>
-          </div>
-
-        </div>
-        <!-- Content -->
-    </section>
-
-
-  <!-- Main Container -->
-  <div class="container mt-3 pt-3">
-        {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-success alert-dismissible fade show mt-1 mb-2" role="alert">
-            <strong>{{ message }}</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        {% endfor %}
-    {% endif %}
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light spirits-color mt-3 mb-3">
-
-      <!-- Navbar brand -->
-      <h5 class="font-weight-bold dark-text mr-4">Категории</h5>
-
-      <!-- Collapse button -->
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1"
-        aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"><span
-          class="navbar-toggler-icon"></span></button>
-
-      <!-- Collapsible content -->
-      <div class="collapse navbar-collapse" id="navbarSupportedContent1">
-
-        <!-- Links -->
-        <ul class="navbar-nav mr-auto">
-            {% for category in categories %}
-          <li class="nav-item ">
-            <a class="nav-link dark-grey-text" href="{{ category.get_absolute_url }}">{{ category.name }}</a>
-          </li>
-            {% endfor %}
-        </ul>
-
-        <!-- Links -->
-        <!-- Search form -->
-        <form class="search-form" role="search">
-
-          <div class="form-group md-form my-0 waves-light">
-
-            <input type="text" class="form-control" placeholder="Поиск">
-
-          </div>
-
-        </form>
-
-      </div>
-      <!-- Collapsible content -->
-
-    </nav>
-
-    <!-- Navbar -->
-    <div class="row pt-4">
-
-      <!-- Sidebar -->
-      <div class="col-lg-3">
-
-        <div class="">
-
-          <!-- Grid row -->
-          <div class="row">
-
-            <div class="col-md-6 col-lg-12 mb-5">
-
-              <!-- Panel -->
-              <h5 class="font-weight-bold dark-grey-text"><strong>Сортировка по</strong></h3>
-
-                <div class="divider"></div>
-
-                <p class="blue-text"><a>Умолчанию</a></p>
-
-                <p class="dark-grey-text"><a>Популярности</a></p>
-
-                <p class="dark-grey-text"><a>По цене: низкая</a></p>
-
-                <p class="dark-grey-text"><a>По цене: высокая</a></p>
-
-            </div>
-
-          </div>
-          <!-- Grid row -->
-
-        </div>
-
-      </div>
-      <!-- Sidebar -->
-
-      <!-- Content -->
-      <div class="col-lg-9">
-
-        <!-- Products Grid -->
-        <section class="section pt-4">
-
-          <!-- Grid row -->
-          <div class="row">
-            {% for product in category_products %}
-            <!-- Grid column -->
-            <div class="col-lg-4 col-md-12 mb-4 d-flex">
-              <!-- Card -->
-              <div class="card card-ecommerce">
-
-                <!-- Card image -->
-                <div class="view overlay mt-2">
-
-
-                      <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.name }}" style="max-height: 230px">
-
-
-                  <a href="{{ product.get_absolute_url }}">
-
-                    <div class="mask rgba-white-slight"></div>
-
-                  </a>
-
-                </div>
-                <!-- Card image -->
-
-                <!-- Card content -->
-                <div class="card-body text-center">
-
-                  <!-- Category & Title -->
-                  <h5 class="card-title mb-1"><strong>
-                      <a href="{{ product.get_absolute_url }}" class="dark-grey-text">{{ product.name }}</a>
-                  </strong></h5>
-                    <span class="italic text-center">{{ product.brand }}</span>
-
-                  <!-- Rating -->
-
-                  <!-- Card footer -->
-                  <div class="card-footer pb-0">
-
-                    <div class="row mb-0">
-
-                      <span class="float-left"><strong>{{ product.price }} <i class="fas fa-ruble-sign"></i></strong></span>
-
-                      <span class="float-right">
-
-                        <a class="" data-toggle="tooltip" data-placement="top" href="{% url 'add_to_cart' ct_model=product.ct_model slug=product.slug%}" title="В заказ"><i
-                            class="fas fa-shopping-cart ml-3"></i></a>
-
-                      </span>
-
-                    </div>
-
-                  </div>
-
-                </div>
-                <!-- Card content -->
-
-              </div>
-              <!-- Card -->
-            </div>
-            {% endfor %}
-          </div>
-          <!-- Grid row -->
-
-
-          <!-- Grid row -->
-          <div class="row justify-content-center mb-4">
-
-            <!-- Pagination -->
-            <nav class="mb-4">
-
-              <ul class="pagination pagination-circle pg-blue mb-0">
-
-                <!-- First -->
-                <li class="page-item disabled clearfix d-none d-md-block"><a
-                    class="page-link waves-effect waves-effect">First</a></li>
-
-                <!-- Arrow left -->
-                <li class="page-item disabled">
-
-                  <a class="page-link waves-effect waves-effect" aria-label="Previous">
-
-                    <span aria-hidden="true">«</span>
-
-                    <span class="sr-only">Previous</span>
-
-                  </a>
-
-                </li>
-
-                <!-- Numbers -->
-                <li class="page-item active"><a class="page-link waves-effect waves-effect">1</a></li>
-
-                <li class="page-item"><a class="page-link waves-effect waves-effect">2</a></li>
-
-                <li class="page-item"><a class="page-link waves-effect waves-effect">3</a></li>
-
-                <li class="page-item"><a class="page-link waves-effect waves-effect">4</a></li>
-
-                <li class="page-item"><a class="page-link waves-effect waves-effect">5</a></li>
-
-                <!-- Arrow right -->
-                <li class="page-item">
-
-                  <a class="page-link waves-effect waves-effect" aria-label="Next">
-
-                    <span aria-hidden="true">»</span>
-
-                    <span class="sr-only">Next</span>
-
-                  </a>
-
-                </li>
-
-                <!-- First -->
-                <li class="page-item clearfix d-none d-md-block"><a class="page-link waves-effect waves-effect">Last</a>
-
-                </li>
-
-              </ul>
-
-            </nav>
-            <!-- Pagination -->
-
-          </div>
-          <!-- Grid row -->
-
-        </section>
-        <!-- Products Grid -->
-
-      </div>
-      <!-- Content -->
-
-    </div>
-
-  </div>
-  <!-- Main Container -->
-
+		<!--start page wrapper -->
+		<div class="page-wrapper">
+			<div class="page-content">
+				<!--start breadcrumb-->
+				<section class="py-3 border-bottom d-none d-md-flex">
+					<div class="container">
+						<div class="page-breadcrumb d-flex align-items-center">
+							<h3 class="breadcrumb-title pe-3">Каталог</h3>
+							<div class="ms-auto">
+								<nav aria-label="breadcrumb">
+									<ol class="breadcrumb mb-0 p-0">
+										<li class="breadcrumb-item"><a href="{% url 'index' %}"><i class="bx bx-home-alt"></i> Начало</a>
+										</li>
+                                        <li class="breadcrumb-item"><a href="{% url 'categories' %}"> Каталог</a>
+										</li>
+										<li class="breadcrumb-item active" aria-current="page">{{ сategory.name }}</li>
+									</ol>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</section>
+				<!--end breadcrumb-->
+				<!--start shop area-->
+				<section class="py-4">
+					<div class="container">
+						<div class="row">
+							<div class="col-12 col-xl-3">
+								<div class="btn-mobile-filter d-xl-none"><i class='bx bx-slider-alt'></i>
+								</div>
+								<div class="filter-sidebar d-none d-xl-flex">
+									<div class="card rounded-0 w-100">
+										<div class="card-body">
+											<div class="align-items-center d-flex d-xl-none">
+												<h6 class="text-uppercase mb-0">Фильтр</h6>
+												<div class="btn-mobile-filter-close btn-close ms-auto cursor-pointer"></div>
+											</div>
+											<hr class="d-flex d-xl-none" />
+											<div class="product-categories">
+												<h6 class="text-uppercase mb-3">Категории</h6>
+												<ul class="list-unstyled mb-0 categories-list">
+                                                    {% for Category in categories %}
+													<li><a href="{{ Category.get_absolute_url }}">{{ Category.name }} <span class="float-end badge rounded-pill bg-light"> </span></a>
+													</li>
+                                                    {% endfor %}
+												</ul>
+											</div>
+											<hr>
+											<div class="price-range">
+												<h6 class="text-uppercase mb-3">Цена</h6>
+												<div class="my-4" id="slider"></div>
+												<div class="d-flex align-items-center">
+													<button type="button" class="btn btn-white btn-sm text-uppercase rounded-0 font-13 fw-500">Фильтр</button>
+													<div class="ms-auto">
+														<p class="mb-0">Price: $200.00 - $900.00</p>
+													</div>
+												</div>
+											</div>
+											<hr>
+											<div class="size-range">
+												<h6 class="text-uppercase mb-3">Объем</h6>
+												<ul class="list-unstyled mb-0 categories-list">
+                                                    {% for BottleVolume in volumes %}
+													<li>
+														<div class="form-check">
+															<input class="form-check-input" type="checkbox" value="" id="{{ BottleVolume.name }}">
+															<label class="form-check-label" for="Small">{{ BottleVolume.name }}</label>
+														</div>
+													</li>
+                                                    {% endfor %}
+												</ul>
+											</div>
+											<hr>
+											<div class="product-brands">
+												<h6 class="text-uppercase mb-3">Бренды</h6>
+												<ul class="list-unstyled mb-0 categories-list">
+                                                    {% for brand in brands %}
+													<li>
+														<div class="form-check">
+															<input class="form-check-input" type="checkbox" value="" id="{{ brand.name }}">
+															<label class="form-check-label" for="Adidas">{{ brand.name }}</label>
+														</div>
+													</li>
+                                                    {% endfor %}
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 col-xl-9">
+								<div class="product-wrapper">
+									<div class="toolbox d-flex align-items-center mb-3 gap-2">
+										<div class="d-flex flex-wrap flex-grow-1 gap-1">
+											<div class="d-flex align-items-center flex-nowrap">
+												<p class="mb-0 font-13 text-nowrap text-white">Сортировать по:</p>
+												<select class="form-select ms-3 rounded-0">
+													<option value="menu_order" selected="selected">По умолчанию</option>
+													<option value="popularity">По популярности</option>
+													<option value="rating">По рейтингу</option>
+													<option value="date">Сначала новые</option>
+													<option value="price">Сначала недорогие</option>
+													<option value="price-desc">Сначала дорогие</option>
+												</select>
+											</div>
+										</div>
+										<div class="d-flex flex-wrap">
+											<div class="d-flex align-items-center flex-nowrap">
+												<p class="mb-0 font-13 text-nowrap text-white">Показать:</p>
+												<select class="form-select ms-3 rounded-0">
+													<option>9</option>
+													<option>12</option>
+													<option>16</option>
+													<option>20</option>
+													<option>50</option>
+													<option>100</option>
+												</select>
+											</div>
+										</div>
+                                        <!-- Вид таблицы товаров
+										<div>	<a href="shop-grid-left-sidebar.html" class="btn btn-white rounded-0"><i class='bx bxs-grid me-0'></i></a>
+										</div>
+										<div>	<a href="shop-list-left-sidebar.html" class="btn btn-light rounded-0"><i class='bx bx-list-ul me-0'></i></a>
+										</div>
+										-->
+									</div>
+									<div class="product-grid">
+										<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-3">
+                                            {% for Product in category_products %}
+											<div class="col">
+												<div class="card rounded-0 product-card">
+													<div class="card-header bg-transparent border-bottom-0">
+														<div class="d-flex align-items-center justify-content-end gap-3">
+															<a href="javascript:;">
+																<div class="product-wishlist"> <i class="bx bx-heart"></i>
+																</div>
+															</a>
+														</div>
+													</div>
+                                                    <a href="{{ Product.get_absolute_url }}"><img src="{{ Product.image.url }}" class="card-img-top" alt="..."></a>
+													<div class="card-body">
+														<div class="product-info">
+															<a href="javascript:;">
+																<p class="product-catergory font-13 mb-1">{{ Product.brand }}</p>
+															</a>
+															<a href="{{ Product.get_absolute_url }}">
+																<h6 class="product-name mb-2">{{ Product.name }}</h6>
+															</a>
+															<div class="d-flex align-items-center">
+																<div class="mb-1 product-price">	<span class="me-1 text-decoration-line-through">$99.00</span>
+																	<span class="text-white fs-5">{{ Product.price }} руб.</span>
+																</div>
+																<div class="cursor-pointer ms-auto">	<i class="bx bxs-star text-white"></i>
+																	<i class="bx bxs-star text-white"></i>
+																	<i class="bx bxs-star text-white"></i>
+																	<i class="bx bxs-star text-white"></i>
+																	<i class="bx bxs-star text-white"></i>
+																</div>
+															</div>
+															<div class="product-action mt-2">
+																<div class="d-grid gap-2">
+																	<a href="{% url 'add_to_cart' ct_model=Product.ct_model slug=Product.slug %}"
+                                                                       class="btn btn-light btn-ecomm">
+                                                                        <i class="bx bxs-cart-add"></i>В заказ</a>
+                                                                    <a href="#" class="btn btn-link btn-ecomm" data-bs-toggle="modal" data-bs-target="#{{ Product.name }}-{{ Product.id }}">
+                                                                        <i class="bx bx-zoom-in"></i>Просмотр</a>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+                                            {% endfor %}
+										</div>
+										<!--end row-->
+									</div>
+									<hr>
+									<nav class="d-flex justify-content-between" aria-label="Page navigation">
+										<ul class="pagination">
+											<li class="page-item"><a class="page-link" href="javascript:;"><i class='bx bx-chevron-left'></i> Предыдущая</a>
+											</li>
+										</ul>
+										<ul class="pagination">
+											<li class="page-item active d-none d-sm-block" aria-current="page"><span class="page-link">1<span class="visually-hidden">(current)</span></span>
+											</li>
+											<li class="page-item d-none d-sm-block"><a class="page-link" href="javascript:;">2</a>
+											</li>
+											<li class="page-item d-none d-sm-block"><a class="page-link" href="javascript:;">3</a>
+											</li>
+											<li class="page-item d-none d-sm-block"><a class="page-link" href="javascript:;">4</a>
+											</li>
+											<li class="page-item d-none d-sm-block"><a class="page-link" href="javascript:;">5</a>
+											</li>
+										</ul>
+										<ul class="pagination">
+											<li class="page-item"><a class="page-link" href="javascript:;" aria-label="Next">Следующая <i class='bx bx-chevron-right'></i></a>
+											</li>
+										</ul>
+									</nav>
+								</div>
+							</div>
+						</div>
+						<!--end row-->
+					</div>
+				</section>
+				<!--end shop area-->
+			</div>
+		</div>
+		<!--end page wrapper -->
+    {% for Product in category_products %}
+    		<!--start quick view product-->
+		<!-- Modal -->
+		<div class="modal fade" id="{{ Product.name }}-{{ Product.id }}">
+			<div class="modal-dialog modal-dialog-centered modal-xl modal-fullscreen-xl-down">
+				<div class="modal-content bg-dark-4 rounded-0 border-0">
+					<div class="modal-body">
+						<button type="button" class="btn-close float-end" data-bs-dismiss="modal"></button>
+						<div class="row g-0">
+							<div class="col-12 col-lg-6">
+								<div class="image-zoom-section">
+									<div class="product-gallery owl-carousel owl-theme border mb-3 p-3" data-slider-id="1">
+										<div class="item">
+											<img src="{{ Product.image.url }}" class="img-fluid" alt="{{ Product.name }}">
+										</div>
+									</div>
+									<div class="owl-thumbs d-flex justify-content-center" data-slider-id="1">
+										<button class="owl-thumb-item">
+											<img src="assets/images/product-gallery/01.png" class="" alt="">
+										</button>
+										<button class="owl-thumb-item">
+											<img src="assets/images/product-gallery/02.png" class="" alt="">
+										</button>
+										<button class="owl-thumb-item">
+											<img src="assets/images/product-gallery/03.png" class="" alt="">
+										</button>
+										<button class="owl-thumb-item">
+											<img src="assets/images/product-gallery/04.png" class="" alt="">
+										</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 col-lg-6">
+								<div class="product-info-section p-3">
+									<h3 class="mt-3 mt-lg-0 mb-0">{{ Product.name }} | {{ Product.category }}</h3>
+									<div class="product-rating d-flex align-items-center mt-2">
+										<div class="rates cursor-pointer font-13">	<i class="bx bxs-star text-warning"></i>
+											<i class="bx bxs-star text-warning"></i>
+											<i class="bx bxs-star text-warning"></i>
+											<i class="bx bxs-star text-warning"></i>
+											<i class="bx bxs-star text-light-4"></i>
+										</div>
+										<div class="ms-1">
+											<p class="mb-0">(24 Голоса/ов)</p>
+										</div>
+									</div>
+									<div class="d-flex align-items-center mt-3 gap-2">
+										<h5 class="mb-0 text-decoration-line-through text-light-3">$98.00</h5>
+										<h4 class="mb-0">{{ Product.price }} руб.</h4>
+									</div>
+									<div class="mt-3">
+										<h6>Описание :</h6>
+										<p class="mb-0">{{ Product.description|safe }}</p>
+									</div>
+									<dl class="row mt-3">	<dt class="col-sm-3">Артикул</dt>
+										<dd class="col-sm-9">MSART3574{{ Product.id }}</dd>	<dt class="col-sm-3">Доставка</dt>
+										<dd class="col-sm-9">Москва</dd>
+									</dl>
+									<!--end row-->
+									<div class="d-flex gap-2 mt-3">
+										<a href="javascript:;" class="btn btn-white btn-ecomm">	<i class="bx bxs-cart-add"></i>В заказ</a>	<a href="javascript:;" class="btn btn-light btn-ecomm"><i class="bx bx-heart"></i>В список желаемого</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--end row-->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--end quick view product-->
+    {% endfor %}
 {% endblock content %}
