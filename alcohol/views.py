@@ -135,7 +135,7 @@ class LoginView(views.View):
             user = authenticate(username=username, password=password)
             if user:
                 login(request, user)
-                return HttpResponseRedirect('/')
+                return HttpResponseRedirect('/catalog')
 
         context = {
             'form': form
@@ -169,7 +169,7 @@ class RegistrationView(views.View):
             )
             user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
             login(request, user)
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/catalog')
         context = {
             'form': form
         }
