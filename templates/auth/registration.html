@@ -16,7 +16,7 @@
 							<div class="ms-auto">
 								<nav aria-label="breadcrumb">
 									<ol class="breadcrumb mb-0 p-0">
-										<li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i> Начало</a>
+										<li class="breadcrumb-item"><a href="{% url 'index' %}"><i class="bx bx-home-alt"></i> Начало</a>
 										</li>
 										<li class="breadcrumb-item active" aria-current="page">Регистрация</li>
 									</ol>
@@ -37,7 +37,7 @@
 											<div class="border p-4 rounded">
 												<div class="text-center">
 													<h3 class="">Регистрация</h3>
-													<p>Уже есть аккаунт? <a href="authentication-signin.html"> Войдите здесь</a>
+													<p>Уже есть аккаунт? <a href="{% url 'login' %}"> Войдите здесь</a>
 													</p>
 												</div>
 												<div class="form-body">
@@ -52,11 +52,11 @@
 															{% crispy_field form.last_name 'class' 'form-control border-end-0' 'placeholder' 'Фамилия' %}
 														</div>
                                                         <div class="col-sm-6">
-															<label for="inputFirstName" class="form-label">Логин</label>
+															<label for="inputUserName" class="form-label">Логин</label>
 															{% crispy_field form.username 'class' 'form-control border-end-0' 'placeholder' 'Логин' %}
 														</div>
                                                         <div class="col-sm-6">
-															<label for="inputFirstName" class="form-label">Дата рождения</label>
+															<label for="inputDateOfBirth" class="form-label">Дата рождения</label>
 															{% crispy_field form.birth_date 'class' 'form-control border-end-0' 'placeholder' '01.12.2003' %}
 														</div>
                                                         <div class="col-sm-6 ">

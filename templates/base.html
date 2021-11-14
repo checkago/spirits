@@ -13,9 +13,7 @@
 	<link href="{%  static 'assets/plugins/simplebar/css/simplebar.css' %}" rel="stylesheet" />
 	<link href="{%  static 'assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css' %}" rel="stylesheet" />
 	<link href="{%  static 'assets/plugins/metismenu/css/metisMenu.min.css' %}" rel="stylesheet" />
-	<!-- loader-->
-	<link href="{%  static 'assets/css/pace.min.css' %}" rel="stylesheet" />
-	<script src="{%  static 'assets/js/pace.min.js' %}"></script>
+
 	<!-- Bootstrap CSS -->
 	<link href="{%  static 'assets/css/bootstrap.min.css' %}" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
@@ -24,7 +22,7 @@
 	<title>Moscow Spirits</title>
 </head>
 
-<body class="bg-theme bg-theme4">	<b class="screen-overlay"></b>
+<body class="bg-theme bg-theme4">
 	<!--wrapper-->
 	<div class="wrapper">
         <!-- СКИДИ АЛЕРТ
@@ -50,56 +48,37 @@
 					<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-4">
 						<div class="col">
 							<div class="footer-section1 mb-3">
-								<h6 class="mb-3 text-uppercase">Contact Info</h6>
+								<h6 class="mb-3 text-uppercase">Контакты</h6>
 								<div class="address mb-3">
-									<p class="mb-0 text-uppercase text-white">Address</p>
-									<p class="mb-0 font-12">123 Street Name, City, Australia</p>
+									<p class="mb-0 text-uppercase text-white">Адрес магазина:</p>
+									<p class="mb-0 font-12">Москва</p>
 								</div>
 								<div class="phone mb-3">
-									<p class="mb-0 text-uppercase text-white">Phone</p>
-									<p class="mb-0 font-13">Toll Free (123) 472-796</p>
-									<p class="mb-0 font-13">Mobile : +91-9910XXXX</p>
+									<p class="mb-0 text-uppercase text-white">Телефон</p>
+									<p class="mb-0 font-13">8(800)555-44-33</p>
+									<p class="mb-0 font-13">8(968)888-66-77</p>
 								</div>
 								<div class="email mb-3">
 									<p class="mb-0 text-uppercase text-white">Email</p>
-									<p class="mb-0 font-13">mail@example.com</p>
-								</div>
-								<div class="working-days mb-3">
-									<p class="mb-0 text-uppercase text-white">WORKING DAYS</p>
-									<p class="mb-0 font-13">Mon - FRI / 9:30 AM - 6:30 PM</p>
+									<p class="mb-0 font-13">info@moscow-spirits.ru</p>
 								</div>
 							</div>
 						</div>
 						<div class="col">
 							<div class="footer-section2 mb-3">
-								<h6 class="mb-3 text-uppercase">Shop Categories</h6>
+								<h6 class="mb-3 text-uppercase">Категории</h6>
 								<ul class="list-unstyled">
-									<li class="mb-1"><a href="javascript:;"><i class='bx bx-chevron-right'></i> Jeans</a>
+                                    {% for Category in categories %}
+									<li class="mb-1"><a href="{{ Category.get_absolute_url }}"><i class='bx bx-chevron-right'></i> {{ Category.name }}</a>
 									</li>
-									<li class="mb-1"><a href="javascript:;"><i class='bx bx-chevron-right'></i> T-Shirts</a>
-									</li>
-									<li class="mb-1"><a href="javascript:;"><i class='bx bx-chevron-right'></i> Sports</a>
-									</li>
-									<li class="mb-1"><a href="javascript:;"><i class='bx bx-chevron-right'></i> Shirts & Tops</a>
-									</li>
-									<li class="mb-1"><a href="javascript:;"><i class='bx bx-chevron-right'></i> Clogs & Mules</a>
-									</li>
-									<li class="mb-1"><a href="javascript:;"><i class='bx bx-chevron-right'></i> Sunglasses</a>
-									</li>
-									<li class="mb-1"><a href="javascript:;"><i class='bx bx-chevron-right'></i> Bags & Wallets</a>
-									</li>
-									<li class="mb-1"><a href="javascript:;"><i class='bx bx-chevron-right'></i> Sneakers & Athletic</a>
-									</li>
-									<li class="mb-1"><a href="javascript:;"><i class='bx bx-chevron-right'></i> Electronis</a>
-									</li>
-									<li class="mb-1"><a href="javascript:;"><i class='bx bx-chevron-right'></i> Furniture</a>
-									</li>
+                                    {% endfor %}
+
 								</ul>
 							</div>
 						</div>
 						<div class="col">
 							<div class="footer-section3 mb-3">
-								<h6 class="mb-3 text-uppercase">Popular Tags</h6>
+								<h6 class="mb-3 text-uppercase">Популярные теги</h6>
 								<div class="tags-box"> <a href="javascript:;" class="tag-link">Cloths</a>
 									<a href="javascript:;" class="tag-link">Electronis</a>
 									<a href="javascript:;" class="tag-link">Furniture</a>
@@ -119,15 +98,17 @@
 						</div>
 						<div class="col">
 							<div class="footer-section4 mb-3">
-								<h6 class="mb-3 text-uppercase">Stay informed</h6>
-								<div class="subscribe">
-									<input type="text" class="form-control radius-30" placeholder="Enter Your Email" />
-									<div class="mt-2 d-grid">	<a href="javascript:;" class="btn btn-white btn-ecomm radius-30">Subscribe</a>
-									</div>
-									<p class="mt-2 mb-0 font-13">Subscribe to our newsletter to receive early discount offers, updates and new products info.</p>
-								</div>
-								<div class="download-app mt-3">
-									<h6 class="mb-3 text-uppercase">Download our app</h6>
+								<h6 class="mb-3 text-uppercase text-center">Moscow Spirits</h6>
+								<div class="mt-3">
+                                    <p class="white-text text-center">Крафтовые алкогольные напитки со всего мира</p>
+                                    <hr>
+                                    <p class="small"><strong>Уведомление:</strong> в соответствии с рекомендациями
+                                        ФС РАР от 25.06.18 приобретение алкогольной продукции возможно непосредственно
+                                        в магазине VinDom по адресу: г.Москва, ул.Мытная, д.7, стр.1</p>
+                                    <p class="small">Отгрузка продукции юридическим лицам осуществляется
+                                        в соответствии с действующим законодательством</p>
+									<!--
+                                    <h6 class="mb-3 text-uppercase">Download our app</h6>
 									<div class="d-flex align-items-center gap-2">
 										<a href="javascript:;">
 											<img src="assets/images/icons/apple-store.png" class="" width="160" alt="" />
@@ -136,6 +117,7 @@
 											<img src="assets/images/icons/play-store.png" class="" width="160" alt="" />
 										</a>
 									</div>
+									-->
 								</div>
 							</div>
 						</div>

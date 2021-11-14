@@ -9,7 +9,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, RegistrationForm, OrderForm
 from .mixins import CartMixin
-from .models import CartProduct, Category, Customer, Product, Brand, Slider, BottleVolume
+from .models import CartProduct, Category, Customer, Product, Brand, Slider, BottleVolume, Order
 from utils.recalc_cart import recalc_cart
 
 
@@ -160,11 +160,13 @@ class RegistrationView(views.View):
             new_user.email = form.cleaned_data['email']
             new_user.first_name = form.cleaned_data['first_name']
             new_user.last_name = form.cleaned_data['last_name']
+
             new_user.save()
             new_user.set_password(form.cleaned_data['password'])
             new_user.save()
             Customer.objects.create(
                 user=new_user,
+                birth_date=form.cleaned_data['birth_date'],
                 phone=form.cleaned_data['phone'],
             )
             user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
@@ -177,13 +179,14 @@ class RegistrationView(views.View):
 
 
 class AccountView(LoginRequiredMixin, CartMixin, views.View):
+    categories = Category.objects.all()
 
     def get(self, request, *args, **kwargs):
         customer = Customer.objects.get(user=request.user)
-        orders = Customer.user_orders.all()
+        categories = Category.objects.all()
         context = {
-            'success': customer,
-            'orders': orders,
+            'categories': categories,
+            'customer': customer,
             'cart': self.cart
         }
         return render(request, 'auth/account_view.html', context)

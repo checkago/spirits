@@ -94,7 +94,16 @@
 											</dl>
 
 											<div class="d-flex gap-2 mt-3">
-												<a href="{% url 'add_to_cart' ct_model=ct_model slug=product.slug %}" class="btn btn-white btn-ecomm">	<i class="bx bxs-cart-add"></i>В заказ</a> <a href="javascript:;" class="btn btn-light btn-ecomm"><i class="bx bx-heart"></i>В список желаемого</a>
+                                                {% if not request.user.is_authenticated %}
+                                                <a tabindex="0" class="btn btn-white btn-ecomm" role="button"
+                                                   data-bs-toggle="popover"
+                                                   data-bs-trigger="focus"
+                                                   data-bs-content="Чтобы заказать товар необходимо войти или зарегистрироваться">
+                                                    <i class="bx bxs-cart-add"></i>В заказ</a>
+                                                {% else %}
+                                                <a href="{% url 'add_to_cart' ct_model=ct_model slug=product.slug %}" class="btn btn-white btn-ecomm">	<i class="bx bxs-cart-add"></i>В заказ</a>
+                                                {% endif %}
+												<a href="javascript:;" class="btn btn-light btn-ecomm disabled"><i class="bx bx-heart"></i>В список желаемого</a>
 											</div>
 											<hr/>
 											<div class="product-sharing">

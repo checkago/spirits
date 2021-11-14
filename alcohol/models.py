@@ -1,4 +1,5 @@
 from django.conf import settings
+from datetime import datetime
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
@@ -186,15 +187,15 @@ class Cart(models.Model):
 
 class Order(models.Model):
 
-    STATUS_NEW = 'new'
-    STATUS_CONFIRMED = 'confirmed'
-    STATUS_IN_PROGRESS = 'in_progress'
-    STATUS_READY = 'ready'
-    STATUS_COMPLETED = 'completed'
-    STATUS_CANCELLED = 'cancelled'
+    STATUS_NEW = 'Новый'
+    STATUS_CONFIRMED = 'Подтвержден'
+    STATUS_IN_PROGRESS = 'В работе'
+    STATUS_READY = 'Готов'
+    STATUS_COMPLETED = 'Получен'
+    STATUS_CANCELLED = 'Отменен'
 
-    BYING_TYPE_SELF = 'self'
-    BYING_TYPE_DELIVERY = 'delivery'
+    BYING_TYPE_SELF = 'Самовывоз из магазина'
+    BYING_TYPE_DELIVERY = 'Доставка'
 
     STATUS_CHOICES = (
         (STATUS_NEW, 'Новый заказ'),
@@ -237,7 +238,7 @@ class Customer(models.Model):
     is_active = models.BooleanField(default=True, verbose_name='Активный')
     phone = models.CharField(max_length=18, verbose_name='Номер телефона')
     birth_date = models.DateField(blank=True, null=True, verbose_name='Дата рождения')
-    addresses = models.ManyToManyField('Address', blank=True, related_name='addresses', verbose_name='Адрес покупателя')
+    user_addresses = models.ManyToManyField('Address', blank=True, related_name='addresses', verbose_name='Адрес покупателя')
     user_orders = models.ManyToManyField(Order, blank=True, related_name='related_customer', verbose_name='Заказы покупателя')
     wishlist = models.ManyToManyField(Product, blank=True, verbose_name='Лист ожидания')
 
@@ -245,15 +246,31 @@ class Customer(models.Model):
         verbose_name = 'Покупатель'
         verbose_name_plural = 'Список покупателей'
 
+    @property
+    def age(self):
+        return int((datetime.now().date() - self.birth_date).days / 365.25)
+
+    @property
+    def age_last(self):
+        if 5 <= int(str(self.age)[-1]) <= 9:
+            return 'лет'
+        elif 2 <= int(str(self.age)[-1]) <= 4:
+            return 'года'
+        else:
+            return 'год'
+
     def __str__(self):
         return f"{self.user.username}"
 
 
 class Address(models.Model):
-    customer = models.ForeignKey('Customer', on_delete=models.CASCADE, verbose_name='Покупатель')
+    customer = models.ForeignKey('Customer', related_name="addresses", on_delete=models.CASCADE, verbose_name='Покупатель')
     city = models.CharField(max_length=50, verbose_name='Город')
     metro = models.CharField(max_length=50, blank=True, null=True, verbose_name='ст. Метро')
-    street = models.CharField(max_length=300, verbose_name='Улица, дом, подъезд, квартира')
+    street = models.CharField(max_length=300, verbose_name='Улица, дом, квартира, подъезд')
+    building = models.CharField(max_length=7, verbose_name='Дом')
+    apartment = models.CharField(max_length=5, blank=True, null=True, verbose_name='Квартира')
+    entrance = models.CharField(max_length=2, blank=True, null=True, verbose_name='Подъезд')
     primary = models.BooleanField(default=True, verbose_name='Основной адрес?')
 
     class Meta:
@@ -261,7 +278,7 @@ class Address(models.Model):
         verbose_name_plural = 'Адреса покупателей'
 
     def __str__(self):
-        return f"Адрес покупателя {self.customer.user.username} | {self.city}, {self.metro}, {self.street}"
+        return f"Адрес пользователя {self.customer.user.username} | {self.city}, {self.metro}, {self.street}, {self.street}, {self.building}"
 
 
 class Notification(models.Model):
