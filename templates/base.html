@@ -13,7 +13,6 @@
 	<link href="{%  static 'assets/plugins/simplebar/css/simplebar.css' %}" rel="stylesheet" />
 	<link href="{%  static 'assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css' %}" rel="stylesheet" />
 	<link href="{%  static 'assets/plugins/metismenu/css/metisMenu.min.css' %}" rel="stylesheet" />
-    <link href="{%  static 'assets/css/datepicker.css' %}" rel="stylesheet" />
 
 
 	<!-- Bootstrap CSS -->
@@ -134,16 +133,16 @@
 							<div class="payment-icon">
 								<div class="row row-cols-auto g-2 justify-content-end">
 									<div class="col">
-										<img src="assets/images/icons/visa.png" alt="" />
+										<img src="{% static 'assets/images/icons/visa.png' %}" alt="" />
 									</div>
 									<div class="col">
-										<img src="assets/images/icons/paypal.png" alt="" />
+										<img src="{% static 'assets/images/icons/paypal.png' %}" alt="" />
 									</div>
 									<div class="col">
-										<img src="assets/images/icons/mastercard.png" alt="" />
+										<img src="{% static 'assets/images/icons/mastercard.png' %}" alt="" />
 									</div>
 									<div class="col">
-										<img src="assets/images/icons/american-express.png" alt="" />
+										<img src="{% static 'assets/images/icons/american-express.png' %}" alt="" />
 									</div>
 								</div>
 							</div>
@@ -164,11 +163,11 @@
 		</div>
 		<div class="switcher-body">
 			<div class="d-flex align-items-center">
-				<h5 class="mb-0 text-uppercase">Theme Customizer</h5>
+				<h5 class="mb-0 text-uppercase">Выберите фон</h5>
 				<button type="button" class="btn-close ms-auto close-switcher" aria-label="Close"></button>
 			</div>
 			<hr/>
-			<p class="mb-0">Gaussian Texture</p>
+			<p class="mb-0">Текстура</p>
 			<hr>
 			<ul class="switcher">
 				<li id="theme1"></li>
@@ -179,7 +178,7 @@
 				<li id="theme6"></li>
 			</ul>
 			<hr>
-			<p class="mb-0">Gradient Background</p>
+			<p class="mb-0">Градиент</p>
 			<hr>
 			<ul class="switcher">
 				<li id="theme7"></li>
@@ -204,8 +203,6 @@
 	<script src="{% static 'assets/plugins/OwlCarousel/js/owl.carousel2.thumbs.min.js' %}"></script>
 	<script src="{% static 'assets/plugins/metismenu/js/metisMenu.min.j' %}s"></script>
 	<script src="{% static 'assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.ru.min.js"></script>
 	<!--app JS-->
 	<script src="{% static 'assets/js/app.js' %}"></script>
 	<script src="{% static 'assets/js/index.js' %}"></script>
@@ -216,17 +213,7 @@
       return new bootstrap.Popover(popoverTriggerEl)
     })
 </script>
-<script>
-    $('#datepicker').datepicker({
-        weekStart: 1,
-        daysOfWeekHighlighted: "6,0",
-        autoclose: true,
-        todayHighlight: true,
-        format: 'mm.dd.yyyy',
-        language: 'ru-RU'
-    });
-    $('#datepicker').datepicker("setDate", new Date());
-</script>
+
 
 </body>
 

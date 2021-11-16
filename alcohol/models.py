@@ -241,6 +241,7 @@ class Customer(models.Model):
     user_addresses = models.ManyToManyField('Address', blank=True, related_name='addresses', verbose_name='Адрес покупателя')
     user_orders = models.ManyToManyField(Order, blank=True, related_name='related_customer', verbose_name='Заказы покупателя')
     wishlist = models.ManyToManyField(Product, blank=True, verbose_name='Лист ожидания')
+    agreement = models.BooleanField(default=False, verbose_name='Согласен с обработкой п.д.')
 
     class Meta:
         verbose_name = 'Покупатель'
@@ -311,6 +312,41 @@ class ImageGallery(models.Model):
 
     def image_url(self):
         return mark_safe(f'<img src="{self.image.url}" width="auto" height="100px"')
+
+
+class Baner(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Название')
+    info = models.CharField(max_length=100, verbose_name='Информация')
+    image = models.ImageField(upload_to=upload_function, verbose_name='Изображение')
+    link = models.URLField(verbose_name='ссылка', blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Банер'
+        verbose_name_plural = 'Банеры'
+
+    def __str__(self):
+        return self.name
+
+
+class Article(models.Model):
+    title = models.CharField(max_length=150, verbose_name='Заголовок')
+    image = models.ImageField(upload_to=upload_function, verbose_name='Фото')
+    text = models.TextField(verbose_name='Текст')
+    date = models.DateTimeField(auto_now_add=True, verbose_name='Дата')
+
+
+class Review(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='Пользователь')
+    text = models.TextField(verbose_name='Текст')
+    product = models.ForeignKey(Product, related_name='reviews', on_delete=models.CASCADE, blank=True, null=True, verbose_name='Товар')
+    date = models.DateTimeField(auto_now_add=True, verbose_name='Дата отзыва')
+
+    class Meta:
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы к товарам'
+
+    def __str__(self):
+        return f"Отзыв к {self.product} {self.user} {self.date}"
 
 
 

@@ -28,6 +28,47 @@
 				<!--end breadcrumb-->
 				<!--start shop cart-->
 				<section class="py-0 py-lg-5">
+                    <div class="container">
+                        {% for error in form.errors.birth_date %}
+                        <div class="alert border-0 alert-dismissible fade show py-2">
+                            <div class="d-flex align-items-center">
+                                <div class="font-35 text-white"><i class="bx bxs-message-square-x"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h6 class="mb-0 text-white">Ошибка!</h6>
+                                    <div class="text-white">{{ error }}</div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endfor %}
+                        {% for error in form.errors.email %}
+                        <div class="alert border-0 alert-dismissible fade show py-2">
+                                <div class="d-flex align-items-center">
+                                    <div class="font-35 text-white"><i class="bx bxs-message-square-x"></i>
+                                    </div>
+                                    <div class="ms-3">
+                                        <h6 class="mb-0 text-white">Ошибка!</h6>
+                                        <div class="text-white">{{ error }}</div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                        {% for error in form.errors.username %}
+                        <div class="alert border-0 alert-dismissible fade show py-2">
+                            <div class="d-flex align-items-center">
+                                <div class="font-35 text-white"><i class="bx bxs-message-square-x"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h6 class="mb-0 text-white">Ошибка!</h6>
+                                    <div class="text-white">{{ error }}</div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endfor %}
+                    </div>
 					<div class="container">
 						<div class="py-5 d-flex align-items-center justify-content-center my-5 my-lg-0">
 							<div class="row row-cols-1 row-cols-lg-1 row-cols-xl-2">
@@ -57,7 +98,7 @@
 														</div>
                                                         <div class="col-sm-6">
 															<label for="inputDateOfBirth" class="form-label">Дата рождения</label>
-															{% crispy_field form.birth_date 'id' 'datepicker' 'class' 'form-control border-end-0' 'placeholder' '01.12.2003' %}
+															{% crispy_field form.birth_date 'class' 'form-control border-end-0' 'placeholder' '01.12.2003' %}
 														</div>
                                                         <div class="col-sm-6 ">
 															<label for="inputChoosePassword" class="form-label">Пароль</label>
@@ -77,8 +118,8 @@
 														</div>
 														<div class="col-12">
 															<div class="form-check form-switch">
-																<input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
-																<label class="form-check-label" for="flexSwitchCheckChecked">Я ознакомился  и принимаю  </label>
+																{% crispy_field form.agreement 'class' 'form-check-input' %}
+																<label class="form-check-label" for="flexSwitchCheckChecked">Я ознакомился и принимаю <a href="#">Соглашение</a></label>
 															</div>
 														</div>
 														<div class="col-12">

@@ -31,6 +31,7 @@ class IndexView(CartMixin, views.View):
 class CategoryView(CartMixin, views.View):
     model = Category
     categories = Category.objects.all()
+
     def get(self, request, *args, **kwargs):
         categories = Category.objects.all()
         products = Product.objects.all()
@@ -168,6 +169,7 @@ class RegistrationView(views.View):
                 user=new_user,
                 birth_date=form.cleaned_data['birth_date'],
                 phone=form.cleaned_data['phone'],
+                agreement=form.cleaned_data['agreement'],
             )
             user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
             login(request, user)

@@ -1,4 +1,5 @@
 from django import forms
+from datetime import datetime
 from .models import Order
 from django.contrib.auth import get_user_model
 
@@ -50,13 +51,14 @@ class LoginForm(forms.ModelForm):
 
 
 class RegistrationForm(forms.ModelForm):
-    birth_date = forms.DateField(widget=forms.DateInput)
+    birth_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), required=True)
     password = forms.CharField(widget=forms.PasswordInput)
     confirm_password = forms.CharField(widget=forms.PasswordInput)
     first_name = forms.CharField(required=True)
     last_name = forms.CharField(required=True)
     phone = forms.CharField(required=True)
-    email = forms.EmailField(required=False)
+    email = forms.EmailField(required=False, widget=forms.EmailInput)
+    agreement = forms.BooleanField()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -73,16 +75,29 @@ class RegistrationForm(forms.ModelForm):
         email = self.cleaned_data['email']
         domain = email.split('.')[-1]
         if domain in ['com', 'net', 'org', 'xyz']:
-            raise forms.ValidationError(f'Использование ящика в домене {domain} не разрешена')
+            raise forms.ValidationError(f'Использование почтового ящика в домене .{domain} не разрешена')
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError('Данный почтовый ящик уже зарегистрирован')
         return email
+
+    def clean_birth_date(self):
+        birth_date = self.cleaned_data['birth_date']
+        age = int((datetime.now().date() - birth_date).days / 365.25)
+        if age < 18:
+            raise forms.ValidationError(f"Указанный вами возраст меньше 18 лет. Регистрация не возможна")
+        return birth_date
 
     def clean_username(self):
         username = self.cleaned_data['username']
         if User.objects.filter(username=username).exists():
             raise forms.ValidationError(f'Имя {username} занято')
         return username
+
+    def clean_agreement(self):
+        agreement = self.cleaned_data['agreement']
+        if agreement == False:
+            raise forms.ValidationError(f'Вы не подтвердили свое согласие с правилами обработки персональных данных')
+        return agreement
 
     def clean(self):
         password = self.cleaned_data['password']

@@ -34,7 +34,6 @@ INSTALLED_APPS = [
     'alcohol',
     'ckeditor',
     'crispy_forms',
-    'crispy_bootstrap5',
     'active_link',
 ]
 

@@ -62,6 +62,21 @@ class SliderAdmin(admin.ModelAdmin):
     form = SliderAdminForm
 
 
+class ArticleAdminForm(forms.ModelForm):
+    text = forms.CharField(widget=CKEditorWidget(config_name='awesome_ckeditor'))
+
+    class Meta:
+        verbose_name = 'Текст'
+        model = Article
+        fields = '__all__'
+
+
+@admin.register(Article)
+class ArticleAdmin(admin.ModelAdmin):
+    list_display = ('title',)
+    form = ArticleAdminForm
+
+
 admin.site.register(BottleVolume)
 admin.site.register(CartProduct)
 admin.site.register(Order)
@@ -70,3 +85,5 @@ admin.site.register(Customer)
 admin.site.register(Address)
 admin.site.register(Notification)
 admin.site.register(ImageGallery)
+admin.site.register(Baner)
+admin.site.register(Review)
