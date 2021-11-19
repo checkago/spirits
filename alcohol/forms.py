@@ -7,6 +7,9 @@ User = get_user_model()
 
 
 class OrderForm(forms.ModelForm):
+    def __init__(self, request, *args, **kwargs):
+        super(OrderForm, self).__init__(*args, **kwargs)
+        self.fields['address'].queryset = Customer.user_addresses.filter(user=request.user)
 
     comment = forms.CharField(
         label='Сообщение',
