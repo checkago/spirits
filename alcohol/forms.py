@@ -5,25 +5,21 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-2
+
 class OrderForm(forms.ModelForm):
 
-    first_name = forms.CharField(required=True)
-    last_name = forms.CharField()
-    phone = forms.CharField(required=True)
-    address = forms.ChoiceField()
-    buying_type = forms.ChoiceField(choices=Order.BYING_TYPE_CHOICES, widget=forms.Select(attrs={'class': 'form-select rounded-0'}))
-    order_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
     comment = forms.CharField(
         label='Сообщение',
-        widget=forms.Textarea(attrs={'rows': '1'}), required=False
+        widget=forms.Textarea(attrs={'rows': '1'}),
+        required=False
     )
 
     class Meta:
         model = Order
         fields = (
-            'first_name', 'last_name', 'phone', 'buying_type', 'address', 'order_date', 'comment'
+            'first_name', 'last_name', 'phone', 'address', 'buying_type', 'comment'
         )
+
 
 
 class LoginForm(forms.ModelForm):

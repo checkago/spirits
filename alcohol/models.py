@@ -207,8 +207,8 @@ class Order(models.Model):
     )
 
     BYING_TYPE_CHOICES = (
-        (BYING_TYPE_SELF, 'Самовывоз из магазина'),
-        (BYING_TYPE_DELIVERY, 'Доставка')
+        (BYING_TYPE_DELIVERY, 'Доставка'),
+        (BYING_TYPE_SELF, 'Самовывоз из магазина')
     )
 
     customer = models.ForeignKey('Customer', on_delete=models.CASCADE, related_name='orders', verbose_name='Покупатель')
@@ -223,7 +223,6 @@ class Order(models.Model):
                                    default=BYING_TYPE_DELIVERY, verbose_name='Тип покупки')
     comment = models.TextField(blank=True, null=True, verbose_name='Комментарий к заказу')
     created_at = models.DateField(auto_now=True, verbose_name='дата создания заказа')
-    order_date = models.DateField(default=timezone.now, verbose_name='Предпочитаемая дата получения заказа')
 
     class Meta:
         verbose_name = 'Заказ покупателя'
@@ -279,7 +278,7 @@ class Address(models.Model):
         verbose_name_plural = 'Адреса покупателей'
 
     def __str__(self):
-        return f"Адрес пользователя {self.customer.user.username} | {self.city}, {self.metro}, {self.street}, {self.street}, {self.building}"
+        return f"{self.city}, {self.metro}, {self.street}, {self.street}, {self.building}"
 
 
 class Notification(models.Model):
