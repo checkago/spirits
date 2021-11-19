@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
+from django import forms
 from django.shortcuts import render
 from django import views
 from django.contrib import messages
@@ -94,6 +95,7 @@ class CategoryDetailView(CartMixin, views.generic.DetailView):
 class BrandsView(CartMixin, views.View):
     model = Brand
     categories = Category.objects.all()
+
     def get(self, request, *args, **kwargs):
         brands = Brand.objects.all()
         context = {
@@ -222,10 +224,12 @@ class CheckoutView(CartMixin, views.View):
         customer = Customer.objects.get(user=request.user)
         categories = Category.objects.all()
         form = OrderForm(request.POST or None)
+        first_name = str(customer.user.first_name)
         context = {
             'cart': self.cart,
             'categories': categories,
             'customer': customer,
+            'first_name': first_name,
             'form': form
         }
         return render(request, 'cart/checkout.html', context)
@@ -242,9 +246,8 @@ class MakeOrderView(CartMixin, views.View):
             new_order.first_name = form.cleaned_data['first_name']
             new_order.last_name = form.cleaned_data['last_name']
             new_order.phone = form.cleaned_data['phone']
-            new_order.address = form.cleaned_data['address']
             new_order.buying_type = form.cleaned_data['buying_type']
-            new_order.order_date = form.cleaned_data['order_date']
+            new_order.address = form.cleaned_data['address']
             new_order.comment = form.cleaned_data['comment']
             new_order.save()
             self.cart.in_order = True
