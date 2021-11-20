@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django import forms
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import render
 from django import views
 from django.contrib import messages
@@ -196,6 +196,20 @@ class AccountView(LoginRequiredMixin, CartMixin, views.View):
         return render(request, 'auth/account_view.html', context)
 
 
+class OrderDetailView(LoginRequiredMixin, PermissionRequiredMixin, CartMixin, views.generic.DetailView):
+    model = Order
+    template_name = 'cart/orderview.html'
+    title = 'order'
+    context_object_name = 'order'
+    permission_required = 'alcohol.view_order'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cart'] = self.cart
+        context['categories'] = Category.objects.all()
+        return context
+
+
 class CartView(CartMixin, views.View):
 
     def get(self, request, *args, **kwargs):
@@ -218,12 +232,12 @@ class AddToCartView(CartMixin, views.View):
         return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
-class CheckoutView(CartMixin, views.View):
+class CheckoutView(LoginRequiredMixin, CartMixin, views.View):
 
     def get(self, request, *args, **kwargs):
         customer = Customer.objects.get(user=request.user)
         categories = Category.objects.all()
-        form = OrderForm(request.POST or None)
+        form = OrderForm(request.POST or None, user=request.user)
         first_name = str(customer.user.first_name)
         context = {
             'cart': self.cart,
@@ -235,10 +249,10 @@ class CheckoutView(CartMixin, views.View):
         return render(request, 'cart/checkout.html', context)
 
 
-class MakeOrderView(CartMixin, views.View):
+class MakeOrderView(LoginRequiredMixin, CartMixin, views.View):
 
     def post(self, request, *args, **kwargs):
-        form = OrderForm(request.POST or None)
+        form = OrderForm(request.POST or None, user=request.user)
         customer = Customer.objects.get(user=request.user)
         if form.is_valid():
             new_order = form.save(commit=False)
@@ -256,9 +270,23 @@ class MakeOrderView(CartMixin, views.View):
             new_order.save()
             customer.orders.add(new_order)
             messages.add_message(request, messages.INFO, 'Спасибо за заказ! Менеджер с Вами свяжется')
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/checkout-complete/')
         return HttpResponseRedirect('/checkout/')
 
+
+class CheckoutCompleteView(LoginRequiredMixin, CartMixin, views.View):
+
+    def get(self, request, *args, **kwargs):
+        customer = Customer.objects.get(user=request.user)
+        categories = Category.objects.all()
+        first_name = str(customer.user.first_name)
+        context = {
+            'cart': self.cart,
+            'categories': categories,
+            'customer': customer,
+            'first_name': first_name,
+        }
+        return render(request, 'cart/checkout-complete.html', context)
 
 
 class DeleteFromCartView(CartMixin, views.View):

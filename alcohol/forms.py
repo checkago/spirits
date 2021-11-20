@@ -1,15 +1,17 @@
 from django import forms
 from datetime import datetime
-from .models import Order, Customer
+from .models import Order, Customer, Address
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
 
 class OrderForm(forms.ModelForm):
-    def __init__(self, request, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
         super(OrderForm, self).__init__(*args, **kwargs)
-        self.fields['address'].queryset = Customer.user_addresses.filter(user=request.user)
+        customer = Customer.objects.get(user=user)
+        self.fields['address'].queryset = Address.objects.filter(customer=customer)
 
     comment = forms.CharField(
         label='Сообщение',

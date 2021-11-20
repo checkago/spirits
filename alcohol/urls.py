@@ -17,8 +17,10 @@ urlpatterns = [
     path('change-qty/<str:ct_model>/<str:slug>/', ChangeQTYView.as_view(), name='change_qty'),
     path('checkout/', CheckoutView.as_view(), name='checkout'),
     path('make-order/', MakeOrderView.as_view(), name='make_order'),
+    path('checkout-complete/', CheckoutCompleteView.as_view(), name='checkout-complete'),
     path('catalog/', CategoryView.as_view(), name='categories'),
     path('brands/brands/', BrandsView.as_view(), name='brands'),
+    path('account/orders/<int:pk>/', OrderDetailView.as_view(), name='order-detail'),
     path('<str:category_slug>/', CategoryDetailView.as_view(), name='category_detail'),
     path('<str:category_slug>/<str:brand_slug>/<str:product_slug>/', ProductDetailView.as_view(), name='product_detail'),
 ]
