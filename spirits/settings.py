@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'alcohol',
+    'specs',
     'ckeditor',
     'crispy_forms',
     'active_link',

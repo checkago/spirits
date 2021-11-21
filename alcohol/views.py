@@ -13,6 +13,8 @@ from .mixins import CartMixin
 from .models import CartProduct, Category, Customer, Product, Brand, Slider, BottleVolume, Order
 from utils.recalc_cart import recalc_cart
 
+from specs.models import ProductFeatures
+
 
 class IndexView(CartMixin, views.View):
 

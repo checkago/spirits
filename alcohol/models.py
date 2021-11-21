@@ -42,6 +42,8 @@ class BottleVolume(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=100, verbose_name='Категория')
     slug = models.SlugField(unique=True, verbose_name='Псевдоним/Slug')
+    features = models.ManyToManyField("specs.CategoryFeature", blank=True,
+                                      related_name='features_for_category', verbose_name='Характеристика категории')
 
     class Meta:
         verbose_name = 'Категория товара'
@@ -88,6 +90,8 @@ class Product(models.Model):
     recipe = models.ForeignKey('Recipe', blank=True, null=True, on_delete=models.CASCADE, verbose_name='Рецепт')
     offer_of_the_week = models.BooleanField(default=False, verbose_name='Предложение недели')
     image = models.ImageField(upload_to=upload_function)
+    features = models.ManyToManyField("specs.ProductFeatures", blank=True,
+                                      related_name='features_for_product', verbose_name='Характеристика товара')
 
     class Meta:
         verbose_name = 'Товар'
@@ -103,6 +107,9 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('product_detail', kwargs={'category_slug': self.category.slug, 'brand_slug': self.brand.slug,
                                                  'product_slug': self.slug})
+
+    def get_features(self):
+        return {f.feature.feature_name: ' '.join([f.value, f.feature.unit or ""]) for f in self.features.all()}
 
 
 class Country(models.Model):
