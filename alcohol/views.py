@@ -213,7 +213,8 @@ class OrderDetailView(LoginRequiredMixin, PermissionRequiredMixin, CartMixin, vi
 class CartView(CartMixin, views.View):
 
     def get(self, request, *args, **kwargs):
-        return render(request, 'cart/cart.html', {'cart': self.cart})
+        categories = Category.objects.all()
+        return render(request, 'cart/cart.html', {'cart': self.cart, 'categories': categories})
 
 
 class AddToCartView(CartMixin, views.View):
