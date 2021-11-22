@@ -1,3 +1,8 @@
+import operator
+
+from functools import reduce
+from itertools import chain
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -14,6 +19,11 @@ from .models import CartProduct, Category, Customer, Product, Brand, Slider, Bot
 from utils.recalc_cart import recalc_cart
 
 from specs.models import ProductFeatures
+
+
+class MyQ(Q):
+
+    default = 'OR'
 
 
 class IndexView(CartMixin, views.View):
@@ -71,7 +81,7 @@ class CategoryDetailView(CartMixin, views.generic.DetailView):
             context['category_products'] = category.product_set.all()
             return context
         if query:
-            products = category.product_set.filter(Q(title__icontains=query))
+            products = category.product_set.filter(Q(name__icontains=query))
             context['category_products'] = products
             return context
         url_kwargs = {}

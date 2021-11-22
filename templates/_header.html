@@ -3,6 +3,7 @@
 {% url 'brands' as brands_url %}
 {% url 'categories' as categories_url %}
 {% url 'account' as account_url %}
+{% load search_filter %}
 
 {% block content %}
 
@@ -51,15 +52,17 @@
                         </div>
                     </div>
                     <div class="col-12 col-md order-4 order-md-2">
+                        <form action="{{ Category.get_absolute_url }}" method="GET">
                         <div class="input-group flex-nowrap px-xl-4">
-                            <input type="text" class="form-control w-100" placeholder="Поиск">
+                            <input class="form-control w-100" name="search" type="search" placeholder="Поиск товара" aria-label="Search">
                             <select class="form-select flex-shrink-0" aria-label="Default select example" style="width: 10.5rem;">
                                 <option selected>Все категории</option>
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
                                 <option value="3">Three</option>
-                            </select>	<span class="input-group-text cursor-pointer"><i class='bx bx-search'></i></span>
+                            </select>	<button type="submit" class="input-group-text cursor-pointer"><i class='bx bx-search'></i></button>
                         </div>
+                        </form>
                     </div>
                     <div class="col col-md-auto order-3 d-none d-xl-flex align-items-center">
                         <div class="fs-1 text-white"><i class='bx bx-headphone'></i>
