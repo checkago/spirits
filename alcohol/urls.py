@@ -20,7 +20,10 @@ urlpatterns = [
     path('checkout-complete/', CheckoutCompleteView.as_view(), name='checkout-complete'),
     path('catalog/', CategoryView.as_view(), name='categories'),
     path('brands/brands/', BrandsView.as_view(), name='brands'),
+    path('clear-notifications/', ClearNotificationsView.as_view(), name='clear-notifications'),
     path('account/orders/<int:pk>/', OrderDetailView.as_view(), name='order-detail'),
+    path('add-to-wishlist/<int:product_id>/', AddToWishlistView.as_view(), name='add_to_wishlist'),
+    path('remove-from-wishlist/<int:product_id>/', RemoveFromWishlistView.as_view(), name='remove_from_wishlist'),
     path('<str:category_slug>/', CategoryDetailView.as_view(), name='category_detail'),
     path('<str:category_slug>/<str:brand_slug>/<str:product_slug>/', ProductDetailView.as_view(), name='product_detail'),
 ]

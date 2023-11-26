@@ -3,6 +3,7 @@
 {% url 'brands' as brands_url %}
 {% url 'categories' as categories_url %}
 {% url 'account' as account_url %}
+{% load search_filter %}
 
 {% block content %}
 
@@ -76,7 +77,7 @@
                             <nav class="navbar navbar-expand">
                                 <ul class="navbar-nav ms-auto">
 
-                                {% if not request.user.is_authenticated %}
+                                    {% if not request.user.is_authenticated %}
                                     <li class="nav-item"><a href="{% url 'login' %}" class="nav-link cart-link"><i class='bx bx-user'></i></a>
                                     </li>
                                     {% else %}
@@ -86,7 +87,45 @@
                                     </li>
                                     <li class="nav-item"><a href="javascript:;" class="nav-link cart-link"><i class='bx bx-heart'></i></a>
                                     </li>
-                                {% endif %}
+                                    {% endif %}
+
+                                    {% if not request.user.is_authenticated %}
+                                    {% else %}
+                                    <li class="nav-item dropdown dropdown-large">
+                                        <a href="#" class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative cart-link" data-bs-toggle="dropdown">
+                                            {% if notifications.count %}
+                                            <span class="alert-count">{{ notifications.count }}</span>
+                                            {% endif %}
+                                            <i class='bx bx-bell'></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                        {% if notifications %}
+                                            <a href="">
+                                                <div class="cart-header">
+                                                    <p class="cart-header-title mb-0">Уведомления</p>
+                                                </div>
+                                            </a>
+                                            <div class="">
+                                                <ul>
+                                                    {% for n in notifications %}
+                                                        <li>
+                                                            <p>{{ n.text|safe }}</p>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                            <div class="d-grid p-3 border-top">	<a href="{% url 'clear-notifications' %}" class="btn btn-light btn-ecomm">ПРОЧИТАНО</a>
+                                            </div>
+                                        {% else %}
+                                            <a href="">
+                                                <div class="cart-header">
+                                                    <p class="cart-header-title mb-0">Новых уведомлений нет</p>
+                                                </div>
+                                            </a>
+                                        {% endif %}
+                                        </div>
+                                    </li>
+                                    {% endif %}
 
                                     {% if not request.user.is_authenticated %}
                                     <li class="nav-item dropdown dropdown-large">

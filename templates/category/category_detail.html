@@ -45,7 +45,7 @@
 												<h6 class="text-uppercase mb-3">Категории</h6>
 												<ul class="list-unstyled mb-0 categories-list">
                                                     {% for Category in categories %}
-													<li><a href="{{ Category.get_absolute_url }}">{{ Category.name }} <span class="float-end badge rounded-pill bg-light"> </span></a>
+													<li><a href="{{ Category.get_absolute_url }}">{{ Category.name }} <span class="float-end badge rounded-pill bg-light">{{ cat_qty }}</span></a>
 													</li>
                                                     {% endfor %}
 												</ul>
@@ -125,7 +125,7 @@
 												<div class="card rounded-0 product-card">
 													<div class="card-header bg-transparent border-bottom-0">
 														<div class="d-flex align-items-center justify-content-end gap-3">
-															<a href="javascript:;">
+															<a href="{% url 'add_to_wishlist' product_id=Product.id %}">
 																<div class="product-wishlist"> <i class="bx bx-heart"></i>
 																</div>
 															</a>

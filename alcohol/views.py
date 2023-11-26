@@ -1,8 +1,3 @@
-import operator
-
-from functools import reduce
-from itertools import chain
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -14,8 +9,8 @@ from django.http import HttpResponseRedirect
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, RegistrationForm, OrderForm
-from .mixins import CartMixin
-from .models import CartProduct, Category, Customer, Product, Brand, Slider, BottleVolume, Order
+from .mixins import CartMixin, NotificationMixin, OwnershipMixin
+from .models import CartProduct, Category, Customer, Product, Brand, Slider, BottleVolume, Order, Notification
 from utils.recalc_cart import recalc_cart
 
 from specs.models import ProductFeatures
@@ -26,7 +21,7 @@ class MyQ(Q):
     default = 'OR'
 
 
-class IndexView(CartMixin, views.View):
+class IndexView(CartMixin, NotificationMixin, views.View):
 
     def get(self, request, *args, **kwargs):
         categories = Category.objects.all()
@@ -36,12 +31,13 @@ class IndexView(CartMixin, views.View):
             'categories': categories,
             'products': products,
             'sliders': sliders,
-            'cart': self.cart
+            'cart': self.cart,
+            'notifications': self.notifications(request.user)
         }
         return render(request, 'index.html', context)
 
 
-class CategoryView(CartMixin, views.View):
+class CategoryView(CartMixin, NotificationMixin, views.View):
     model = Category
     categories = Category.objects.all()
 
@@ -55,12 +51,13 @@ class CategoryView(CartMixin, views.View):
             'products': products,
             'volumes': volumes,
             'brands': brands,
-            'cart': self.cart
+            'cart': self.cart,
+            'notifications': self.notifications(request.user)
         }
         return render(request, 'category/categories.html', context)
 
 
-class CategoryDetailView(CartMixin, views.generic.DetailView):
+class CategoryDetailView(CartMixin, NotificationMixin, views.generic.DetailView):
     model = Category
     categories = Category.objects.all()
     brands = Brand.objects.all()
@@ -104,7 +101,7 @@ class CategoryDetailView(CartMixin, views.generic.DetailView):
         return context
 
 
-class BrandsView(CartMixin, views.View):
+class BrandsView(CartMixin, NotificationMixin, views.View):
     model = Brand
     categories = Category.objects.all()
 
@@ -112,12 +109,13 @@ class BrandsView(CartMixin, views.View):
         brands = Brand.objects.all()
         context = {
             'brands': brands,
-            'cart': self.cart
+            'cart': self.cart,
+            'notifications': self.notifications(request.user)
         }
         return render(request, 'brands/brands.html', context)
 
 
-class ProductDetailView(CartMixin, views.generic.DetailView):
+class ProductDetailView(CartMixin, NotificationMixin, views.generic.DetailView):
     model = Product
     template_name = 'product/product_detail.html'
     slug_url_kwarg = 'product_slug'
@@ -194,7 +192,7 @@ class RegistrationView(views.View):
         return render(request, 'auth/registration.html', context)
 
 
-class AccountView(LoginRequiredMixin, CartMixin, views.View):
+class AccountView(LoginRequiredMixin, CartMixin, NotificationMixin, views.View):
     categories = Category.objects.all()
 
     def get(self, request, *args, **kwargs):
@@ -203,12 +201,13 @@ class AccountView(LoginRequiredMixin, CartMixin, views.View):
         context = {
             'categories': categories,
             'customer': customer,
-            'cart': self.cart
+            'cart': self.cart,
+            'notifications': self.notifications(request.user)
         }
         return render(request, 'auth/account_view.html', context)
 
 
-class OrderDetailView(LoginRequiredMixin, PermissionRequiredMixin, CartMixin, views.generic.DetailView):
+class OrderDetailView(LoginRequiredMixin, PermissionRequiredMixin, NotificationMixin, CartMixin, views.generic.DetailView):
     model = Order
     template_name = 'cart/orderview.html'
     title = 'order'
@@ -222,11 +221,39 @@ class OrderDetailView(LoginRequiredMixin, PermissionRequiredMixin, CartMixin, vi
         return context
 
 
-class CartView(CartMixin, views.View):
+class CartView(CartMixin, NotificationMixin, views.View):
 
     def get(self, request, *args, **kwargs):
         categories = Category.objects.all()
         return render(request, 'cart/cart.html', {'cart': self.cart, 'categories': categories})
+
+
+class AddToWishlistView(views.View):
+
+    @staticmethod
+    def get(request, *args, **kwargs):
+        product = Product.objects.get(id=kwargs['product_id'])
+        customer = Customer.objects.get(user=request.user)
+        customer.wishlist.add(product)
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+class RemoveFromWishlistView(views.View):
+
+    @staticmethod
+    def get(request, *args, **kwargs):
+        product = Product.objects.get(id=kwargs['product_id'])
+        customer = Customer.objects.get(user=request.user)
+        customer.wishlist.remove(product)
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+class ClearNotificationsView(views.View):
+
+    @staticmethod
+    def get(request, *args, **kwargs):
+        Notification.objects.make_all_read(request.user.customer)
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
 class AddToCartView(CartMixin, views.View):
@@ -245,7 +272,7 @@ class AddToCartView(CartMixin, views.View):
         return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
-class CheckoutView(LoginRequiredMixin, CartMixin, views.View):
+class CheckoutView(LoginRequiredMixin, NotificationMixin, CartMixin, views.View):
 
     def get(self, request, *args, **kwargs):
         customer = Customer.objects.get(user=request.user)
@@ -257,12 +284,13 @@ class CheckoutView(LoginRequiredMixin, CartMixin, views.View):
             'categories': categories,
             'customer': customer,
             'first_name': first_name,
-            'form': form
+            'form': form,
+            'notifications': self.notifications(request.user)
         }
         return render(request, 'cart/checkout.html', context)
 
 
-class MakeOrderView(LoginRequiredMixin, CartMixin, views.View):
+class MakeOrderView(LoginRequiredMixin, NotificationMixin, CartMixin, views.View):
 
     def post(self, request, *args, **kwargs):
         form = OrderForm(request.POST or None, user=request.user)
@@ -287,22 +315,25 @@ class MakeOrderView(LoginRequiredMixin, CartMixin, views.View):
         return HttpResponseRedirect('/checkout/')
 
 
-class CheckoutCompleteView(LoginRequiredMixin, CartMixin, views.View):
+class CheckoutCompleteView(LoginRequiredMixin, NotificationMixin, CartMixin, views.View):
 
     def get(self, request, *args, **kwargs):
         customer = Customer.objects.get(user=request.user)
         categories = Category.objects.all()
         first_name = str(customer.user.first_name)
+        order = customer.orders.last()
         context = {
             'cart': self.cart,
             'categories': categories,
             'customer': customer,
             'first_name': first_name,
+            'notifications': self.notifications(request.user),
+            'order': order
         }
         return render(request, 'cart/checkout-complete.html', context)
 
 
-class DeleteFromCartView(CartMixin, views.View):
+class DeleteFromCartView(CartMixin,  views.View):
 
     def get(self, request, *args, **kwargs):
         ct_model, product_slug = kwargs.get('ct_model'), kwargs.get('slug')
@@ -318,7 +349,7 @@ class DeleteFromCartView(CartMixin, views.View):
         return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
-class ChangeQTYView(CartMixin, views.View):
+class ChangeQTYView(CartMixin, NotificationMixin, views.View):
 
     def post(self, request, *args, **kwargs):
         ct_model, product_slug = kwargs.get('ct_model'), kwargs.get('slug')

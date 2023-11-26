@@ -88,7 +88,7 @@
 																</td>
 																<td>{{ Order.cart.final_price }}</td>
 																<td>
-																	<div class="d-flex gap-2">	<a href="javascript:;" class="btn btn-light btn-sm rounded-0">Открыть</a>
+																	<div class="d-flex gap-2">	<a href="{% url 'order-detail' Order.pk %}" class="btn btn-light btn-sm rounded-0">Открыть</a>
 																	</div>
 																</td>
 															</tr>

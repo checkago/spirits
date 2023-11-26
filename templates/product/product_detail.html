@@ -103,7 +103,7 @@
                                                 {% else %}
                                                 <a href="{% url 'add_to_cart' ct_model=ct_model slug=product.slug %}" class="btn btn-white btn-ecomm">	<i class="bx bxs-cart-add"></i>В заказ</a>
                                                 {% endif %}
-												<a href="javascript:;" class="btn btn-light btn-ecomm disabled"><i class="bx bx-heart"></i>В список желаемого</a>
+												<a href="{% url 'add_to_wishlist' product_id=product.id %}" class="btn btn-light btn-ecomm"><i class="bx bx-heart"></i>В список желаемого</a>
 											</div>
 											<hr/>
 											<div class="product-sharing">

@@ -1,8 +1,12 @@
+from _multiprocessing import send
+
 from django.conf import settings
 from datetime import datetime
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
+from django.db.models.signals import post_save, pre_save
+from django.utils.safestring import mark_safe
 import operator
 from django.urls import reverse
 from django.utils import timezone
@@ -86,6 +90,7 @@ class Product(models.Model):
     volume = models.ForeignKey(BottleVolume, on_delete=models.CASCADE, verbose_name='Объем')
     price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name='Цена')
     stock = models.IntegerField(default=1, verbose_name='Количество на складе')
+    out_of_stock = models.BooleanField(default=False, verbose_name='Нет в наличии')
     description = models.TextField(default='Описание товара появится позже', verbose_name='Описание товара')
     recipe = models.ForeignKey('Recipe', blank=True, null=True, on_delete=models.CASCADE, verbose_name='Рецепт')
     offer_of_the_week = models.BooleanField(default=False, verbose_name='Предложение недели')
@@ -267,7 +272,7 @@ class Customer(models.Model):
             return 'год'
 
     def __str__(self):
-        return f"{self.user.username}"
+        return self.user.username
 
 
 class Address(models.Model):
@@ -288,10 +293,27 @@ class Address(models.Model):
         return f"{self.city}, {self.metro}, {self.street}, {self.street}, {self.building}"
 
 
+class NotificationManager(models.Manager):
+
+    def get_queryset(self):
+        return super().get_queryset()
+
+    def all(self, recipient):
+        return self.get_queryset().filter(
+            recipient=recipient,
+            read=False
+        )
+
+    def make_all_read(self, recipient):
+        qs = self.get_queryset().filter(recipient=recipient, read=False)
+        qs.update(read=True)
+
+
 class Notification(models.Model):
     recipient = models.ForeignKey(Customer, on_delete=models.CASCADE, verbose_name='Получатель уведомления')
     text = models.TextField(verbose_name='Текст уведомления')
     read = models.BooleanField(default=False, verbose_name='Прочитано')
+    objects = NotificationManager()
 
     class Meta:
         verbose_name = 'Уведомление'
@@ -353,6 +375,34 @@ class Review(models.Model):
 
     def __str__(self):
         return f"Отзыв к {self.product} {self.user} {self.date}"
+
+
+def check_previous_qty(instance, **kwargs):
+
+    try:
+        product = Product.objects.get(id=instance.id)
+    except Product.DoesNotExist:
+        return None
+    instance.out_of_stock = True if not product.stock else False
+
+
+def send_notification(instance, **kwargs):
+    if instance.stock and instance.out_of_stock:
+        customers = Customer.objects.filter(
+            wishlist__in=[instance]
+        )
+        if customers.count():
+            for c in customers:
+                Notification.objects.create(
+                    recipient=c,
+                    text=mark_safe(f'Товар, <a href="{instance.get_absolute_url()}">{instance.name}</a>, '
+                                   f'который вы ожидаете, есть в наличии')
+                )
+                c.wishlist.remove(instance)
+
+
+post_save.connect(send_notification, sender=Product)
+pre_save.connect(check_previous_qty, sender=Product)
 
 
 
